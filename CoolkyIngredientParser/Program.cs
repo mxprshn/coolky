@@ -1,12 +1,16 @@
-﻿using System;
+﻿using CoolkyIngredientParser.FindFoodParser;
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace CoolkyIngredientParser
 {
     class Program
     {
-        static void Main(string[] args)
+        static async Task Main(string[] args)
         {
-            Console.WriteLine("Hello World!");
+            var findFoodParser = new IngredientParser(new FindFoodParserFactory());
+            await findFoodParser.ParseAsync();
         }
     }
 }

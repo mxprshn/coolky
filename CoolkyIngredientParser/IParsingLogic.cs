@@ -6,6 +6,6 @@ namespace CoolkyIngredientParser
     public interface IParsingLogic
     {
         string GetType(IDocument page);
-        List<string> GetNames(IDocument page);
+        IList<string> GetNames(IDocument page);
     }
 }

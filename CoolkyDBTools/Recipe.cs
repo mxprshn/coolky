@@ -18,7 +18,7 @@ namespace CoolkyTools
         public Recipe() { }
 
         public Recipe(string id, string dishName, string cookTime, string cuisine, string type, string portionAmount,
-                List<string> ingredients, List<string> steps)
+                IList<string> ingredients, IList<string> steps)
         {
             Id = id;
             DishName = dishName;

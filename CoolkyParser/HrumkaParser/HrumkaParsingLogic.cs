@@ -28,7 +28,7 @@ namespace CoolkyRecipeParser.HrumkaParser
             return "CUISINE";
         }
 
-        public List<string> GetIngredients(IDocument page)
+        public IList<string> GetIngredients(IDocument page)
         {
             var ingredientElements = page.QuerySelectorAll("[itemprop=\"recipeIngredient\"]");
             var result = new List<string>();
@@ -41,7 +41,7 @@ namespace CoolkyRecipeParser.HrumkaParser
             return result;
         }
 
-        public List<string> GetSteps(IDocument page)
+        public IList<string> GetSteps(IDocument page)
         {
             // ".instruction || .instructions" nullrefexception
             var stepElements = page.QuerySelectorAll(".instruction");

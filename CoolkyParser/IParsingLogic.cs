@@ -11,7 +11,7 @@ namespace CoolkyRecipeParser
         string GetType(IDocument page);
         string GetCuisine(IDocument page);
         string GetPortionAmount(IDocument page);
-        List<string> GetSteps(IDocument page);
-        List<string> GetIngredients(IDocument page);
+        IList<string> GetSteps(IDocument page);
+        IList<string> GetIngredients(IDocument page);
     }
 }

@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 
-namespace CoolkyRecipeParser.HrumkaParser
+namespace CoolkyIngredientParser.FindFoodParser
 {
-    class HrumkaParserFactory : IParserFactory
+    class FindFoodParserFactory : IParserFactory
     {
-        public List<ParsingContext> GetContexts() => new List<ParsingContext> { new HrumkaDessertContext() };
-        public IParsingLogic GetLogic() => new HrumkaParsingLogic();
+        public List<ParsingContext> GetContexts() => new List<ParsingContext> { new FindFoodFruitContext() };
+        public IParsingLogic GetLogic() => new FindFoodParsingLogic();
     }
 }
