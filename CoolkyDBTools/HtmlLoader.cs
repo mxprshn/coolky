@@ -1,15 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using System.Net.Http;
 using AngleSharp.Dom;
 using AngleSharp;
 
 namespace CoolkyRecipeParser
 {
-    static class HtmlLoader
+    public static class HtmlLoader
     {
         public static async Task<IDocument> LoadAsync(string url)
         {

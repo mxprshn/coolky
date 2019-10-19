@@ -1,18 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using Realms;
 
-namespace CoolkyRecipeParser
+namespace CoolkyTools
 {
-    public class Recipe
+    public class Recipe : RealmObject
     {
-        public string Id { get; private set; }
-        public string DishName { get; private set; }
-        public string CookTime { get; private set; }
-        public string Cuisine { get; private set; }
-        public string Type { get; private set; }
-        public string PortionAmount { get; private set; }
-        public List<string> Ingredients { get; private set; }
-        public List<string> Steps { get; private set; }
+        public string Id { get; set; }
+        public string DishName { get; set; }
+        public string CookTime { get; set; }
+        public string Cuisine { get; set; }
+        public string Type { get;  }
+        public string PortionAmount { get;  }
+        public IList<string> Ingredients { get; }
+        public IList<string> Steps { get; }
+
+        public Recipe() { }
 
         public Recipe(string id, string dishName, string cookTime, string cuisine, string type, string portionAmount,
                 List<string> ingredients, List<string> steps)

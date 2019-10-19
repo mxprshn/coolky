@@ -8,7 +8,7 @@ namespace CoolkyRecipeParser
         static async Task Main(string[] args)
         {
             var hrumkaParser = new RecipeParser(new HrumkaParserFactory());
-            var recipes = await hrumkaParser.ParseAsync();
+            await hrumkaParser.ParseAsync();
         }
     }
 }
