@@ -8,9 +8,18 @@ using CoolkyTools;
 
 namespace CoolkyRecipeParser.HrumkaParser
 {
-    public abstract class HrumkaContext : ParsingContext
+    public class HrumkaTypeContext : ParsingContext
     {
         private const string baseUrl = "https://1000.menu";
+
+        private string urlTypeName;
+        private string type;
+
+        public HrumkaTypeContext(string urlTypeName, string type)
+        {
+            this.urlTypeName = urlTypeName;
+            this.type = type;
+        }
 
         private int PageCountParser(string pageString)
         {
@@ -21,13 +30,13 @@ namespace CoolkyRecipeParser.HrumkaParser
 
         public override async IAsyncEnumerable<IDocument> GetPages()
         {
-            var basePage = await HtmlLoader.LoadAsync($"{baseUrl}/catalog/{UrlTypeName()}");
+            var basePage = await HtmlLoader.LoadAsync($"{baseUrl}/catalog/{urlTypeName}");
             var pageCount = PageCountParser(basePage.QuerySelector(".search-pages [href]:last-child").Text());
 
             // отдельно первую страницу?
             for (var i = 1; i <= pageCount; ++i)
             {
-                var currentPage = await HtmlLoader.LoadAsync($"{baseUrl}/catalog/{UrlTypeName()}/{i}");
+                var currentPage = await HtmlLoader.LoadAsync($"{baseUrl}/catalog/{urlTypeName}/{i}");
                 var recipeElements = currentPage.QuerySelectorAll(".h5");
                 Console.WriteLine($"{recipeElements.Length} recipes found at page {i}.");
 
@@ -43,6 +52,6 @@ namespace CoolkyRecipeParser.HrumkaParser
             }
         }
 
-        public abstract string UrlTypeName();
+        public override string GetType(IParsingLogic logic, IDocument page) => type;
     }
 }

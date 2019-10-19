@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="AngleSharp" Version="0.13.0" />
+    <PackageReference Include="LingvoNET" Version="1.1.2" />
     <PackageReference Include="Realm" Version="4.2.0" />
   </ItemGroup>
 

@@ -4,7 +4,7 @@ using Realms;
 
 namespace CoolkyTools
 {
-    public class Recipe : RealmObject
+    public class Recipe
     {
         public string Id { get; set; }
         public string DishName { get; set; }

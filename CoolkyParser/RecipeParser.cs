@@ -24,7 +24,7 @@ namespace CoolkyRecipeParser
                     var recipe = new Recipe(context.GetId(logic, page), context.GetDishName(logic, page), context.GetCookTime(logic, page), context.GetCuisine(logic, page),
                             context.GetType(logic, page), context.GetPortionAmount(logic, page), context.GetIngredients(logic, page), context.GetSteps(logic, page));
                     recipe.Print();
-                    await RecipeDBProvider.AddRecipe(recipe);
+                    //await RecipeDBProvider.AddRecipe(recipe);
                 }
             }
         }

@@ -15,7 +15,7 @@ namespace CoolkyTools
         public static async Task AddRecipe(Recipe recipe)
         { 
             var realm = Realm.GetInstance(configuration);
-            realm.Write(() => realm.Add(recipe));
+            //realm.Write(() => realm.Add(recipe));
         }
     }
 }

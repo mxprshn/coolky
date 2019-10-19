@@ -27,14 +27,9 @@ namespace CoolkyIngredientParser
                     foreach (var name in context.GetNames(logic, page))
                     {
                         var ingredient = new Ingredient(context.GetType(logic, page), new List<string>{ name });
-                        list.Add(ingredient);
+                        ingredient.Print();
                     }                    
                 }
-            }
-
-            foreach (var ingredient in list)
-            {
-                ingredient.Print();
             }
         }
     }

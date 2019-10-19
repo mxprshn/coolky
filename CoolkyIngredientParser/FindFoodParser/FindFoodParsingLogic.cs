@@ -12,7 +12,7 @@ namespace CoolkyIngredientParser.FindFoodParser
 
             foreach (var ingredientNameElement in nameElements)
             {
-                result.Add(ingredientNameElement.GetAttribute("title"));
+                result.Add(ingredientNameElement.GetAttribute("title").ToLower());
             }
 
             return result;
