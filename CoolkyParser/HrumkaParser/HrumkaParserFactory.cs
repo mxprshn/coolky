@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CoolkyParser.HrumkaParser
+namespace CoolkyRecipeParser.HrumkaParser
 {
     class HrumkaParserFactory : IParserFactory
     {

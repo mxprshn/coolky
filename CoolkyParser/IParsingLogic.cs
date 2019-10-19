@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using AngleSharp.Dom;
 
-namespace CoolkyParser
+namespace CoolkyRecipeParser
 {
     public interface IParsingLogic
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading;
 using AngleSharp.Dom;
 
-namespace CoolkyParser.HrumkaParser
+namespace CoolkyRecipeParser.HrumkaParser
 {
     class HrumkaDessertContext : ParsingContext
     {

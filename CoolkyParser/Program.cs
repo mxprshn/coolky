@@ -1,7 +1,7 @@
-﻿using CoolkyParser.HrumkaParser;
+﻿using CoolkyRecipeParser.HrumkaParser;
 using System.Threading.Tasks;
 
-namespace CoolkyParser
+namespace CoolkyRecipeParser
 {
     class Program
     {

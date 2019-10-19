@@ -7,7 +7,7 @@ using System.Net.Http;
 using AngleSharp.Dom;
 using AngleSharp;
 
-namespace CoolkyParser
+namespace CoolkyRecipeParser
 {
     static class HtmlLoader
     {

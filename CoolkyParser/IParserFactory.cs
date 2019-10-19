@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace CoolkyParser
+namespace CoolkyRecipeParser
 {
     public interface IParserFactory
     {
