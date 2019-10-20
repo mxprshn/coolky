@@ -1,17 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using Realms;
+using CoolkyIngredientParser;
 
-namespace CoolkyTools
+namespace CoolkyRecipeParser
 {
-    public class Recipe
+    public class Recipe : RealmObject
     {
         public string Id { get; set; }
         public string DishName { get; set; }
         public string CookTime { get; set; }
         public string Cuisine { get; set; }
-        public string Type { get;  }
-        public string PortionAmount { get;  }
+        public string Type { get; set; }
+        public string PortionAmount { get; set; }
         public IList<string> Ingredients { get; }
         public IList<string> Steps { get; }
 
@@ -28,28 +29,6 @@ namespace CoolkyTools
             Ingredients = ingredients;
             Steps = steps;
             PortionAmount = portionAmount;
-        }
-
-        public void Print()
-        {
-            Console.WriteLine(Id);
-            Console.WriteLine(DishName);
-            Console.WriteLine(Type);
-            Console.WriteLine(Cuisine);
-            Console.WriteLine(CookTime);
-            Console.WriteLine(PortionAmount);
-
-            foreach (var ingredient in Ingredients)
-            {
-                Console.WriteLine(ingredient);
-            }
-
-            foreach (var step in Steps)
-            {
-                Console.WriteLine(step);
-            }
-
-            Console.WriteLine();
         }
     }
 }

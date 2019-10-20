@@ -7,8 +7,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoolkyRecipeParser", "Coolk
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoolkyIngredientParser", "..\CoolkyIngredientParser\CoolkyIngredientParser.csproj", "{DA59C5B7-76A3-4A37-BFDB-A9D0C2FCAEFE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "CoolkyTools", "..\CoolkyDBTools\CoolkyTools.csproj", "{EC951F9C-465D-431E-A386-BF67BEB765B4}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -23,10 +21,6 @@ Global
 		{DA59C5B7-76A3-4A37-BFDB-A9D0C2FCAEFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{DA59C5B7-76A3-4A37-BFDB-A9D0C2FCAEFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{DA59C5B7-76A3-4A37-BFDB-A9D0C2FCAEFE}.Release|Any CPU.Build.0 = Release|Any CPU
-		{EC951F9C-465D-431E-A386-BF67BEB765B4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{EC951F9C-465D-431E-A386-BF67BEB765B4}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{EC951F9C-465D-431E-A386-BF67BEB765B4}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{EC951F9C-465D-431E-A386-BF67BEB765B4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
-using CoolkyTools;
 
 namespace CoolkyIngredientParser
 {
@@ -26,8 +25,9 @@ namespace CoolkyIngredientParser
                 {
                     foreach (var name in context.GetNames(logic, page))
                     {
-                        var ingredient = new Ingredient(context.GetType(logic, page), new List<string>{ name });
+                        var ingredient = new Ingredient(context.GetType(logic, page), name);
                         ingredient.Print();
+                        await IngredientDBProvider.AddIngredient(ingredient);
                     }                    
                 }
             }
