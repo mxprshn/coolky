@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Collections;
 using LingvoNET;
+using System.Text.RegularExpressions;
 
 namespace CoolkyIngredientParser
 {
@@ -30,23 +31,42 @@ namespace CoolkyIngredientParser
         // асинхронно?
         public static IList<string> GetSynonyms(string source)
         {
+            if (source.Contains(" ") && !source.Contains("("))
+            {
+                return null;
+            }
+
             var result = new List<string>();
 
-            if (source.Contains(" "))
+            if (source.Contains("("))
             {
+                var regex = new Regex("\\((.*?)\\)");
+                var synonym = regex.Match(source).Value.Replace("(", "").Replace(")", "");
+                result.Add(synonym);
+                if (GetForms(synonym) != null)
+                {
+                    result.AddRange(GetForms(synonym));
+                }
                 return result;
             }
 
-            var noun = Nouns.FindOne(source);
+            return GetForms(source);
+        }
+
+        public static IList<string> GetForms(string source)
+        {
+            var result = new List<string>();
+            var noun = Nouns.FindSimilar(source);
 
             if (noun != null)
             {
                 result.Add(noun[Case.Genitive, Number.Singular]);
                 result.Add(noun[Case.Genitive, Number.Plural]);
                 result.Add(noun[Case.Nominative, Number.Plural]);
+                return result;
             }
 
-            return result;
+            return null;
         }
     }
 }

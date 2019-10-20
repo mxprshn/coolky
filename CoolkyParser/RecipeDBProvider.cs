@@ -12,7 +12,7 @@ namespace CoolkyRecipeParser
         private static RealmConfiguration configuration = new RealmConfiguration($"Recipes.realm");
 
         // правильно ли сделано асинхронно?
-        public static async Task AddRecipe(Recipe recipe)
+        public static async Task AddUnstructuredRecipe(UnstructuredRecipe recipe)
         { 
             var realm = Realm.GetInstance(configuration);
             realm.Write(() => realm.Add(recipe));

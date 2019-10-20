@@ -17,7 +17,5 @@ namespace CoolkyIngredientParser
             var realm = Realm.GetInstance(configuration);
             realm.Write(() => realm.Add(ingredient));
         }
-
-
     }
 }

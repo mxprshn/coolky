@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 
 namespace CoolkyRecipeParser
@@ -20,10 +22,9 @@ namespace CoolkyRecipeParser
             {
                 await foreach (var page in context.GetPages())
                 {
-                    var recipe = new Recipe(context.GetId(logic, page), context.GetDishName(logic, page), context.GetCookTime(logic, page), context.GetCuisine(logic, page),
-                            context.GetType(logic, page), context.GetPortionAmount(logic, page), context.GetIngredients(logic, page), context.GetSteps(logic, page));
-                    //recipe.Print();
-                    await RecipeDBProvider.AddRecipe(recipe);
+                    var recipe = new UnstructuredRecipe(context.GetId(logic, page), context.GetDishName(logic, page), context.GetCookTime(logic, page), context.GetCuisine(logic, page),
+                            context.GetType(logic, page), context.GetPortionAmount(logic, page), context.GetIngredients(logic, page), context.GetSteps(logic, page), context.GetWebSite());
+                    await RecipeDBProvider.AddUnstructuredRecipe(recipe);
                 }
             }
         }

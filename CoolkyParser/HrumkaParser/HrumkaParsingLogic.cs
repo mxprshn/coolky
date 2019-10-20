@@ -8,7 +8,7 @@ namespace CoolkyRecipeParser.HrumkaParser
         public string GetId(IDocument page)
         {
             var idElement = page.QuerySelector("[data-cid]");
-            return idElement.GetAttribute("data-cid");
+            return $"0{idElement.GetAttribute("data-cid")}";
         }
 
         public string GetDishName(IDocument page)
@@ -23,10 +23,7 @@ namespace CoolkyRecipeParser.HrumkaParser
             return cookTimeElement.Text().TrimStart(' ');
         }
 
-        public string GetCuisine(IDocument page)
-        {
-            return "CUISINE";
-        }
+        public string GetCuisine(IDocument page) => null;
 
         public IList<string> GetIngredients(IDocument page)
         {
@@ -63,10 +60,7 @@ namespace CoolkyRecipeParser.HrumkaParser
             return result;
         }
 
-        public string GetType(IDocument page)
-        {
-            return "TYPE";
-        }
+        public string GetType(IDocument page) => null;
 
         public string GetPortionAmount(IDocument page)
         {

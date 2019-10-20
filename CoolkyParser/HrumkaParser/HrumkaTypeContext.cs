@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-using CoolkyTools;
 
 namespace CoolkyRecipeParser.HrumkaParser
 {
@@ -53,5 +52,6 @@ namespace CoolkyRecipeParser.HrumkaParser
         }
 
         public override string GetType(IParsingLogic logic, IDocument page) => type;
+        public override string GetWebSite() => "1000.menu";
     }
 }
