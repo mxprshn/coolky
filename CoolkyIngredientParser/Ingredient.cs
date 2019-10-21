@@ -20,37 +20,12 @@ namespace CoolkyIngredientParser
         {
             Type = type;
             Name = name;
-            Synonyms = GetSynonyms(name);
+            Synonyms = GetForms(name);
         }
 
         public void Print()
         {
-            Console.WriteLine($"{Type} {Name} {Synonyms}");
-        }
-
-        // асинхронно?
-        public static IList<string> GetSynonyms(string source)
-        {
-            if (source.Contains(" ") && !source.Contains("("))
-            {
-                return null;
-            }
-
-            var result = new List<string>();
-
-            if (source.Contains("("))
-            {
-                var regex = new Regex("\\((.*?)\\)");
-                var synonym = regex.Match(source).Value.Replace("(", "").Replace(")", "");
-                result.Add(synonym);
-                if (GetForms(synonym) != null)
-                {
-                    result.AddRange(GetForms(synonym));
-                }
-                return result;
-            }
-
-            return GetForms(source);
+            Console.WriteLine($"{Type} {Name}");
         }
 
         public static IList<string> GetForms(string source)
@@ -60,13 +35,23 @@ namespace CoolkyIngredientParser
 
             if (noun != null)
             {
-                result.Add(noun[Case.Genitive, Number.Singular]);
-                result.Add(noun[Case.Genitive, Number.Plural]);
-                result.Add(noun[Case.Nominative, Number.Plural]);
-                return result;
+                if (noun[Case.Genitive, Number.Singular] != null)
+                {
+                    result.Add(noun[Case.Genitive, Number.Singular]);
+                }
+
+                if (noun[Case.Genitive, Number.Plural] != null)
+                {
+                    result.Add(noun[Case.Genitive, Number.Plural]);
+                }
+
+                if (noun[Case.Nominative, Number.Plural] != null)
+                {
+                    result.Add(noun[Case.Nominative, Number.Plural]);
+                }
             }
 
-            return null;
+            return result;
         }
     }
 }

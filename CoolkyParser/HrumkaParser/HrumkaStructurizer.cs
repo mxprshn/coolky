@@ -2,48 +2,31 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
+using CoolkyIngredientParser;
 
 namespace CoolkyRecipeParser.HrumkaParser
 {
     class HrumkaStructurizer : IStructurizer
     {
-        private int ConvertTime(string source)
+        public int StructurizeCookTime(string source)
         {
-            var regex = new Regex("\\d+");
-            var matches = regex.Matches(source);
-            var result = 0;
+            var match = Regex.Match(source, "((?<days>\\d+) д)? *((?<hours>\\d+) ч)? *((?<minutes>\\d+) мин)?");
 
-            for (var i = matches.Count - 1; i >= 0; --i)
-            {
-                var time = int.Parse(matches[i].Value);
+            var days = 0;
+            var hours = 0;
+            var minutes = 0;
 
-                switch (i)
-                {
-                    case 0:
-                        {
-                            result += time;
-                            break;
-                        }
-                    case 1:
-                        {
-                            result += 60 * time;
-                            break;
-                        }
-                    case 2:
-                        {
-                            result += 1440 * time;
-                            break;
-                        }
-                }
-            }
+            int.TryParse(match.Groups["days"].Value, out days);
+            int.TryParse(match.Groups["hours"].Value, out hours);
+            int.TryParse(match.Groups["minutes"].Value, out minutes);
 
-            return result;
+            return 1440 * days + 60 * hours + minutes;
         }
 
-        public Recipe Structurize(UnstructuredRecipe source)
-        {
-            return new Recipe(source.Id, source.DishName, ConvertTime(source.CookTime), source.Cuisine,
-                    source.Type, int.Parse(source.PortionAmount), source.PictureUrl, source.Ingredients, null, source.Steps, source.WebSite);
-        }
+        public IList<string> StructurizeIngredientText(IList<string> source) => source;
+
+        public int StructurizePortionAmount(string source) => int.Parse(source);
+
+        public IList<string> StructurizeSteps(IList<string> source) => source;
     }
 }

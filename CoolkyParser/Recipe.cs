@@ -31,6 +31,7 @@ namespace CoolkyRecipeParser
             CookTime = cookTime;
             Cuisine = cuisine;
             Type = type;
+            IngredientText = ingredientText;
             Ingredients = ingredients;
             Steps = steps;
             PortionAmount = portionAmount;

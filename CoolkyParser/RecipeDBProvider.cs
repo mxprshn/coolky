@@ -4,6 +4,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using CoolkyIngredientParser;
 using Realms;
 using Realms.Exceptions;
 
@@ -29,14 +30,37 @@ namespace CoolkyRecipeParser
             }            
         }
 
+        private static IList<Ingredient> GetTags(IList<string> ingredientTexts)
+        {
+            var result = new List<Ingredient>();
+            var realm = Realm.GetInstance(configuration);
+
+            foreach (var ingredientText in ingredientTexts)
+            {
+                foreach (var ingredient in realm.All<Ingredient>())
+                {
+                    if (ingredientText.ToLower().Contains(ingredient.Name))
+                    {
+                        result.Add(ingredient);
+                    }
+                }
+            }
+
+            return result;
+        }
+
         public static void Structurize(IStructurizer structurizer)
         {
             var source = Realm.GetInstance(tempConfiguration);
             var target = Realm.GetInstance(configuration);
 
-            foreach (var recipe in source.All<UnstructuredRecipe>())
+            foreach (var current in source.All<UnstructuredRecipe>())
             {
-                target.Write(() => target.Add(structurizer.Structurize(recipe)));
+                var recipe = new Recipe(current.Id, current.DishName, structurizer.StructurizeCookTime(current.CookTime), current.Cuisine,
+                            current.Type, structurizer.StructurizePortionAmount(current.PortionAmount), current.PictureUrl,
+                            structurizer.StructurizeIngredientText(current.Ingredients), GetTags(current.Ingredients),
+                            structurizer.StructurizeSteps(current.Steps), current.WebSite);
+                target.Write(() => target.Add(recipe));
             }
         }
     }

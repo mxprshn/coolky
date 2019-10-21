@@ -6,6 +6,9 @@ namespace CoolkyRecipeParser
 {
     public interface IStructurizer
     {
-        Recipe Structurize(UnstructuredRecipe source);
+        int StructurizeCookTime(string source);
+        int StructurizePortionAmount(string source);
+        IList<string> StructurizeIngredientText(IList<string> source);
+        IList<string> StructurizeSteps(IList<string> source);
     }
 }

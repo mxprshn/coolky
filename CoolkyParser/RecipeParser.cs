@@ -17,7 +17,7 @@ namespace CoolkyRecipeParser
         public async Task ParseAsync()
         {
             var logic = factory.GetLogic();
-            
+
             //foreach (var context in factory.GetContexts())
             //{
             //    await foreach (var page in context.GetPages())
