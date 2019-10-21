@@ -5,25 +5,26 @@ using CoolkyIngredientParser;
 
 namespace CoolkyRecipeParser
 {
-    public class UnstructuredRecipe : RealmObject
+    public class Recipe : RealmObject
     {
         [PrimaryKey]
         public string Id { get; set; }
 
         public string DishName { get; set; }
-        public string CookTime { get; set; }
+        public int CookTime { get; set; }
         public string Cuisine { get; set; }
         public string Type { get; set; }
-        public string PortionAmount { get; set; }
+        public int PortionAmount { get; set; }
         public string PictureUrl { get; set; }
         public string WebSite { get; set; }
-        public IList<string> Ingredients { get; }
+        public IList<string> IngredientText { get; }
+        public IList<Ingredient> Ingredients { get; }
         public IList<string> Steps { get; }
 
-        public UnstructuredRecipe() { }
+        public Recipe() { }
 
-        public UnstructuredRecipe(string id, string dishName, string cookTime, string cuisine, string type, string portionAmount,
-                string pictureUrl, IList<string> ingredients, IList<string> steps, string webSite)
+        public Recipe(string id, string dishName, int cookTime, string cuisine, string type, int portionAmount,
+                string pictureUrl, IList<string> ingredientText, IList<Ingredient> ingredients, IList<string> steps, string webSite)
         {
             Id = id;
             DishName = dishName;

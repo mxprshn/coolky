@@ -10,5 +10,6 @@ namespace CoolkyRecipeParser.HrumkaParser
         };
 
         public IParsingLogic GetLogic() => new HrumkaParsingLogic();
+        public IStructurizer GetStructurizer() => new HrumkaStructurizer();
     }
 }
