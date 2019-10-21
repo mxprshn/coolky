@@ -13,6 +13,7 @@ namespace CoolkyRecipeParser
         public string Cuisine { get; set; }
         public string Type { get; set; }
         public string PortionAmount { get; set; }
+        public string PictureUrl { get; set; }
         public string WebSite { get; set; }
         public IList<string> Ingredients { get; }
         public IList<string> Steps { get; }
@@ -20,7 +21,7 @@ namespace CoolkyRecipeParser
         public UnstructuredRecipe() { }
 
         public UnstructuredRecipe(string id, string dishName, string cookTime, string cuisine, string type, string portionAmount,
-                IList<string> ingredients, IList<string> steps, string webSite)
+                string pictureUrl, IList<string> ingredients, IList<string> steps, string webSite)
         {
             Id = id;
             DishName = dishName;
@@ -30,6 +31,7 @@ namespace CoolkyRecipeParser
             Ingredients = ingredients;
             Steps = steps;
             PortionAmount = portionAmount;
+            PictureUrl = pictureUrl;
             WebSite = webSite;
         }
     }

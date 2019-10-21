@@ -67,5 +67,11 @@ namespace CoolkyRecipeParser.HrumkaParser
             var portionAmountElement = page.QuerySelector("[id=\"r_kolvo_porcij\"]");
             return portionAmountElement.Text();
         }
+
+        public string GetPictureUrl(IDocument page)
+        {
+            var cookTimeElement = page.QuerySelector(".foto_gallery");
+            return cookTimeElement.GetAttribute("href");
+        }
     }
 }

@@ -14,6 +14,7 @@ namespace CoolkyRecipeParser
         public virtual string GetType(IParsingLogic logic, IDocument page) => logic.GetType(page);
         public virtual string GetCuisine(IParsingLogic logic, IDocument page) => logic.GetCuisine(page);
         public virtual string GetPortionAmount(IParsingLogic logic, IDocument page) => logic.GetPortionAmount(page);
+        public virtual string GetPictureUrl(IParsingLogic logic, IDocument page) => logic.GetPictureUrl(page);
         public virtual IList<string> GetIngredients(IParsingLogic logic, IDocument page) => logic.GetIngredients(page);
         public virtual IList<string> GetSteps(IParsingLogic logic, IDocument page) => logic.GetSteps(page);
 
