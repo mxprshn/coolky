@@ -1,0 +1,17 @@
+<resources>
+    <string name="app_name">Coolky</string>
+    <string name="ingredientsText">Ингредиенты</string>
+    <string name="cuisineText">Кухня</string>
+    <string name="typeOfDishText">Тип блюда</string>
+    <string name="recipesSearchText">Поиск рецептов</string>
+    <string name="cookingTimeText">Время приготовления до</string>
+    <string name="recommended">Рекомендуемое</string>
+    <string name="myRecipes">Мои рецепты</string>
+    <string name="favorites">Избранное</string>
+    <string name="settings">Настройки</string>
+    <string name="myRecipesInDeveloping">Мои рецепты. В разработке</string>
+    <string name="recommendedInDeveloping">Рекомендуемое. В разработке</string>
+    <string name="recipesSearchInDeveloping">Поиск рецептов. В разработке</string>
+    <string name="settingsInDeveloping">Настройки. В разработке</string>
+    <string name="favoritesInDeveloping">Избранное. В разработке</string>
+</resources>
