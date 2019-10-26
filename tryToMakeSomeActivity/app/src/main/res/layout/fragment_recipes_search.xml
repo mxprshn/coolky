@@ -23,10 +23,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:layout_marginEnd="15dp"
         android:src="@drawable/transparent_plus"
         app:backgroundTint="#009688"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toEndOf="@+id/ingredients"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -74,7 +75,7 @@
         android:layout_marginBottom="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"  />
+        app:layout_constraintBottom_toBottomOf="parent" />
 
     <Button
         android:id="@+id/chooseCuisine"
