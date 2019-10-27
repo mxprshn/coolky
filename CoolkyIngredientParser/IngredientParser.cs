@@ -17,7 +17,7 @@ namespace CoolkyIngredientParser
         public async Task ParseAsync()
         {
             var logic = factory.GetLogic();
-            var list = new List<Ingredient>();
+            var list = new List<RawIngredient>();
 
             foreach (var context in factory.GetContexts())
             {
@@ -25,7 +25,7 @@ namespace CoolkyIngredientParser
                 {
                     foreach (var name in context.GetNames(logic, page))
                     {
-                        var ingredient = new Ingredient(context.GetType(logic, page), name);
+                        var ingredient = new RawIngredient(context.GetType(logic, page), name);
                         ingredient.Print();
                         await IngredientDBProvider.AddIngredient(ingredient);
                     }                    

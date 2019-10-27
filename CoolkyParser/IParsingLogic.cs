@@ -7,12 +7,12 @@ namespace CoolkyRecipeParser
     {
         string GetId(IDocument page);
         string GetDishName(IDocument page);
-        string GetCookTime(IDocument page);
+        int GetCookTime(IDocument page);
         string GetType(IDocument page);
         string GetCuisine(IDocument page);
-        string GetPortionAmount(IDocument page);
+        int GetPortionAmount(IDocument page);
         string GetPictureUrl(IDocument page);
         IList<string> GetSteps(IDocument page);
-        IList<string> GetIngredients(IDocument page);
+        IList<(string name, string amount)> GetIngredients(IDocument page);
     }
 }

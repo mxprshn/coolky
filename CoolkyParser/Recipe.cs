@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Realms;
-using CoolkyIngredientParser;
 
 namespace CoolkyRecipeParser
 {
@@ -17,22 +17,18 @@ namespace CoolkyRecipeParser
         public int PortionAmount { get; set; }
         public string PictureUrl { get; set; }
         public string WebSite { get; set; }
-        public IList<string> IngredientText { get; }
-        public IList<Ingredient> Ingredients { get; }
         public IList<string> Steps { get; }
 
         public Recipe() { }
 
         public Recipe(string id, string dishName, int cookTime, string cuisine, string type, int portionAmount,
-                string pictureUrl, IList<string> ingredientText, IList<Ingredient> ingredients, IList<string> steps, string webSite)
+                string pictureUrl, string webSite, IList<string> steps)
         {
             Id = id;
             DishName = dishName;
             CookTime = cookTime;
             Cuisine = cuisine;
             Type = type;
-            IngredientText = ingredientText;
-            Ingredients = ingredients;
             Steps = steps;
             PortionAmount = portionAmount;
             PictureUrl = pictureUrl;

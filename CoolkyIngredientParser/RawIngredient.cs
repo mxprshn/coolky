@@ -8,15 +8,15 @@ using System.Text.RegularExpressions;
 
 namespace CoolkyIngredientParser
 {
-    public class Ingredient : RealmObject
+    public class RawIngredient : RealmObject
     {
         public string Type { get; set; }
         public string Name { get; set; }
         public IList<string> Synonyms { get; }
 
-        public Ingredient() { }
+        public RawIngredient() { }
 
-        public Ingredient(string type, string name)
+        public RawIngredient(string type, string name)
         {
             Type = type;
             Name = name;

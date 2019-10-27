@@ -1,10 +1,32 @@
 ﻿using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using AngleSharp.Dom;
 
 namespace CoolkyRecipeParser.HrumkaParser
 {
     class HrumkaParsingLogic : IParsingLogic
     {
+        private int ConvertTime(string source)
+        {
+            var match = Regex.Match(source, "((?<days>\\d+) д)? *((?<hours>\\d+) ч)? *((?<minutes>\\d+) мин)?");
+
+            var days = 0;
+            var hours = 0;
+            var minutes = 0;
+
+            int.TryParse(match.Groups["days"].Value, out days);
+            int.TryParse(match.Groups["hours"].Value, out hours);
+            int.TryParse(match.Groups["minutes"].Value, out minutes);
+
+            return 1440 * days + 60 * hours + minutes;
+        }
+
+        private (string, string) SplitIngredient(string source)
+        {
+            var match = Regex.Match(source, "(?<name>.+) - (?<amount>.+)");
+            return (match.Groups["name"].Value.ToLower(), match.Groups["amount"].Value.TrimStart());
+        }
+
         public string GetId(IDocument page)
         {
             var idElement = page.QuerySelector("[data-cid]");
@@ -17,22 +39,23 @@ namespace CoolkyRecipeParser.HrumkaParser
             return nameElement.Text();
         }
 
-        public string GetCookTime(IDocument page)
+        public int GetCookTime(IDocument page)
         {
             var cookTimeElement = page.QuerySelector(".cooktime");
-            return cookTimeElement.Text().TrimStart(' ');
+            return ConvertTime(cookTimeElement.Text().TrimStart(' '));
         }
 
         public string GetCuisine(IDocument page) => null;
 
-        public IList<string> GetIngredients(IDocument page)
+        public IList<(string name, string amount)> GetIngredients(IDocument page)
         {
             var ingredientElements = page.QuerySelectorAll("[itemprop=\"recipeIngredient\"]");
-            var result = new List<string>();
+
+            var result = new List<(string name, string amount)>();
 
             foreach (var ingredientNameElement in ingredientElements)
             {
-                result.Add(ingredientNameElement.GetAttribute("content"));
+                result.Add(SplitIngredient(ingredientNameElement.GetAttribute("content")));
             }
 
             return result;
@@ -62,10 +85,10 @@ namespace CoolkyRecipeParser.HrumkaParser
 
         public string GetType(IDocument page) => null;
 
-        public string GetPortionAmount(IDocument page)
+        public int GetPortionAmount(IDocument page)
         {
             var portionAmountElement = page.QuerySelector("[id=\"r_kolvo_porcij\"]");
-            return portionAmountElement.Text();
+            return int.Parse(portionAmountElement.Text());
         }
 
         public string GetPictureUrl(IDocument page)
