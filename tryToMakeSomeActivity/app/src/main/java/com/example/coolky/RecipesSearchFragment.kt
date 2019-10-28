@@ -1,6 +1,7 @@
 package com.example.coolky
 
 import android.app.AlertDialog
+import android.content.ClipData
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -26,22 +27,69 @@ public class RecipesSearchFragment : Fragment() {
     public override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        chooseTypeOfDish.setOnClickListener(this::typeOfDishClickHandler)
+        chooseTypeOfDish.setOnClickListener(this::chooseTypeOfDishClickHandler)
+        chooseCuisine.setOnClickListener(this::chooseCuisineClickHandler)
     }
 
-    private fun typeOfDishClickHandler(typeOfDish: View) {
-       if (typeOfDish is Button) {
+    private fun chooseTypeOfDishClickHandler(chooseTypeOfDish: View) {
+       if (chooseTypeOfDish is Button) {
+            val typesOfDishes = resources.getStringArray(R.array.typesOfDishes)
             val builder = AlertDialog.Builder(this.context)
+
             builder.setTitle(R.string.chooseTypeOfDishText)
-                .setItems(R.array.typesOfDishes, DialogInterface.OnClickListener { dialog, which ->
-                    
-                        // The 'which' argument contains the index position
-                        // of the selected item
+                .setMultiChoiceItems(R.array.typesOfDishes, null,
+                    DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
+                        if (isChecked) {
+                            // If the user checked the item, add it to the selected items
+                            selectedTypesOfDishes.add(typesOfDishes[which])
+                        } else if (selectedTypesOfDishes.contains(typesOfDishes[which])) {
+                            // Else, if the item is already in the array, remove it
+                            selectedTypesOfDishes.remove(typesOfDishes[which])
+                        }
+                    })
+                // Set the action buttons
+                .setPositiveButton(R.string.ok,
+                    DialogInterface.OnClickListener { dialog, id ->
+                        // User clicked OK, so save the selectedItems results somewhere
+                        // or return them to the component that opened the dialog
+                        // ...
                     })
                 .create()
                 .show()
        }
     }
 
-    private var typeOfDish: String? = null
+    private fun chooseCuisineClickHandler(chooseTypeOfCuisine: View)
+    {
+        if (chooseTypeOfCuisine is Button) {
+            val cuisines = resources.getStringArray(R.array.cuisines)
+            val builder = AlertDialog.Builder(this.context)
+
+            builder.setTitle(R.string.chooseCuisineText)
+                .setMultiChoiceItems(R.array.cuisines, null,
+                    DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
+                        if (isChecked) {
+                            // If the user checked the item, add it to the selected items
+                            selectedCuisines.add(cuisines[which])
+                        } else if (selectedCuisines.contains(cuisines[which])) {
+                            // Else, if the item is already in the array, remove it
+                            selectedCuisines.remove(cuisines[which])
+                        }
+                    })
+                // Set the action buttons
+                .setPositiveButton(R.string.ok,
+                    DialogInterface.OnClickListener { dialog, id ->
+                        // User clicked OK, so save the selectedItems results somewhere
+                        // or return them to the component that opened the dialog
+                        // ...
+                    })
+                .create()
+                .show()
+        }
+    }
+
+    // Where we track the selected types of dishes
+    public val selectedTypesOfDishes: MutableList<String> = mutableListOf()
+    // Where we track the selected cuisines
+    public val selectedCuisines: MutableList<String> = mutableListOf()
 }
