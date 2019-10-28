@@ -17,4 +17,18 @@
     <string name="recipesSearchTextOnButton">поиск рецептов</string>
     <string name="choose">выбрать</string>
     <string name="min">мин</string>
+    <string-array name="typesOfDishes">
+        <item>Любое</item>
+        <item>Первое</item>
+        <item>Второе</item>
+        <item>Салаты</item>
+        <item>Закуски</item>
+        <item>Выпечка</item>
+        <item>Десерты</item>
+        <item>Консервирование</item>
+        <item>Соусы</item>
+        <item>Напитки</item>
+        <item>Мультиварка</item>
+    </string-array>
+    <string name="chooseTypeOfDishText">Выберите тип блюда</string>
 </resources>
