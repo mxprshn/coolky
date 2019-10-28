@@ -7,16 +7,111 @@
     tools:context=".RecipesSearchFragment">
 
     <TextView
-        android:id="@+id/recipesSearchText"
-        android:layout_width="match_parent"
+        android:id="@+id/ingredients"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="252dp"
-        android:gravity="center"
-        android:text="@string/recipesSearchInDeveloping"
-        android:textSize="30dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
+        android:layout_marginStart="22dp"
+        android:layout_marginTop="25dp"
+        android:text="@string/ingredientsText"
+        android:textSize="21sp"
+        android:textStyle="bold"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/addIngredient"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:src="@drawable/transparent_plus"
+        app:backgroundTint="#009688"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.8"
+        app:layout_constraintStart_toEndOf="@+id/ingredients"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/cookingTime"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cookingTimeText"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintLeft_toLeftOf="@id/ingredients"
+        app:layout_constraintTop_toBottomOf="@+id/ingredients"
+        app:layout_constraintVertical_bias="0.3" />
+
+    <TextView
+        android:id="@+id/cuisine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/cuisineText"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/typeOfDish"
+        app:layout_constraintLeft_toLeftOf="@id/ingredients"
+        app:layout_constraintTop_toBottomOf="@id/cookingTime"
+        app:layout_constraintVertical_bias="0.2" />
+
+    <TextView
+        android:id="@+id/typeOfDish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/typeOfDishText"
+        android:textSize="21sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/cuisine"
+        app:layout_constraintLeft_toLeftOf="@id/ingredients"
+        app:layout_constraintBottom_toTopOf="@id/recipesSearchButton" />
+
+    <Button
+        android:id="@+id/recipesSearchButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:text="@string/recipesSearchTextOnButton"
+        android:textSize="21sp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent" />
+
+    <Button
+        android:id="@+id/chooseCuisine"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/cuisine"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toEndOf="@+id/cuisine"
+        app:layout_constraintTop_toTopOf="@+id/cuisine" />
+
+    <Button
+        android:id="@+id/chooseTypeOfDish"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/choose"
+        android:textSize="16sp"
+        app:layout_constraintBottom_toBottomOf="@+id/typeOfDish"
+        app:layout_constraintEnd_toEndOf="@+id/chooseCuisine"
+        app:layout_constraintHorizontal_bias="0.75"
+        app:layout_constraintStart_toStartOf="@+id/chooseCuisine"
+        app:layout_constraintTop_toTopOf="@+id/typeOfDish" />
+
+    <EditText
+        android:id="@+id/cookingTimeMinutes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="@string/min"
+        android:inputType="number"
+        android:maxLength="7"
+        app:layout_constraintBottom_toBottomOf="@id/cookingTime"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.35"
+        app:layout_constraintStart_toEndOf="@+id/cookingTime"
+        app:layout_constraintTop_toTopOf="@+id/cookingTime" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
