@@ -6,6 +6,5 @@ namespace CoolkyRecipeParser
     {
         List<ParsingContext> GetContexts();
         IParsingLogic GetLogic();
-        IStructurizer GetStructurizer();
     }
 }

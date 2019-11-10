@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 
 namespace CoolkyRecipeParser
 {
@@ -19,22 +20,29 @@ namespace CoolkyRecipeParser
             {
                 await foreach (var page in context.GetPages())
                 {
-                    var ingredients = context.GetIngredients(logic, page);
-                    var id = context.GetId(logic, page);
-                    
-                    // сначала проверить на наличие, а не парсить все
-                    await RecipeDBProvider.AddRecipe(id, context.GetDishName(logic, page), context.GetCookTime(logic, page), context.GetCuisine(logic, page),
-                            context.GetType(logic, page), context.GetPortionAmount(logic, page), context.GetPictureUrl(logic, page), context.GetSteps(logic, page), context.GetWebSite());
-
-                    foreach (var ingredient in ingredients)
+                    try
                     {
-                        if (!RecipeDBProvider.IngredientExists(ingredient.name))
-                        {
-                            await RecipeDBProvider.AddIngredient(ingredient.name);
-                        }
+                        var ingredients = context.GetIngredients(logic, page);
+                        var id = context.GetId(logic, page);
 
-                        await RecipeDBProvider.AddRecipeIngredient(id, RecipeDBProvider.FindIngredientIdByName(ingredient.name), ingredient.amount);
-                    }                    
+                        await RecipeDBProvider.AddRecipe(id, context.GetDishName(logic, page), context.GetCookTime(logic, page), context.GetCuisine(logic, page),
+                                context.GetType(logic, page), context.GetPortionAmount(logic, page), context.GetPictureUrl(logic, page), context.GetSteps(logic, page), context.GetWebSite());
+
+                        foreach (var ingredient in ingredients)
+                        {
+                            if (!RecipeDBProvider.IngredientExists(ingredient.name))
+                            {
+                                await RecipeDBProvider.AddIngredient(ingredient.name);
+                            }
+
+                            await RecipeDBProvider.AddRecipeIngredient(id, RecipeDBProvider.FindIngredientIdByName(ingredient.name), ingredient.amount);
+                        }
+                    }
+                    catch (Exception exc)
+                    {
+                        Console.WriteLine($"Error occured during page parsing: {exc.Message}");
+                        continue;
+                    }
                 }
             }
         }

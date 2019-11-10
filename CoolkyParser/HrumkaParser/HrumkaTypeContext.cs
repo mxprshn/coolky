@@ -46,7 +46,19 @@ namespace CoolkyRecipeParser.HrumkaParser
                     Console.WriteLine($"Parsing recipe {counter} in {Thread.CurrentThread.ManagedThreadId} thread.");
                     ++counter;
                     var recipeLink = recipeElement.GetAttribute("href");
-                    yield return await HtmlLoader.LoadAsync(baseUrl + recipeLink);
+                    IDocument page = null;
+
+                    try
+                    {
+                        page = await HtmlLoader.LoadAsync(baseUrl + recipeLink);
+                    }
+                    catch (Exception exc)
+                    {
+                        Console.WriteLine($"Error occured during downloading {recipeLink}.");
+                        continue;
+                    }
+
+                    yield return page;
                 }
             }
         }

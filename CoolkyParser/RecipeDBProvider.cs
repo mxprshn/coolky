@@ -27,11 +27,11 @@ namespace CoolkyRecipeParser
 
         public static async Task AddRecipeIngredient(string recipeId, string ingredientId, string amount)
         {
-            var database = Realm.GetInstance(config);
+            var realm = Realm.GetInstance(config);
 
-            database.Write(() =>
+            await realm.WriteAsync(tempRealm =>
             {
-                database.Add(new RecipeIngredient(recipeId, ingredientId, amount));
+                tempRealm.Add(new RecipeIngredient(recipeId, ingredientId, amount));
             });
         }
 
@@ -39,10 +39,10 @@ namespace CoolkyRecipeParser
         public static async Task AddRecipe(string id, string dishName, int cookTime, string cuisine, string type, int portionAmount,
                 string pictureUrl, IList<string> steps, string webSite)
         {
-            var database = Realm.GetInstance(config);
-            database.Write(() =>
+            var realm = Realm.GetInstance(config);
+            await realm.WriteAsync(tempRealm =>
             {
-                var existingRecipe = database.Find<Recipe>(id);
+                var existingRecipe = tempRealm.Find<Recipe>(id);
 
                 if (existingRecipe != null)
                 {
@@ -58,7 +58,7 @@ namespace CoolkyRecipeParser
                 }
                 else
                 {
-                    database.Add(new Recipe(id, dishName, cookTime, cuisine, type, portionAmount, pictureUrl, webSite, steps));
+                    tempRealm.Add(new Recipe(id, dishName, cookTime, cuisine, type, portionAmount, pictureUrl, webSite, steps));
                 }
             });      
         }
@@ -66,11 +66,10 @@ namespace CoolkyRecipeParser
         // правильно ли сделано асинхронно?
         public static async Task AddIngredient(string name)
         {
-            var database = Realm.GetInstance(config);
-            //var type = await CoolkyIngredientParser.IngredientDBProvider.FindType(name);
-            database.Write(() =>
+            var realm = Realm.GetInstance(config);
+            await realm.WriteAsync(tempRealm =>
             {
-                database.Add(new Ingredient { Name = name });
+                tempRealm.Add(new Ingredient { Name = name });
             });
         }
     }
