@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
+import com.example.coolky.recipepage.RecipeFragment
 import kotlinx.android.synthetic.main.activity_main.*
 public class MainActivity : AppCompatActivity() {
 
@@ -14,8 +15,11 @@ public class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         bottomNavigation.selectedItemId = R.id.recipesSearch
-        recipesSearchFragment = RecipesSearchFragment()
-        changeFragment(recipesSearchFragment)
+
+//        recipesSearchFragment = RecipesSearchFragment()
+//        changeFragment(recipesSearchFragment)
+          recipeFragment = RecipeFragment()
+          changeFragment(recipeFragment)
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             bottomNavigationOnItemSelectedHandler(item)
@@ -67,6 +71,7 @@ public class MainActivity : AppCompatActivity() {
     private lateinit var recommendedFragment: RecommendedFragment
     private lateinit var myRecipesFragment: MyRecipesFragment
     private lateinit var settingsFragment: SettingsFragment
+    private lateinit var recipeFragment: RecipeFragment
     private lateinit var recipesSearchFragment: RecipesSearchFragment
     private lateinit var favoritesFragment: FavoritesFragment
 }

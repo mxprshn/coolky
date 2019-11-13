@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="recipe_pic_height">300dp</dimen>
+    <dimen name="recipe_fragment_margin">12dp</dimen>
+    <dimen name="dish_name_text_size">28sp</dimen>
+</resources>

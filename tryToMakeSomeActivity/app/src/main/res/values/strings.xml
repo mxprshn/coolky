@@ -46,4 +46,7 @@
     </string-array>
 
     <string name="chooseCuisineText">Выберите кухню</string>
+    <string name="ingredientsTabHeaderText">Ингредиенты</string>
+    <string name="stepsTabHeaderText">Приготовление</string>
+    <string name="portionsText">порций</string>
 </resources>
