@@ -16,17 +16,17 @@ import kotlinx.android.synthetic.main.view_holder_recipe_ingredient.view.*
 //        (collection, true)
 class RecipeIngredientListAdapter : RecyclerView.Adapter<RecipeIngredientListAdapter.RecipeIngredientViewHolder>()
 {
-    override fun getItemCount() = 15
+    override fun getItemCount() = 30
 
     override fun onBindViewHolder(holder: RecipeIngredientViewHolder, position: Int)
     {
         holder.ingredientName.text = "Салями ${position.toString()}"
-        holder.ingredientName.text = "${position.toString()}00 гр"
+        holder.ingredientAmount.text = "${position.toString()}00 гр"
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeIngredientViewHolder
     {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.fragment_recipe_ingredient_list, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.view_holder_recipe_ingredient, parent, false)
         return RecipeIngredientViewHolder(view)
     }
 
