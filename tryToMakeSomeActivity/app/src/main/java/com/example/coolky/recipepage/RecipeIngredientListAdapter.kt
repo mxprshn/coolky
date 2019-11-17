@@ -16,7 +16,7 @@ import kotlinx.android.synthetic.main.view_holder_recipe_ingredient.view.*
 //        (collection, true)
 class RecipeIngredientListAdapter : RecyclerView.Adapter<RecipeIngredientListAdapter.RecipeIngredientViewHolder>()
 {
-    override fun getItemCount() = 30
+    override fun getItemCount() = 10
 
     override fun onBindViewHolder(holder: RecipeIngredientViewHolder, position: Int)
     {
