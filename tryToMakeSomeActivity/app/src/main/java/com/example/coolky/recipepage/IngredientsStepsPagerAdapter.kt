@@ -10,13 +10,21 @@ class IngredientsStepsPagerAdapter(fragmentManager: FragmentManager) : FragmentP
 {
     override fun getItem(position: Int): Fragment
     {
-        return RecipeIngredientListFragment()
+        return when (position)
+        {
+            0 -> RecipeIngredientListFragment()
+            else -> RecipeStepListFragment()
+        }
     }
 
-    override fun getCount() = 1
+    override fun getCount() = 2
 
     override fun getPageTitle(position: Int): CharSequence?
     {
-        return "Ингредиенты"
+        return when (position)
+        {
+            0 -> "Ингредиенты"
+            else -> "Приготовление"
+        }
     }
 }
