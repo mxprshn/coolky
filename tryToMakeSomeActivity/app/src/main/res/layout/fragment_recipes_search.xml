@@ -114,18 +114,6 @@
         app:layout_constraintStart_toEndOf="@+id/cookingTime"
         app:layout_constraintTop_toTopOf="@+id/cookingTime" />
 
-    <!-- <?xml version="1.0" encoding="utf-8"?> -->
-
-   <!-- <com.google.android.material.chip.Chip
-        android:id="@+id/tagItem"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:closeIcon="@drawable/ic_close_black_24dp"
-        android:text="ololo"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </com.google.android.material.chip.Chip> -->
-
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
@@ -137,7 +125,7 @@
         app:layout_constraintTop_toBottomOf="@id/cuisine">
 
         <com.google.android.material.chip.ChipGroup
-            android:id="@+id/tagGroup"
+            android:id="@+id/tagGroupTypesOfDishes"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

@@ -1,7 +1,6 @@
 package com.example.coolky
 
 import android.app.AlertDialog
-import android.content.ClipData
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -17,6 +16,8 @@ import kotlinx.android.synthetic.main.tag_item.*
 
 /**
  * A simple [Fragment] subclass.
+ *
+ * Lets the user choose ingredients, cuisines, types of dishes and cooking time.
  */
 public class RecipesSearchFragment : Fragment() {
     public override fun onCreateView(
@@ -34,6 +35,9 @@ public class RecipesSearchFragment : Fragment() {
         chooseCuisine.setOnClickListener(this::chooseCuisineClickHandler)
     }
 
+    /**
+     * Handles "type of dish click" event.
+     */
     private fun chooseTypeOfDishClickHandler(chooseTypeOfDish: View) {
        if (chooseTypeOfDish is Button) {
             val typesOfDishes = resources.getStringArray(R.array.typesOfDishes)
@@ -45,16 +49,10 @@ public class RecipesSearchFragment : Fragment() {
                         if (isChecked) {
                             selectedTypesOfDishes.add(typesOfDishes[which])
 
-                            val tagItem = Chip(tagGroup.context)
-                            // И ТУТ КАК БЫ ВОЗНИКАЕТ ИСКЛЮЧЕНИЕ Invocation target exception, в следующей строчке
+                            var layoutInflater = LayoutInflater.from(context)
+                            val tag = layoutInflater.inflate(R.layout.tag_item, null, false)
+                            tagGroupTypesOfDishes.addView(tag)
 
-                            if (tagItem == null)
-                            {
-                                Log.i("lala", "NPE")
-                            }
-
-                            tagItem.setText(typesOfDishes[which]) // = typesOfDishes[which] // падает тут :(
-                            tagGroup.addView(tagItem)
                         } else if (selectedTypesOfDishes.contains(typesOfDishes[which])) {
                             selectedTypesOfDishes.remove(typesOfDishes[which])
                         }
