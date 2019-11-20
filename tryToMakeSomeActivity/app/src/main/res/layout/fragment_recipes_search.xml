@@ -61,21 +61,21 @@
         android:text="@string/typeOfDishText"
         android:textSize="21sp"
         android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/cuisine"
+        app:layout_constraintBottom_toTopOf="@id/recipesSearchButton"
         app:layout_constraintLeft_toLeftOf="@id/ingredients"
-        app:layout_constraintBottom_toTopOf="@id/recipesSearchButton" />
+        app:layout_constraintTop_toBottomOf="@id/cuisine" />
 
     <Button
         android:id="@+id/recipesSearchButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:gravity="center"
         android:text="@string/recipesSearchTextOnButton"
         android:textSize="21sp"
-        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <Button
         android:id="@+id/chooseCuisine"
@@ -113,5 +113,33 @@
         app:layout_constraintHorizontal_bias="0.35"
         app:layout_constraintStart_toEndOf="@+id/cookingTime"
         app:layout_constraintTop_toTopOf="@+id/cookingTime" />
+
+    <!-- <?xml version="1.0" encoding="utf-8"?> -->
+
+   <!-- <com.google.android.material.chip.Chip
+        android:id="@+id/tagItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:closeIcon="@drawable/ic_close_black_24dp"
+        android:text="ololo"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+    </com.google.android.material.chip.Chip> -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="20dp"
+        android:orientation="horizontal"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/cuisine">
+
+        <com.google.android.material.chip.ChipGroup
+            android:id="@+id/tagGroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

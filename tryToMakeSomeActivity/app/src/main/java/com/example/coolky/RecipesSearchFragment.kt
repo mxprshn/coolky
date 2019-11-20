@@ -10,7 +10,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import kotlinx.android.synthetic.main.fragment_recipes_search.*
+import kotlinx.android.synthetic.main.tag_item.*
 
 /**
  * A simple [Fragment] subclass.
@@ -40,19 +43,24 @@ public class RecipesSearchFragment : Fragment() {
                 .setMultiChoiceItems(R.array.typesOfDishes, null,
                     DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
                         if (isChecked) {
-                            // If the user checked the item, add it to the selected items
                             selectedTypesOfDishes.add(typesOfDishes[which])
+
+                            val tagItem = Chip(tagGroup.context)
+                            // И ТУТ КАК БЫ ВОЗНИКАЕТ ИСКЛЮЧЕНИЕ Invocation target exception, в следующей строчке
+
+                            if (tagItem == null)
+                            {
+                                Log.i("lala", "NPE")
+                            }
+
+                            tagItem.setText(typesOfDishes[which]) // = typesOfDishes[which] // падает тут :(
+                            tagGroup.addView(tagItem)
                         } else if (selectedTypesOfDishes.contains(typesOfDishes[which])) {
-                            // Else, if the item is already in the array, remove it
                             selectedTypesOfDishes.remove(typesOfDishes[which])
                         }
                     })
-                // Set the action buttons
                 .setPositiveButton(R.string.ok,
                     DialogInterface.OnClickListener { dialog, id ->
-                        // User clicked OK, so save the selectedItems results somewhere
-                        // or return them to the component that opened the dialog
-                        // ...
                     })
                 .create()
                 .show()
@@ -69,19 +77,13 @@ public class RecipesSearchFragment : Fragment() {
                 .setMultiChoiceItems(R.array.cuisines, null,
                     DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
                         if (isChecked) {
-                            // If the user checked the item, add it to the selected items
                             selectedCuisines.add(cuisines[which])
                         } else if (selectedCuisines.contains(cuisines[which])) {
-                            // Else, if the item is already in the array, remove it
                             selectedCuisines.remove(cuisines[which])
                         }
                     })
-                // Set the action buttons
                 .setPositiveButton(R.string.ok,
                     DialogInterface.OnClickListener { dialog, id ->
-                        // User clicked OK, so save the selectedItems results somewhere
-                        // or return them to the component that opened the dialog
-                        // ...
                     })
                 .create()
                 .show()
