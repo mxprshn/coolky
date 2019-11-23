@@ -6,22 +6,21 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.coolky.R
+import com.example.coolky.database.DBProvider
 import com.example.coolky.database.models.RecipeIngredient
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.view_holder_recipe_ingredient.view.*
 
-//class RecipeIngredientListAdapter(collection: OrderedRealmCollection<RecipeIngredient>) : RealmRecyclerViewAdapter<RecipeIngredient, RecipeIngredientListAdapter.RecipeIngredientViewHolder>
-//        (collection, true)
-class RecipeIngredientListAdapter : RecyclerView.Adapter<RecipeIngredientListAdapter.RecipeIngredientViewHolder>()
+class RecipeIngredientListAdapter(collection: OrderedRealmCollection<RecipeIngredient>?) : RealmRecyclerViewAdapter<RecipeIngredient, RecipeIngredientListAdapter.RecipeIngredientViewHolder>
+        (collection, true)
 {
-    override fun getItemCount() = 10
-
     override fun onBindViewHolder(holder: RecipeIngredientViewHolder, position: Int)
     {
-        holder.ingredientName.text = "Салями ${position.toString()}"
-        holder.ingredientAmount.text = "${position.toString()}00 гр"
+        val recipeIngredient = getItem(position)
+        holder.ingredientName.text = DBProvider.findIngredientById(recipeIngredient!!.IngredientId!!)!!.Name
+        holder.ingredientAmount.text = recipeIngredient.Amount
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeIngredientViewHolder

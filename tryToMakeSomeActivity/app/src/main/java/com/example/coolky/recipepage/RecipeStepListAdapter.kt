@@ -12,27 +12,13 @@ import io.realm.RealmRecyclerViewAdapter
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.view_holder_recipe_ingredient.view.*
 
-//class RecipeIngredientListAdapter(collection: OrderedRealmCollection<RecipeIngredient>) : RealmRecyclerViewAdapter<RecipeIngredient, RecipeIngredientListAdapter.RecipeIngredientViewHolder>
-//        (collection, true)
-class RecipeStepListAdapter : RecyclerView.Adapter<RecipeStepListAdapter.RecipeStepViewHolder>()
+class RecipeStepListAdapter(private val steps: List<String>?) : RecyclerView.Adapter<RecipeStepListAdapter.RecipeStepViewHolder>()
 {
-    override fun getItemCount() = 10
+    override fun getItemCount() = steps!!.size
 
     override fun onBindViewHolder(holder: RecipeStepViewHolder, position: Int)
     {
-        holder.stepText.text =  when
-        {
-            position % 2 == 0 -> "Сперва займитесь соусом. Традиционно для пиццы используют томатный соус," +
-                    " приготовленный из свежих или из консервированных томатов, но так как сезон свежих томатов" +
-                    " слишком короткий, а консервированные можно найти не везде, предлагаю приготовить простой, но" +
-                    " вкусный вариант соуса для пиццы. Возьмите 1 ст. л. с горкой хорошей (качественной и вкусной!)" +
-                    " томатной пасты, добавьте к ней 2-3 ст. л. воды (кипяченой), щепотку сахара, соли и немного" +
-                    " сушенных трав."
-
-            else -> "И перемешайте. По консистенции соус должен быть близок к кетчупу, поэтому если нужно," +
-                    " то можете добавить немного больше или меньше воды, в зависимости от густоты пасты." +
-                    " Вот и всё, соус готов."
-        }
+        holder.stepText.text = steps!![position]
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecipeStepViewHolder

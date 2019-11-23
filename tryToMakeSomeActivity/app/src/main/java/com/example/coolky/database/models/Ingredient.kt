@@ -9,6 +9,4 @@ open class Ingredient : RealmObject()
     public var Id: String? = null
 
     public var Name: String? = null
-    public var Type: String? = null
-
 }

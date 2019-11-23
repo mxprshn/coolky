@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.example.coolky.R
@@ -12,12 +13,24 @@ import kotlinx.android.synthetic.main.fragment_recipe.*
 
 class RecipeFragment : Fragment()
 {
-    private lateinit var ingredientsStepsPagerAdapter: IngredientsStepsPagerAdapter
+    private lateinit var model: RecipeInfoViewModel
+
+    override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory
+    {
+        return RecipeInfoViewModel.Factory("013161")
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?)
+    {
+        super.onCreate(savedInstanceState)
+
+        model = ViewModelProvider(this)[RecipeInfoViewModel::class.java]
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?): View?
+            savedInstanceState: Bundle?): View?
     {
-        // Inflate the layout for this fragment
+        super.onCreateView(inflater, container, savedInstanceState)
         return inflater.inflate(R.layout.fragment_recipe, container, false)
     }
 
@@ -26,5 +39,9 @@ class RecipeFragment : Fragment()
         super.onViewCreated(view, savedInstanceState)
         ingredientsStepsViewPager.adapter = IngredientsStepsPagerAdapter(childFragmentManager)
         ingredientsStepsTabLayout.setupWithViewPager(ingredientsStepsViewPager)
+
+        dishNameTextView.text = model.Name
+        portionsAmountTextView.text = model.PortionAmount.toString()
+        timeAmountTextView.text = model.CookTime.toString()
     }
 }
