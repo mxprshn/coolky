@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.viewpager.widget.ViewPager
 import com.example.coolky.R
+import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_recipe.*
 
 class RecipeFragment : Fragment()
@@ -17,7 +18,7 @@ class RecipeFragment : Fragment()
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory
     {
-        return RecipeInfoViewModel.Factory("013161")
+        return RecipeInfoViewModel.Factory("026008")
     }
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -40,8 +41,10 @@ class RecipeFragment : Fragment()
         ingredientsStepsViewPager.adapter = IngredientsStepsPagerAdapter(childFragmentManager)
         ingredientsStepsTabLayout.setupWithViewPager(ingredientsStepsViewPager)
 
+        Picasso.get().isLoggingEnabled = true
         dishNameTextView.text = model.Name
         portionsAmountTextView.text = model.PortionAmount.toString()
         timeAmountTextView.text = model.CookTime.toString()
+        Picasso.get().load("https:" + model.PictureUrl).into(dishImageView)
     }
 }
