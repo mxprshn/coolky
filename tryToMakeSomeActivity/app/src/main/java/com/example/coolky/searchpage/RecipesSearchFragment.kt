@@ -1,18 +1,16 @@
-package com.example.coolky
+package com.example.coolky.searchpage
 
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import com.google.android.material.chip.Chip
-import com.google.android.material.chip.ChipGroup
+import androidx.lifecycle.ViewModelProvider
+import com.example.coolky.R
 import kotlinx.android.synthetic.main.fragment_recipes_search.*
-import kotlinx.android.synthetic.main.tag_item.*
 
 /**
  * A simple [Fragment] subclass.
@@ -20,11 +18,15 @@ import kotlinx.android.synthetic.main.tag_item.*
  * Lets the user choose ingredients, cuisines, types of dishes and cooking time.
  */
 public class RecipesSearchFragment : Fragment() {
+
+    private lateinit var model: RecipeSearchViewModel
+
     public override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+        model = ViewModelProvider(this)[RecipeSearchViewModel::class.java]
         return inflater.inflate(R.layout.fragment_recipes_search, container, false)
     }
 
@@ -44,20 +46,27 @@ public class RecipesSearchFragment : Fragment() {
             val builder = AlertDialog.Builder(this.context)
 
             builder.setTitle(R.string.chooseTypeOfDishText)
-                .setMultiChoiceItems(R.array.typesOfDishes, null,
+                .setMultiChoiceItems(
+                    R.array.typesOfDishes, null,
                     DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
                         if (isChecked) {
                             selectedTypesOfDishes.add(typesOfDishes[which])
 
-                            var layoutInflater = LayoutInflater.from(context)
-                            val tag = layoutInflater.inflate(R.layout.tag_item, null, false)
-                            tagGroupTypesOfDishes.addView(tag)
+                            val layoutInflater = LayoutInflater.from(context)
+
+                            for (i in 1..100)
+                            {
+                                val tag = layoutInflater.inflate(R.layout.tag_item, null, false)
+                                tagGroupTypesOfDishes.addView(tag)
+                            }
+
 
                         } else if (selectedTypesOfDishes.contains(typesOfDishes[which])) {
                             selectedTypesOfDishes.remove(typesOfDishes[which])
                         }
                     })
-                .setPositiveButton(R.string.ok,
+                .setPositiveButton(
+                    R.string.ok,
                     DialogInterface.OnClickListener { dialog, id ->
                     })
                 .create()
@@ -72,7 +81,8 @@ public class RecipesSearchFragment : Fragment() {
             val builder = AlertDialog.Builder(this.context)
 
             builder.setTitle(R.string.chooseCuisineText)
-                .setMultiChoiceItems(R.array.cuisines, null,
+                .setMultiChoiceItems(
+                    R.array.cuisines, null,
                     DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
                         if (isChecked) {
                             selectedCuisines.add(cuisines[which])
@@ -80,7 +90,8 @@ public class RecipesSearchFragment : Fragment() {
                             selectedCuisines.remove(cuisines[which])
                         }
                     })
-                .setPositiveButton(R.string.ok,
+                .setPositiveButton(
+                    R.string.ok,
                     DialogInterface.OnClickListener { dialog, id ->
                     })
                 .create()

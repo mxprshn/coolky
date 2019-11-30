@@ -6,7 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     style="@style/Widget.MaterialComponents.Chip.Entry"
     android:id="@+id/tagItem"
-    android:text="hahaha"
+    android:text="oolololololololololololololo"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:closeIcon="@drawable/ic_close_black_24dp">
