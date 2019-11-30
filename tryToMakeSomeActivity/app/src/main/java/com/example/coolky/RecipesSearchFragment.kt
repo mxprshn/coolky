@@ -1,7 +1,6 @@
 package com.example.coolky
 
 import android.app.AlertDialog
-import android.content.ClipData
 import android.content.DialogInterface
 import android.os.Bundle
 import android.util.Log
@@ -10,10 +9,15 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
 import kotlinx.android.synthetic.main.fragment_recipes_search.*
+import kotlinx.android.synthetic.main.tag_item.*
 
 /**
  * A simple [Fragment] subclass.
+ *
+ * Lets the user choose ingredients, cuisines, types of dishes and cooking time.
  */
 public class RecipesSearchFragment : Fragment() {
     public override fun onCreateView(
@@ -31,6 +35,9 @@ public class RecipesSearchFragment : Fragment() {
         chooseCuisine.setOnClickListener(this::chooseCuisineClickHandler)
     }
 
+    /**
+     * Handles "type of dish click" event.
+     */
     private fun chooseTypeOfDishClickHandler(chooseTypeOfDish: View) {
        if (chooseTypeOfDish is Button) {
             val typesOfDishes = resources.getStringArray(R.array.typesOfDishes)
@@ -40,19 +47,18 @@ public class RecipesSearchFragment : Fragment() {
                 .setMultiChoiceItems(R.array.typesOfDishes, null,
                     DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
                         if (isChecked) {
-                            // If the user checked the item, add it to the selected items
                             selectedTypesOfDishes.add(typesOfDishes[which])
+
+                            var layoutInflater = LayoutInflater.from(context)
+                            val tag = layoutInflater.inflate(R.layout.tag_item, null, false)
+                            tagGroupTypesOfDishes.addView(tag)
+
                         } else if (selectedTypesOfDishes.contains(typesOfDishes[which])) {
-                            // Else, if the item is already in the array, remove it
                             selectedTypesOfDishes.remove(typesOfDishes[which])
                         }
                     })
-                // Set the action buttons
                 .setPositiveButton(R.string.ok,
                     DialogInterface.OnClickListener { dialog, id ->
-                        // User clicked OK, so save the selectedItems results somewhere
-                        // or return them to the component that opened the dialog
-                        // ...
                     })
                 .create()
                 .show()
@@ -69,19 +75,13 @@ public class RecipesSearchFragment : Fragment() {
                 .setMultiChoiceItems(R.array.cuisines, null,
                     DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
                         if (isChecked) {
-                            // If the user checked the item, add it to the selected items
                             selectedCuisines.add(cuisines[which])
                         } else if (selectedCuisines.contains(cuisines[which])) {
-                            // Else, if the item is already in the array, remove it
                             selectedCuisines.remove(cuisines[which])
                         }
                     })
-                // Set the action buttons
                 .setPositiveButton(R.string.ok,
                     DialogInterface.OnClickListener { dialog, id ->
-                        // User clicked OK, so save the selectedItems results somewhere
-                        // or return them to the component that opened the dialog
-                        // ...
                     })
                 .create()
                 .show()
