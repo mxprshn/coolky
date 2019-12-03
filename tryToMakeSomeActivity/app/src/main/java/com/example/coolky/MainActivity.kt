@@ -18,11 +18,12 @@ public class MainActivity : AppCompatActivity() {
 
         bottomNavigation.selectedItemId = R.id.recipesSearch
 
-        recipeSearchResultsFragment = RecipeSearchResultsFragment()
-        changeFragment(recipeSearchResultsFragment)
-        recipesSearchFragment = RecipesSearchFragment()
-          //recipeFragment = RecipeFragment()
-          //changeFragment(recipeFragment)
+        recipeFragment = RecipeFragment()
+        changeFragment(recipeFragment)
+//        recipeSearchResultsFragment = RecipeSearchResultsFragment()
+//        changeFragment(recipeSearchResultsFragment)
+        //recipesSearchFragment = RecipesSearchFragment()
+
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             bottomNavigationOnItemSelectedHandler(item)
@@ -78,4 +79,6 @@ public class MainActivity : AppCompatActivity() {
     private lateinit var recipeSearchResultsFragment: RecipeSearchResultsFragment
     private lateinit var recipesSearchFragment: RecipesSearchFragment
     private lateinit var favoritesFragment: FavoritesFragment
+
+    private lateinit var recipeFragment: RecipeFragment
 }

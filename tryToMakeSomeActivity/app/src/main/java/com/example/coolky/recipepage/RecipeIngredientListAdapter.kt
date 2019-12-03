@@ -17,7 +17,7 @@ class RecipeIngredientListAdapter(collection: OrderedRealmCollection<RecipeIngre
     override fun onBindViewHolder(holder: RecipeIngredientViewHolder, position: Int)
     {
         val recipeIngredient = getItem(position)
-        holder.ingredientName.text = DBProvider.findIngredientById(recipeIngredient!!.IngredientId!!)!!.Name
+        holder.ingredientName.text = recipeIngredient!!.Ingredient!!.Name
         holder.ingredientAmount.text = recipeIngredient.Amount
     }
 
