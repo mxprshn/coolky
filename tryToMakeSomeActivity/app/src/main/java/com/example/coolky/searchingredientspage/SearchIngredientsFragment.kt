@@ -8,11 +8,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coolky.database.DBProvider
 import com.example.coolky.database.models.Ingredient
-import com.example.coolky.recipepage.ShowIngredientsAdapter
 import io.realm.RealmResults
-import kotlinx.android.synthetic.main.fragment_recipes_search.*
 import kotlinx.android.synthetic.main.fragment_search_ingredients.*
 
 /**
@@ -31,6 +30,10 @@ class SearchIngredientsFragment : Fragment() {
     public override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
+        showIngredients.adapter = ShowIngredientsAdapter(ingredients)
+        showIngredients.layoutManager = LinearLayoutManager(context)
+
+
         searchIngredients.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
 
@@ -41,8 +44,6 @@ class SearchIngredientsFragment : Fragment() {
             }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                ingredients = DBProvider.getIngredients(searchIngredients.text.toString())
-
                 if (searchIngredients.text.isNotEmpty()) {
                     ingredients = DBProvider.getIngredients(searchIngredients.text.toString())
 
