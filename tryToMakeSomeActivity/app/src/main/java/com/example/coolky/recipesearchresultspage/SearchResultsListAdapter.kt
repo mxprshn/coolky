@@ -9,21 +9,22 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.coolky.R
 import com.example.coolky.database.DBProvider
 import com.example.coolky.database.models.Recipe
+import com.example.coolky.database.models.RecipeIngredient
 import com.squareup.picasso.Picasso
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import kotlinx.android.synthetic.main.fragment_recipe.*
 
-class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?) : RealmRecyclerViewAdapter<Recipe, SearchResultsListAdapter.SearchResultViewHolder>
+class SearchResultsListAdapter(collection: OrderedRealmCollection<RecipeIngredient>?) : RealmRecyclerViewAdapter<RecipeIngredient, SearchResultsListAdapter.SearchResultViewHolder>
         (collection, true)
 {
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int)
     {
-        val recipe = getItem(position)
-        holder.dishNameTextView.text = recipe!!.DishName
-        holder.ingredientsLeftAmountTextView.text = DBProvider.findRecipeIngredientsById(recipe.Id!!).count().toString()
-        holder.dishTypeTextView.text = recipe.Type
-        Picasso.get().load(recipe.PictureUrl).into(holder.dishImageView)
+        val recipeIngredient = getItem(position)
+        holder.dishNameTextView.text = recipeIngredient!!.Recipe!!.DishName
+        holder.ingredientsLeftAmountTextView.text = DBProvider.findRecipeIngredientsById(recipeIngredient.Recipe!!.Id!!).count().toString()
+        holder.dishTypeTextView.text = recipeIngredient.Recipe!!.Type
+        Picasso.get().load(recipeIngredient.Recipe!!.PictureUrl).into(holder.dishImageView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder
