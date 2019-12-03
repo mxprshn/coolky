@@ -35,7 +35,7 @@ namespace CoolkyRecipeParser
                                 await RecipeDBProvider.AddIngredient(ingredient.name);
                             }
 
-                            await RecipeDBProvider.AddRecipeIngredient(id, RecipeDBProvider.FindIngredientIdByName(ingredient.name), ingredient.amount);
+                            await RecipeDBProvider.AddRecipeIngredient(id, ingredient.name, ingredient.amount);
                         }
                     }
                     catch (Exception exc)

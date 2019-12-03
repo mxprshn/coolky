@@ -13,36 +13,42 @@ namespace CoolkyRecipeParser
     {
         private static RealmConfiguration config = new RealmConfiguration($"Recipes.realm");
 
-        public static string FindIngredientIdByName(string name)
+        public static Ingredient FindIngredientByName(string name)
         {
-            var database = Realm.GetInstance(config);
-            return database.All<Ingredient>().Where(i => i.Name == name).First().Id;
+            var realm = Realm.GetInstance(config);
+            return realm.Find<Ingredient>(name);
+        }
+
+        public static Recipe FindRecipeById(string id)
+        {
+            var realm = Realm.GetInstance(config);
+            return realm.Find<Recipe>(id);
         }
 
         public static bool IngredientExists(string name)
         {
-            var database = Realm.GetInstance(config);
-            return database.All<Ingredient>().Where(i => i.Name == name).Count() != 0;
+            var realm = Realm.GetInstance(config);
+            return realm.Find<Ingredient>(name) != null;
         }
 
-        public static async Task AddRecipeIngredient(string recipeId, string ingredientId, string amount)
+        public static async Task AddRecipeIngredient(string recipeId, string ingredientName, string amount)
         {
             var realm = Realm.GetInstance(config);
 
             await realm.WriteAsync(tempRealm =>
             {
-                tempRealm.Add(new RecipeIngredient(recipeId, ingredientId, amount));
+                tempRealm.Add(new RecipeIngredient(FindRecipeById(recipeId), FindIngredientByName(ingredientName), amount));
             });
         }
 
-        // правильно ли сделано асинхронно?
         public static async Task AddRecipe(string id, string dishName, int cookTime, string cuisine, string type, int portionAmount,
                 string pictureUrl, IList<string> steps, string webSite)
         {
             var realm = Realm.GetInstance(config);
+
             await realm.WriteAsync(tempRealm =>
             {
-                var existingRecipe = tempRealm.Find<Recipe>(id);
+                var existingRecipe = realm.Find<Recipe>(id);
 
                 if (existingRecipe != null)
                 {
@@ -60,13 +66,13 @@ namespace CoolkyRecipeParser
                 {
                     tempRealm.Add(new Recipe(id, dishName, cookTime, cuisine, type, portionAmount, pictureUrl, webSite, steps));
                 }
-            });      
+            });
         }
 
-        // правильно ли сделано асинхронно?
         public static async Task AddIngredient(string name)
         {
             var realm = Realm.GetInstance(config);
+
             await realm.WriteAsync(tempRealm =>
             {
                 tempRealm.Add(new Ingredient { Name = name });
