@@ -18,10 +18,10 @@ public class MainActivity : AppCompatActivity() {
 
         bottomNavigation.selectedItemId = R.id.recipesSearch
 
-        recipeFragment = RecipeFragment()
-        changeFragment(recipeFragment)
-//        recipeSearchResultsFragment = RecipeSearchResultsFragment()
-//        changeFragment(recipeSearchResultsFragment)
+//        recipeFragment = RecipeFragment()
+//        changeFragment(recipeFragment)
+        recipeSearchResultsFragment = RecipeSearchResultsFragment()
+        changeFragment(recipeSearchResultsFragment)
         //recipesSearchFragment = RecipesSearchFragment()
 
 

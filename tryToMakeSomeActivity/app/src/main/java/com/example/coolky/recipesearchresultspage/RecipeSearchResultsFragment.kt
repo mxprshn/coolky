@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coolky.R
+import com.example.coolky.database.DBProvider
 import com.example.coolky.database.models.Recipe
 import io.realm.OrderedRealmCollection
 import kotlinx.android.synthetic.main.fragment_recipe_ingredient_list.*
@@ -25,6 +26,6 @@ class RecipeSearchResultsFragment : Fragment()
     {
         super.onViewCreated(view, savedInstanceState)
         searchResultsRecyclerView.layoutManager = LinearLayoutManager(this.context)
-        searchResultsRecyclerView.adapter = SearchResultsListAdapter()
+        searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes())
     }
 }

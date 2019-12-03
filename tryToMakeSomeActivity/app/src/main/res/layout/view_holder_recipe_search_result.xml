@@ -10,22 +10,13 @@
         android:id="@+id/ingredientsLeftAmountTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
         android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toTopOf="@+id/lineImageView"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/dishNameTextView"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toEndOf="@+id/dishImageView"
         tools:text="нужно еще ингредиентов: 7" />
-
-    <TextView
-        android:id="@+id/typeTextView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="второе"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="@+id/dishNameTextView"
-        app:layout_constraintTop_toBottomOf="@+id/dishNameTextView" />
 
     <ImageView
         android:id="@+id/dishImageView"
@@ -34,9 +25,9 @@
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
         android:scaleType="centerCrop"
+        app:layout_constraintBottom_toBottomOf="@+id/ingredientsLeftAmountTextView"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="@+id/ingredientsLeftAmountTextView"
         app:srcCompat="@drawable/pepperoni" />
 
     <TextView
@@ -44,7 +35,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:text="Пицца Пепперони"
+        android:layout_marginEnd="8dp"
+        android:text="Пицца Оололололололололололо"
+        android:textStyle="bold"
+        app:layout_constrainedHeight="false"
+        app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/dishImageView"
@@ -55,10 +50,23 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
+        android:cropToPadding="false"
         android:scaleType="fitXY"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:srcCompat="@drawable/step_shadow_bottom" />
+
+    <TextView
+        android:id="@+id/typeTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:text="второе"
+        android:textStyle="italic"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="@+id/dishNameTextView"
+        app:layout_constraintTop_toBottomOf="@+id/dishNameTextView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
