@@ -1,15 +1,20 @@
 package com.example.coolky.searchpage
 
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.FragmentTransaction
+
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.lifecycle.ViewModelProvider
 import com.example.coolky.R
+import com.example.coolky.RecommendedFragment
+import com.example.coolky.changeFragment
+import com.example.coolky.searchingredientspage.SearchIngredientsFragment
 import kotlinx.android.synthetic.main.fragment_recipes_search.*
 
 /**
@@ -35,6 +40,14 @@ public class RecipesSearchFragment : Fragment() {
 
         chooseTypeOfDish.setOnClickListener(this::chooseTypeOfDishClickHandler)
         chooseCuisine.setOnClickListener(this::chooseCuisineClickHandler)
+        chooseIngredient.setOnClickListener(this::chooseIngredientClickHandler)
+    }
+
+    private fun chooseIngredientClickHandler(chooseIngredient: View) {
+        if (chooseIngredient is Button) {
+            var searchIngredientsFragment = SearchIngredientsFragment()
+            changeFragment(searchIngredientsFragment, activity!!.supportFragmentManager)
+        }
     }
 
     /**
