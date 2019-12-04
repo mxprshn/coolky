@@ -18,7 +18,7 @@ public class MainActivity : AppCompatActivity() {
         bottomNavigation.selectedItemId = R.id.recipesSearch
 
         recipesSearchFragment = RecipesSearchFragment()
-        changeFragment(recipesSearchFragment, supportFragmentManager)
+        FragmentTools.changeFragment(recipesSearchFragment, supportFragmentManager)
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             bottomNavigationOnItemSelectedHandler(item)
@@ -34,28 +34,28 @@ public class MainActivity : AppCompatActivity() {
         when(item.itemId) {
             R.id.recommended -> {
                 recommendedFragment = RecommendedFragment()
-                changeFragment(recommendedFragment, supportFragmentManager)
+                FragmentTools.changeFragment(recommendedFragment, supportFragmentManager)
             }
 
             R.id.myRecipes -> {
                 myRecipesFragment = MyRecipesFragment()
-                changeFragment(myRecipesFragment, supportFragmentManager)
+                FragmentTools.changeFragment(myRecipesFragment, supportFragmentManager)
             }
 
             R.id.recipesSearch -> {
                 recipesSearchFragment =
                     RecipesSearchFragment()
-                changeFragment(recipesSearchFragment, supportFragmentManager)
+                FragmentTools.changeFragment(recipesSearchFragment, supportFragmentManager)
             }
 
             R.id.favorites -> {
                 favoritesFragment = FavoritesFragment()
-                changeFragment(favoritesFragment, supportFragmentManager)
+                FragmentTools.changeFragment(favoritesFragment, supportFragmentManager)
             }
 
             R.id.settings -> {
                 settingsFragment = SettingsFragment()
-                changeFragment(settingsFragment, supportFragmentManager)
+                FragmentTools.changeFragment(settingsFragment, supportFragmentManager)
             }
         }
     }
