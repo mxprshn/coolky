@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.coolky.database.DBProvider
 import com.example.coolky.database.models.Ingredient
+import io.realm.OrderedRealmCollection
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_search_ingredients.*
 
@@ -33,30 +34,39 @@ class SearchIngredientsFragment : Fragment() {
         showIngredients.adapter = ShowIngredientsAdapter(ingredients)
         showIngredients.layoutManager = LinearLayoutManager(context)
 
-
         searchIngredients.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) {
+            override fun afterTextChanged(s: Editable?) { }
 
-            }
-
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
-
-            }
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-                if (searchIngredients.text.isNotEmpty()) {
-                    ingredients = DBProvider.getIngredients(searchIngredients.text.toString())
-
-                    if (!ingredients.isNullOrEmpty()) {
-                        nothingIsFound.visibility = View.GONE
-                        showIngredients.adapter = ShowIngredientsAdapter(ingredients)
-                    }
-                    else if (ingredients != null && ingredients.isNullOrEmpty()) {
-                        nothingIsFound.visibility = View.VISIBLE
-                    }
-                }
+                searchHintsHandler()
             }
         })
+
+
+    }
+
+    // Хорошо ли просто делать ресайклер вью невидимым?
+    private fun searchHintsHandler() {
+        if (searchIngredients.text.isNotEmpty()) {
+            ingredients = DBProvider.getIngredients(searchIngredients.text.toString())
+
+            if (!ingredients.isNullOrEmpty()) {
+                nothingIsFound.visibility = View.GONE
+                showIngredients.adapter = ShowIngredientsAdapter(ingredients)
+                showIngredients.visibility = View.VISIBLE
+            }
+            else if (ingredients != null && ingredients.isNullOrEmpty()) {
+                showIngredients.visibility = View.GONE
+                nothingIsFound.visibility = View.VISIBLE
+            }
+        }
+        else
+        {
+            nothingIsFound.visibility = View.GONE
+            showIngredients.visibility = View.GONE
+        }
     }
 
     var ingredients: RealmResults<Ingredient>? = null
