@@ -15,7 +15,8 @@ class DBProvider
         public fun getIngredients(input: String): RealmResults<Ingredient>
         {
             val database = Realm.getDefaultInstance()
-            return database.where<Ingredient>().findAll()
+            return database.where<Ingredient>().beginsWith("Name", input)
+                .or().contains("Name", " $input").findAll()
         }
 
         public fun getRecipes(): RealmResults<Recipe>
