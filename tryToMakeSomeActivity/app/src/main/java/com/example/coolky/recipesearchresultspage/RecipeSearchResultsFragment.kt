@@ -26,6 +26,6 @@ class RecipeSearchResultsFragment : Fragment()
     {
         super.onViewCreated(view, savedInstanceState)
         searchResultsRecyclerView.layoutManager = LinearLayoutManager(this.context)
-        searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes())
+        searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes(arrayOf("соленые огурцы"), arrayOf(), arrayOf(), 800))
     }
 }
