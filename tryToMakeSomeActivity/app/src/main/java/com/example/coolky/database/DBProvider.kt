@@ -15,7 +15,8 @@ class DBProvider
         public fun getIngredients(input: String): RealmResults<Ingredient>
         {
             val database = Realm.getDefaultInstance()
-            return database.where<Ingredient>().findAll()
+            return database.where<Ingredient>().beginsWith("Name", input)
+                .or().contains("Name", " $input").findAll()
         }
 
         public fun getRecipes(): RealmResults<Recipe>
@@ -31,16 +32,16 @@ class DBProvider
             return database.where<Recipe>().equalTo("Id", recipeId).findFirst()
         }
 
-        public fun findIngredientById(ingredientId: String) : Ingredient?
+        public fun findIngredientByName(ingredientName: String) : Ingredient?
         {
             val database = Realm.getDefaultInstance()
-            return database.where<Ingredient>().equalTo("Id", ingredientId).findFirst()
+            return database.where<Ingredient>().equalTo("Name", ingredientName).findFirst()
         }
 
         public fun findRecipeIngredientsById(recipeId: String) : RealmResults<RecipeIngredient>
         {
             val database = Realm.getDefaultInstance()
-            return database.where<RecipeIngredient>().equalTo("RecipeId", recipeId).findAll()
+            return database.where<RecipeIngredient>().equalTo("Recipe.Id", recipeId).findAll()
         }
     }
 }

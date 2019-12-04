@@ -39,15 +39,15 @@
         android:id="@+id/dotImageView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toBottomOf="@+id/ingredientAmountTextView"
-        app:layout_constraintEnd_toStartOf="@+id/ingredientAmountTextView"
+        app:layout_constraintBottom_toBottomOf="@+id/ingredientsLeftAmountTextView"
+        app:layout_constraintEnd_toStartOf="@+id/ingredientsLeftAmountTextView"
         app:layout_constraintHorizontal_weight="1"
         app:layout_constraintStart_toEndOf="@+id/ingredientNameTextView"
-        app:layout_constraintTop_toTopOf="@+id/ingredientAmountTextView"
+        app:layout_constraintTop_toTopOf="@+id/ingredientsLeftAmountTextView"
         app:srcCompat="@drawable/ic_black_dot" />
 
     <TextView
-        android:id="@+id/ingredientAmountTextView"
+        android:id="@+id/ingredientsLeftAmountTextView"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

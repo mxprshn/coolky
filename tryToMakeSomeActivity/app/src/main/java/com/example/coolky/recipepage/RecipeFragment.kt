@@ -18,7 +18,7 @@ class RecipeFragment : Fragment()
 
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory
     {
-        return RecipeInfoViewModel.Factory("026008")
+        return RecipeInfoViewModel.Factory("038585")
     }
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -45,6 +45,6 @@ class RecipeFragment : Fragment()
         dishNameTextView.text = model.Name
         portionsAmountTextView.text = model.PortionAmount.toString()
         timeAmountTextView.text = model.CookTime.toString()
-        Picasso.get().load("https:" + model.PictureUrl).into(dishImageView)
+        Picasso.get().load(model.PictureUrl).into(dishImageView)
     }
 }

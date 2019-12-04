@@ -10,8 +10,6 @@ import com.example.coolky.database.DBProvider
 import com.example.coolky.database.models.RecipeIngredient
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
-import io.realm.RealmResults
-import kotlinx.android.synthetic.main.view_holder_recipe_ingredient.view.*
 
 class RecipeIngredientListAdapter(collection: OrderedRealmCollection<RecipeIngredient>?) : RealmRecyclerViewAdapter<RecipeIngredient, RecipeIngredientListAdapter.RecipeIngredientViewHolder>
         (collection, true)
@@ -19,7 +17,7 @@ class RecipeIngredientListAdapter(collection: OrderedRealmCollection<RecipeIngre
     override fun onBindViewHolder(holder: RecipeIngredientViewHolder, position: Int)
     {
         val recipeIngredient = getItem(position)
-        holder.ingredientName.text = DBProvider.findIngredientById(recipeIngredient!!.IngredientId!!)!!.Name
+        holder.ingredientName.text = recipeIngredient!!.Ingredient!!.Name
         holder.ingredientAmount.text = recipeIngredient.Amount
     }
 
@@ -32,7 +30,7 @@ class RecipeIngredientListAdapter(collection: OrderedRealmCollection<RecipeIngre
     class RecipeIngredientViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
         val ingredientName: TextView = itemView.findViewById(R.id.ingredientNameTextView)
-        val ingredientAmount: TextView = itemView.findViewById(R.id.ingredientAmountTextView)
+        val ingredientAmount: TextView = itemView.findViewById(R.id.ingredientsLeftAmountTextView)
 
     }
 }
