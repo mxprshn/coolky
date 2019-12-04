@@ -19,17 +19,17 @@
     <string name="min">мин</string>
 
     <string-array name="typesOfDishes">
-    <item>Любой</item>
-    <item>Первое</item>
-    <item>Второе</item>
-    <item>Салаты</item>
-    <item>Закуски</item>
-    <item>Выпечка</item>
-    <item>Десерты</item>
-    <item>Консервирование</item>
-    <item>Соусы</item>
-    <item>Напитки</item>
-    <item>Мультиварка</item>
+        <item>Любой</item>
+        <item>Первое</item>
+        <item>Второе</item>
+        <item>Салаты</item>
+        <item>Закуски</item>
+        <item>Выпечка</item>
+        <item>Десерты</item>
+        <item>Консервирование</item>
+        <item>Соусы</item>
+        <item>Напитки</item>
+        <item>Мультиварка</item>
     </string-array>
 
     <string name="chooseTypeOfDishText">Выберите тип блюда</string>
@@ -49,4 +49,7 @@
     <string name="ingredientsTabHeaderText">Ингредиенты</string>
     <string name="stepsTabHeaderText">Приготовление</string>
     <string name="portionsText">порций</string>
+
+    <string name="inputIngredient">Введите ингредиент</string>
+    <string name="nothingIsFoundForYourRequest">По вашему запросу ничего не найдено</string>
 </resources>
