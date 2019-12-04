@@ -10,6 +10,8 @@ import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.coolky.R
+import com.example.coolky.changeFragment
+import com.example.coolky.searchingredientspage.SearchIngredientsFragment
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_recipes_search.*
 
@@ -52,8 +54,8 @@ public class RecipesSearchFragment : Fragment() {
         chooseTypeOfDish.setOnClickListener(this::chooseTypeOfDishClickHandler)
         chooseCuisine.setOnClickListener(this::chooseCuisineClickHandler)
         recipesSearchButton.setOnClickListener(this::searchClickHandler)
+        chooseIngredient.setOnClickListener(this::chooseIngredientClickHandler)
     }
-
 
     private fun updateAfterAdding(base: Array<String>, toRemove : ArrayList<String>): Array<String> {
 
@@ -98,7 +100,7 @@ public class RecipesSearchFragment : Fragment() {
      * Handles "type of dish click" event.
      */
     private fun chooseTypeOfDishClickHandler(chooseTypeOfDish: View) {
-       if (chooseTypeOfDish is Button) {
+        if (chooseTypeOfDish is Button) {
             val builder = AlertDialog.Builder(this.context)
             val typesOfDishesCopy = typesOfDishes.copyOf()
             val tmpChosenTypes = ArrayList<String>()
@@ -147,7 +149,14 @@ public class RecipesSearchFragment : Fragment() {
                     })
                 .create()
                 .show()
-       }
+        }
+    }
+
+    private fun chooseIngredientClickHandler(chooseIngredient: View) {
+        if (chooseIngredient is Button) {
+            var searchIngredientsFragment = SearchIngredientsFragment()
+            changeFragment(searchIngredientsFragment, activity!!.supportFragmentManager)
+        }
     }
 
     private fun chooseCuisineClickHandler(chooseTypeOfCuisine: View)  {

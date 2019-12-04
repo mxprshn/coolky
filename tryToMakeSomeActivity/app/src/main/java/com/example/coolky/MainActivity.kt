@@ -6,9 +6,9 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentTransaction
-import com.example.coolky.recipepage.RecipeFragment
 import com.example.coolky.searchpage.RecipesSearchFragment
 import kotlinx.android.synthetic.main.activity_main.*
+
 public class MainActivity : AppCompatActivity() {
 
     public override fun onCreate(savedInstanceState: Bundle?) {
@@ -17,11 +17,8 @@ public class MainActivity : AppCompatActivity() {
 
         bottomNavigation.selectedItemId = R.id.recipesSearch
 
-        recipesSearchFragment =
-            RecipesSearchFragment()
-        changeFragment(recipesSearchFragment)
-          //recipeFragment = RecipeFragment()
-          //changeFragment(recipeFragment)
+        recipesSearchFragment = RecipesSearchFragment()
+        changeFragment(recipesSearchFragment, supportFragmentManager)
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             bottomNavigationOnItemSelectedHandler(item)
@@ -37,44 +34,35 @@ public class MainActivity : AppCompatActivity() {
         when(item.itemId) {
             R.id.recommended -> {
                 recommendedFragment = RecommendedFragment()
-                changeFragment(recommendedFragment)
+                changeFragment(recommendedFragment, supportFragmentManager)
             }
 
             R.id.myRecipes -> {
                 myRecipesFragment = MyRecipesFragment()
-                changeFragment(myRecipesFragment)
+                changeFragment(myRecipesFragment, supportFragmentManager)
             }
 
             R.id.recipesSearch -> {
                 recipesSearchFragment =
                     RecipesSearchFragment()
-                changeFragment(recipesSearchFragment)
+                changeFragment(recipesSearchFragment, supportFragmentManager)
             }
 
             R.id.favorites -> {
                 favoritesFragment = FavoritesFragment()
-                changeFragment(favoritesFragment)
+                changeFragment(favoritesFragment, supportFragmentManager)
             }
 
             R.id.settings -> {
                 settingsFragment = SettingsFragment()
-                changeFragment(settingsFragment)
+                changeFragment(settingsFragment, supportFragmentManager)
             }
         }
-    }
-
-    private fun changeFragment(fragment: Fragment) {
-        supportFragmentManager
-            .beginTransaction()
-            .replace(R.id.frameLayout , fragment)
-            .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
-            .commit()
     }
 
     private lateinit var recommendedFragment: RecommendedFragment
     private lateinit var myRecipesFragment: MyRecipesFragment
     private lateinit var settingsFragment: SettingsFragment
-    private lateinit var recipeFragment: RecipeFragment
     private lateinit var recipesSearchFragment: RecipesSearchFragment
     private lateinit var favoritesFragment: FavoritesFragment
 }
