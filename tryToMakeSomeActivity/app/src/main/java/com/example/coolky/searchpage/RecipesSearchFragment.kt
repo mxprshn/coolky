@@ -9,8 +9,8 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import com.example.coolky.FragmentTools
 import com.example.coolky.R
-import com.example.coolky.changeFragment
 import com.example.coolky.searchingredientspage.SearchIngredientsFragment
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_recipes_search.*
@@ -155,7 +155,7 @@ public class RecipesSearchFragment : Fragment() {
     private fun chooseIngredientClickHandler(chooseIngredient: View) {
         if (chooseIngredient is Button) {
             var searchIngredientsFragment = SearchIngredientsFragment()
-            changeFragment(searchIngredientsFragment, activity!!.supportFragmentManager)
+            FragmentTools.changeFragment(searchIngredientsFragment, activity!!.supportFragmentManager)
         }
     }
 
@@ -212,16 +212,12 @@ public class RecipesSearchFragment : Fragment() {
     private fun searchClickHandler(search: View) {
         if (search is Button) {
             val ingredients = ArrayList<String>()
-            var typesOfDishes = ArrayList<String>()
-            var cuisines = ArrayList<String>()
+            var typesOfDishes = chosenTypes
+            var cuisines = chosenCuisines
             var time = cookingTimeMinutes.text?.toString()?.toInt()
 
             if (time == null) {
                 time = -1
-            }
-
-            for (i in 0..tagGroupTypesOfDishes.childCount - 1) {
-
             }
         }
     }
