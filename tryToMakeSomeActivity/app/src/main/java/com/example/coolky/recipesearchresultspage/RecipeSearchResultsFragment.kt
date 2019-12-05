@@ -43,6 +43,6 @@ class RecipeSearchResultsFragment : Fragment()
         })
 
         searchResultsRecyclerView.layoutManager = LinearLayoutManager(this.context)
-        searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes())
+        searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes(arrayOf(), arrayOf(), arrayOf(), 800))
     }
 }

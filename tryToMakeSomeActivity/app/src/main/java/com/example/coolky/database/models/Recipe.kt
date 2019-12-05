@@ -2,6 +2,8 @@ package com.example.coolky.database.models
 
 import io.realm.RealmList
 import io.realm.RealmObject
+import io.realm.RealmResults
+import io.realm.annotations.LinkingObjects
 import io.realm.annotations.PrimaryKey
 
 open class Recipe : RealmObject()
@@ -17,4 +19,7 @@ open class Recipe : RealmObject()
     public var PictureUrl: String? = null
     public var WebSite: String? = null
     public var Steps: RealmList<String> = RealmList()
+
+    @LinkingObjects("Recipe")
+    public final val RecipeIngredients: RealmResults<RecipeIngredient>? = null
 }
