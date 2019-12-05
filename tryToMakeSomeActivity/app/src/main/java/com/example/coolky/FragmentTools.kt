@@ -5,8 +5,7 @@ import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentTransaction
 
 class FragmentTools {
-    companion object
-    {
+    companion object {
         fun changeFragment(fragmentToOpen: Fragment, manager: FragmentManager) {
             manager
                 .beginTransaction()

@@ -3,6 +3,7 @@ package com.example.coolky.searchpage
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.example.coolky.FragmentTools
 import com.example.coolky.R
+import com.example.coolky.recipesearchresultspage.RecipeSearchResultsFragment
 import com.example.coolky.searchingredientspage.SearchIngredientsFragment
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_recipes_search.*
@@ -22,7 +24,7 @@ import kotlinx.android.synthetic.main.fragment_recipes_search.*
  */
 public class RecipesSearchFragment : Fragment() {
 
-    private lateinit var model: RecipeSearchViewModel
+    private var model: RecipeSearchViewModel?=null
     private lateinit var typesOfDishes: Array<String>
     private var chosenTypes = ArrayList<String>()
     private lateinit var cuisines: Array<String>
@@ -36,8 +38,6 @@ public class RecipesSearchFragment : Fragment() {
 
         cuisines = resources.getStringArray(R.array.cuisines)
         cuisines.sort()
-
-        model = ViewModelProvider(this)[RecipeSearchViewModel::class.java]
     }
 
     public override fun onCreateView(
@@ -212,13 +212,24 @@ public class RecipesSearchFragment : Fragment() {
     private fun searchClickHandler(search: View) {
         if (search is Button) {
             val ingredients = ArrayList<String>()
-            var typesOfDishes = chosenTypes
-            var cuisines = chosenCuisines
+            val typesOfDishes = chosenTypes
+            val cuisines = chosenCuisines
             var time = cookingTimeMinutes.text?.toString()?.toInt()
 
             if (time == null) {
                 time = -1
             }
+
+            model = ViewModelProvider(activity!!)[RecipeSearchViewModel::class.java]
+
+            model!!.ChosenIngredients.value = ingredients
+            model!!.ChosenTypesOfDishes.value = typesOfDishes
+            model!!.ChosenCuisines.value = cuisines
+            model!!.ChosenTime.value = time
+
+            val searchResultsFragment = RecipeSearchResultsFragment()
+
+            FragmentTools.changeFragment(searchResultsFragment, activity!!.supportFragmentManager)
         }
     }
 }

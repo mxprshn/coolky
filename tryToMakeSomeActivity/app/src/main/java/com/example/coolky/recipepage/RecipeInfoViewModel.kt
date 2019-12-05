@@ -7,8 +7,7 @@ import com.example.coolky.database.models.Recipe
 import com.example.coolky.database.models.RecipeIngredient
 import io.realm.OrderedRealmCollection
 
-class RecipeInfoViewModel(private val id: String) : ViewModel()
-{
+class RecipeInfoViewModel(private val id: String) : ViewModel()  {
     private val recipe: Recipe? = DBProvider.findRecipeById(id)
 
     public var Name: String? = recipe!!.DishName
