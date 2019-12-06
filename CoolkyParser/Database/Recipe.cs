@@ -8,15 +8,31 @@ namespace CoolkyRecipeParser
     public class Recipe : RealmObject
     {
         [PrimaryKey]
+        [MapTo("id")]
         public string Id { get; set; }
 
+        [MapTo("dishName")]
         public string DishName { get; set; }
+
+        [MapTo("cookTime")]
         public int CookTime { get; set; }
+
+        [MapTo("cuisine")]
         public string Cuisine { get; set; }
+
+        [MapTo("type")]
         public string Type { get; set; }
+
+        [MapTo("portionAmount")]
         public int PortionAmount { get; set; }
+
+        [MapTo("pictureUrl")]
         public string PictureUrl { get; set; }
+
+        [MapTo("webSite")]
         public string WebSite { get; set; }
+
+        [MapTo("steps")]
         public IList<string> Steps { get; }
 
         public Recipe() { }

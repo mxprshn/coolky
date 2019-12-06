@@ -10,8 +10,13 @@ namespace CoolkyRecipeParser
         //public string RecipeId { get; set; }
         //public string IngredientId { get; set; }
 
+        [MapTo("recipe")]
         public Recipe Recipe { get; set; }
+
+        [MapTo("ingredient")]
         public Ingredient Ingredient { get; set; }
+
+        [MapTo("amount")]
         public string Amount { get; set; }
 
         public RecipeIngredient() {}
