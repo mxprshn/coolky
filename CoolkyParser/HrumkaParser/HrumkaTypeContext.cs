@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
+using System.Threading.Tasks;
+using System.Collections.Concurrent;
+using System.Linq;
 
 namespace CoolkyRecipeParser.HrumkaParser
 {
@@ -27,24 +30,25 @@ namespace CoolkyRecipeParser.HrumkaParser
             return int.Parse(match.Value);
         }
 
-        public override async IAsyncEnumerable<IDocument> GetPages()
+        public override async Task<IEnumerable<IDocument>> GetPages()
         {
             var basePage = await HtmlLoader.LoadAsync($"{baseUrl}/catalog/{urlTypeName}");
             var pageCount = PageCountParser(basePage.QuerySelector(".search-pages [href]:last-child").Text());
+            var queue = new ConcurrentBag<IDocument>();
+            var counter = 1;
 
-            // отдельно первую страницу?
-            for (var i = 1; i <= pageCount; ++i)
+            await Enumerable.Range(1, pageCount).ForEachAsync<int>(async (i) =>
             {
                 var currentPage = await HtmlLoader.LoadAsync($"{baseUrl}/catalog/{urlTypeName}/{i}");
                 var recipeElements = currentPage.QuerySelectorAll(".h5");
                 Console.WriteLine($"{recipeElements.Length} recipes found at page {i}.");
 
-                var counter = 1;
+                
 
-                foreach (var recipeElement in recipeElements)
+                await recipeElements.ForEachAsync(async (recipeElement) =>
                 {
-                    Console.WriteLine($"Parsing recipe {counter} in {Thread.CurrentThread.ManagedThreadId} thread.");
-                    ++counter;
+                    Console.WriteLine($"Downloading recipe {counter} of type {type} in {Thread.CurrentThread.ManagedThreadId} thread.");
+                    Interlocked.Increment(ref counter);
                     var recipeLink = recipeElement.GetAttribute("href");
                     IDocument page = null;
 
@@ -55,12 +59,13 @@ namespace CoolkyRecipeParser.HrumkaParser
                     catch (Exception exc)
                     {
                         Console.WriteLine($"Error occured during downloading {recipeLink}.");
-                        continue;
                     }
 
-                    yield return page;
-                }
-            }
+                    queue.Add(page);
+                });
+            });
+
+            return queue.ToList();
         }
 
         public override string GetType(IParsingLogic logic, IDocument page) => type;

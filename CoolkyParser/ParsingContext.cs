@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using AngleSharp.Dom;
 
 namespace CoolkyRecipeParser
@@ -6,7 +7,7 @@ namespace CoolkyRecipeParser
     public abstract class ParsingContext
     {
         // реализовать через yield return?
-        public abstract IAsyncEnumerable<IDocument> GetPages();
+        public abstract Task<IEnumerable<IDocument>> GetPages();
 
         public virtual string GetId(IParsingLogic logic, IDocument page) => logic.GetId(page);
         public virtual string GetDishName(IParsingLogic logic, IDocument page) => logic.GetDishName(page);

@@ -10,17 +10,17 @@ namespace CoolkyRecipeParser
     {
         public static async Task<IDocument> LoadAsync(string url)
         {
-            string htmlSourceCode;
+                string htmlSourceCode;
 
-            using (HttpClient client = new HttpClient())
-            {
-                // обработка ошибок?
-                htmlSourceCode = await client.GetStringAsync(url);
-            }
+                using (HttpClient client = new HttpClient())
+                {
+                    // обработка ошибок?
+                    htmlSourceCode = await client.GetStringAsync(url);
+                }
 
-            var config = Configuration.Default;
-            var context = BrowsingContext.New(config);
-            return await context.OpenAsync(req => req.Content(htmlSourceCode));
+                var config = Configuration.Default;
+                var context = BrowsingContext.New(config);
+                return await context.OpenAsync(req => req.Content(htmlSourceCode));
         }
     }
 }
