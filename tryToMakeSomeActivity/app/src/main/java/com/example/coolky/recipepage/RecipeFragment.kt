@@ -1,24 +1,35 @@
 package com.example.coolky.recipepage
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.viewpager.widget.ViewPager
 import com.example.coolky.R
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_recipe.*
+
 
 class RecipeFragment : Fragment()
 {
     private lateinit var model: RecipeInfoViewModel
 
+    companion object {
+
+        @JvmStatic
+        fun newInstance(recipeId: String) : RecipeFragment {
+            val newFragment = RecipeFragment()
+            val args = Bundle()
+            args.putString("recipeId", recipeId)
+            newFragment.arguments = args
+            return newFragment
+        }
+    }
+
     override fun getDefaultViewModelProviderFactory(): ViewModelProvider.Factory
     {
-        return RecipeInfoViewModel.Factory("038585")
+        return RecipeInfoViewModel.Factory(arguments!!.getString("recipeId")!!)
     }
 
     override fun onCreate(savedInstanceState: Bundle?)
