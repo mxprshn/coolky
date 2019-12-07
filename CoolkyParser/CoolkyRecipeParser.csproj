@@ -10,8 +10,4 @@
     <PackageReference Include="Realm" Version="4.2.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <ProjectReference Include="..\CoolkyIngredientParser\CoolkyIngredientParser.csproj" />
-  </ItemGroup>
-
 </Project>

@@ -22,7 +22,8 @@ namespace CoolkyRecipeParser
 
             foreach (var context in factory.GetContexts())
             {
-                var urls = await context.GetPages();               
+                var urls = await context.GetPages();
+                var counter = 0;
 
                 await urls.ForEachAsync(async (url) =>
                 {
@@ -43,7 +44,8 @@ namespace CoolkyRecipeParser
                         var ingredients = context.GetIngredients(logic, page);
                         var id = context.GetId(logic, page);
 
-                        Console.WriteLine($"Parsing recipe {id} in {Thread.CurrentThread.ManagedThreadId} thread.");
+                        Interlocked.Increment(ref counter);
+                        Console.WriteLine($"Parsing recipe {counter} of {urls.Count()} in {Thread.CurrentThread.ManagedThreadId} thread.");
 
                         await RecipeDBProvider.AddRecipe(id, context.GetDishName(logic, page), context.GetCookTime(logic, page), context.GetCuisine(logic, page),
                                 context.GetType(logic, page), context.GetPortionAmount(logic, page), context.GetPictureUrl(logic, page), context.GetSteps(logic, page), context.GetWebSite());

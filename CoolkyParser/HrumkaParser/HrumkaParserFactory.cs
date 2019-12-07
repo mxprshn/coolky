@@ -6,7 +6,7 @@ namespace CoolkyRecipeParser.HrumkaParser
     {
         public List<ParsingContext> GetContexts() => new List<ParsingContext>
         {
-            new HrumkaTypeContext("vtoroe-bludo", "второе")
+            new HrumkaCuisineContext("gruzinskaya-kuxnya", "грузинская")
         };
 
         public IParsingLogic GetLogic() => new HrumkaParsingLogic();
