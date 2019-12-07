@@ -1,19 +1,24 @@
 package com.example.coolky.searchingredientspage
 
-import com.example.coolky.R
+import android.app.Activity
+import android.content.Context
+import android.inputmethodservice.Keyboard
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
+import android.view.*
+import android.view.inputmethod.InputMethodManager
+import android.widget.EditText
+import androidx.core.content.ContextCompat.getSystemService
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.example.coolky.R
 import com.example.coolky.database.DBProvider
 import com.example.coolky.database.models.Ingredient
-import io.realm.OrderedRealmCollection
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_search_ingredients.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -34,17 +39,33 @@ class SearchIngredientsFragment : Fragment() {
         showIngredients.adapter = ShowIngredientsAdapter(ingredients)
         showIngredients.layoutManager = LinearLayoutManager(context)
 
-        searchIngredients.addTextChangedListener(object : TextWatcher {
-            override fun afterTextChanged(s: Editable?) { }
+        showIngredients.addOnItemTouchListener(RecyclerItemClickListener(context, showIngredients,
+            object : RecyclerItemClickListener.OnItemClickListener {
+                override fun onItemClick(view: View?, position: Int) {
+                    Log.wtf("wtf", "okay")
+                    searchIngredients.hideKeyboard()
+                    /*if (true) {
+                        Toast.makeText(context, "${view.text.toString()}", Toast.LENGTH_LONG)
+                    }*/
+                }
 
-            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) { }
+                override fun onLongItemClick(view: View?, position: Int) {}
+            }))
+
+        searchIngredients.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(s: Editable?) {}
+
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
                 searchHintsHandler()
             }
         })
+    }
 
-
+    fun Context.hideKeyboard(view: View) {
+        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
+        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
     }
 
     // Хорошо ли просто делать ресайклер вью невидимым?
@@ -69,5 +90,10 @@ class SearchIngredientsFragment : Fragment() {
         }
     }
 
-    var ingredients: RealmResults<Ingredient>? = null
+    fun EditText.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
+    }
+
+    private var ingredients: RealmResults<Ingredient>? = null
 }
