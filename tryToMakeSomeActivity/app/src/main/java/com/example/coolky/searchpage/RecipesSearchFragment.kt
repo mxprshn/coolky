@@ -16,6 +16,8 @@ import com.example.coolky.R
 import com.example.coolky.recipesearchresultspage.RecipeSearchResultsFragment
 import com.example.coolky.searchingredientspage.SearchIngredientsFragment
 import com.google.android.material.chip.Chip
+import com.google.android.material.chip.ChipGroup
+import kotlinx.android.synthetic.main.fragment_recipe.*
 import kotlinx.android.synthetic.main.fragment_recipes_search.*
 
 /**
@@ -27,9 +29,7 @@ public class RecipesSearchFragment : Fragment() {
 
     private var model: RecipeSearchViewModel?=null
     private lateinit var typesOfDishes: Array<String>
-    private var chosenTypes = ArrayList<String>()
     private lateinit var cuisines: Array<String>
-    private var chosenCuisines = ArrayList<String>()
 
     override fun onCreate(savedInstanceState: Bundle?)
     {
@@ -48,7 +48,38 @@ public class RecipesSearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
+
         return inflater.inflate(R.layout.fragment_recipes_search, container, false)
+    }
+
+    public override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        FillViews()
+    }
+
+    public fun FillViews() {
+        for (ingrediemt in model!!.chosenIngredients) {
+
+        }
+
+        val types = ArrayList<String>()
+
+        for (type in model!!.chosenTypesOfDishes) {
+            types.add(type)
+        }
+
+        addTags(types, 1)
+
+        val cuisines = ArrayList<String>()
+
+        for (cuisine in model!!.chosenCuisines) {
+            cuisines.add(cuisine)
+        }
+
+        addTags(cuisines, 2)
+
+        if (model!!.chosenTime != 0 && model!!.chosenTime != Int.MAX_VALUE) {
+            cookingTimeMinutes.text.append(model!!.chosenTime.toString())
+        }
     }
 
     public override fun onActivityCreated(savedInstanceState: Bundle?) {
@@ -58,6 +89,50 @@ public class RecipesSearchFragment : Fragment() {
         chooseCuisine.setOnClickListener(this::chooseCuisineClickHandler)
         recipesSearchButton.setOnClickListener(this::searchClickHandler)
         chooseIngredient.setOnClickListener(this::chooseIngredientClickHandler)
+    }
+
+    private fun addTags(chosen : ArrayList<String>, choice : Int) {
+
+        if (chosen.size == 0) {
+            return
+        }
+
+        val layoutInflater = LayoutInflater.from(context)
+
+        if (choice == 1) {
+            typesOfDishes = updateAfterAdding(typesOfDishes, chosen)
+
+            for (type in chosen) {
+                val tag = layoutInflater.inflate(R.layout.tag_item, null, false)
+
+                (tag as Chip).text = type
+
+                tag.setOnCloseIconClickListener {
+                    tagGroupTypesOfDishes.removeView(tag)
+                    model!!.Remove(type, choice)
+                    typesOfDishes = updateAfterRemoving(typesOfDishes, type)
+                }
+
+                tagGroupTypesOfDishes.addView(tag)
+            }
+        }
+        else if (choice == 2) {
+            cuisines = updateAfterAdding(cuisines, chosen)
+
+            for (cuisine in chosen) {
+                val tag = layoutInflater.inflate(R.layout.tag_item, null, false)
+
+                (tag as Chip).text = cuisine
+
+                tag.setOnCloseIconClickListener {
+                    tagGroupCuisines.removeView(tag)
+                    model!!.Remove(cuisine, choice)
+                    cuisines = updateAfterRemoving(cuisines, cuisine)
+                }
+
+                tagGroupCuisines.addView(tag)
+            }
+        }
     }
 
     private fun updateAfterAdding(base: Array<String>, toRemove : ArrayList<String>): Array<String> {
@@ -115,17 +190,17 @@ public class RecipesSearchFragment : Fragment() {
                         if (isChecked) {
                             val text = typesOfDishesCopy[which]
 
-                            if (!chosenTypes.contains(text))
+                            if (!model!!.chosenTypesOfDishes.contains(text))
                             {
                                 tmpChosenTypes.add(text)
-                                chosenTypes.add(text)
+                                model!!.Add(text, 1)
                             }
 
-                        } else if (chosenTypes.contains(typesOfDishesCopy[which])) {
+                        } else if (model!!.chosenTypesOfDishes.contains(typesOfDishesCopy[which])) {
 
                             val text = typesOfDishesCopy[which]
 
-                            chosenTypes.remove(text)
+                            model!!.Remove(text, 1)
                             tmpChosenTypes.remove(text)
                         }
                     })
@@ -133,22 +208,7 @@ public class RecipesSearchFragment : Fragment() {
                     R.string.ok,
                     DialogInterface.OnClickListener { dialog, id ->
 
-                        val layoutInflater = LayoutInflater.from(context)
-                        typesOfDishes = updateAfterAdding(typesOfDishes, tmpChosenTypes)
-
-                        for (type in tmpChosenTypes) {
-                            val tag = layoutInflater.inflate(R.layout.tag_item, null, false)
-
-                            (tag as Chip).text = type
-
-                            tag.setOnCloseIconClickListener {
-                                tagGroupTypesOfDishes.removeView(tag)
-                                chosenTypes.remove(type)
-                                typesOfDishes = updateAfterRemoving(typesOfDishes, type)
-                            }
-
-                            tagGroupTypesOfDishes.addView(tag)
-                        }
+                        addTags(tmpChosenTypes, 1)
                     })
                 .create()
                 .show()
@@ -157,7 +217,7 @@ public class RecipesSearchFragment : Fragment() {
 
     private fun chooseIngredientClickHandler(chooseIngredient: View) {
         if (chooseIngredient is Button) {
-            var searchIngredientsFragment = SearchIngredientsFragment()
+            val searchIngredientsFragment = SearchIngredientsFragment()
             FragmentTools.changeFragment(searchIngredientsFragment, activity!!.supportFragmentManager)
         }
     }
@@ -175,37 +235,22 @@ public class RecipesSearchFragment : Fragment() {
                         if (isChecked) {
                             val text = cuisinesCopy[which]
 
-                            if (!chosenCuisines.contains(text))
+                            if (!model!!.chosenCuisines.contains(text))
                             {
                                 tmpChosenCuisines.add(text)
-                                chosenCuisines.add(text)
+                                model!!.Add(text, 2)
                             }
-                        } else if (chosenCuisines.contains(cuisines[which])) {
+                        } else if (model!!.chosenCuisines.contains(cuisines[which])) {
                             val text = cuisinesCopy[which]
 
-                            chosenCuisines.remove(text)
+                            model!!.Remove(text, 2)
                             tmpChosenCuisines.remove(text)
                         }
                     })
                 .setPositiveButton(
                     R.string.ok,
                     DialogInterface.OnClickListener { dialog, id ->
-                        val layoutInflater = LayoutInflater.from(context)
-                        cuisines = updateAfterAdding(cuisines, tmpChosenCuisines)
-
-                        for (cuisine in tmpChosenCuisines) {
-                            val tag = layoutInflater.inflate(R.layout.tag_item, null, false)
-
-                            (tag as Chip).text = cuisine
-
-                            tag.setOnCloseIconClickListener {
-                                tagGroupCuisines.removeView(tag)
-                                chosenCuisines.remove(cuisine)
-                                cuisines = updateAfterRemoving(cuisines, cuisine)
-                            }
-
-                            tagGroupCuisines.addView(tag)
-                        }
+                        addTags(tmpChosenCuisines, 2)
                     })
                 .create()
                 .show()
@@ -215,23 +260,17 @@ public class RecipesSearchFragment : Fragment() {
     private fun searchClickHandler(search: View) {
         if (search is Button) {
             val ingredients = ArrayList<String>()
-            val typesOfDishes = chosenTypes
-            val cuisines = chosenCuisines
-            val time : Int
 
             val timeText = cookingTimeMinutes.text.toString()
 
-            if (TextUtils.isEmpty(timeText)) {
-                time = Int.MAX_VALUE
-            }
-            else {
-                time = timeText.toInt()
+            val time = if (TextUtils.isEmpty(timeText)) {
+                Int.MAX_VALUE
+            } else {
+                timeText.toInt()
             }
 
-            model!!.ChosenIngredients = ingredients
-            model!!.ChosenTypesOfDishes = typesOfDishes
-            model!!.ChosenCuisines = cuisines
-            model!!.ChosenTime = time
+            model!!.chosenIngredients = ingredients
+            model!!.chosenTime = time
 
             val searchResultsFragment = RecipeSearchResultsFragment()
 

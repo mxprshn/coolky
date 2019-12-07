@@ -22,8 +22,6 @@ import kotlin.math.log
 
 class RecipeSearchResultsFragment : Fragment()
 {
-
-
     private lateinit var chosenIngredients : Array<String>
     private lateinit var chosenTypes : Array<String>
     private lateinit var chosenCuisines : Array<String>
@@ -42,11 +40,11 @@ class RecipeSearchResultsFragment : Fragment()
 
         val model = ViewModelProvider(activity!!)[RecipeSearchViewModel::class.java]
 
-        chosenCuisines = Array(model.ChosenCuisines.size) {i -> model.ChosenCuisines[i].toLowerCase(Locale.getDefault())}
+        chosenCuisines = Array(model.chosenCuisines.size) {i -> model.chosenCuisines[i].toLowerCase(Locale.getDefault())}
 
-        chosenTypes = Array(model.ChosenTypesOfDishes.size) {i -> model.ChosenTypesOfDishes[i].toLowerCase(Locale.getDefault())}
+        chosenTypes = Array(model.chosenTypesOfDishes.size) {i -> model.chosenTypesOfDishes[i].toLowerCase(Locale.getDefault())}
 
-        chosenTime = model.ChosenTime
+        chosenTime = model.chosenTime
 
         searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes(arrayOf(), chosenTypes, chosenCuisines, chosenTime))
     }
