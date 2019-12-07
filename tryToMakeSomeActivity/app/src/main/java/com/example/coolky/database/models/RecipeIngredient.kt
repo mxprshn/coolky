@@ -4,7 +4,7 @@ import io.realm.RealmObject
 
 open class RecipeIngredient : RealmObject()
 {
-    public var Recipe: Recipe? = null
-    public var Ingredient: Ingredient? = null
-    public var Amount: String? = null
+    public var recipe: Recipe? = null
+    public var ingredient: Ingredient? = null
+    public var amount: String? = null
 }

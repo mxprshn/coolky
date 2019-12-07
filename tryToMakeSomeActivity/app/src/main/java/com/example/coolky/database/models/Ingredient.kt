@@ -6,5 +6,5 @@ import io.realm.annotations.PrimaryKey
 open class Ingredient : RealmObject()
 {
     @PrimaryKey
-    public var Name: String? = null
+    public var name: String? = null
 }

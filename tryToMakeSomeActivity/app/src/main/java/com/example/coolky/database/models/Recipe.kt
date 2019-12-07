@@ -9,17 +9,17 @@ import io.realm.annotations.PrimaryKey
 open class Recipe : RealmObject()
 {
     @PrimaryKey
-    public var Id: String? = null
+    public var id: String? = null
 
-    public var DishName: String? = null
-    public var CookTime: Int = 0
-    public var Cuisine: String? = null
-    public var Type: String? = null
-    public var PortionAmount: Int = 0
-    public var PictureUrl: String? = null
-    public var WebSite: String? = null
-    public var Steps: RealmList<String> = RealmList()
+    public var dishName: String? = null
+    public var cookTime: Int = 0
+    public var cuisine: String? = null
+    public var type: String? = null
+    public var portionAmount: Int = 0
+    public var pictureUrl: String? = null
+    public var webSite: String? = null
+    public var steps: RealmList<String> = RealmList()
 
-    @LinkingObjects("Recipe")
-    public final val RecipeIngredients: RealmResults<RecipeIngredient>? = null
+    @LinkingObjects("recipe")
+    public final val recipeIngredients: RealmResults<RecipeIngredient>? = null
 }

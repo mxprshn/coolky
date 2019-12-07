@@ -15,8 +15,8 @@ class DBProvider
         // это нужно как-то сделать аля статическим
         public fun getIngredients(input: String): RealmResults<Ingredient> {
             val database = Realm.getDefaultInstance()
-            return database.where<Ingredient>().beginsWith("Name", input)
-                .or().contains("Name", " $input").findAll()
+            return database.where<Ingredient>().beginsWith("name", input)
+                .or().contains("name", " $input").findAll()
         }
 
         public fun getRecipes(ingredients: Array<String>, types : Array<String>, cuisines: Array<String>
@@ -28,37 +28,37 @@ class DBProvider
 
             for (ingredient in ingredients)
             {
-                recipeQuery = recipeQuery.equalTo("RecipeIngredients.Ingredient.Name", ingredient)
+                recipeQuery = recipeQuery.equalTo("recipeIngredients.ingredient.name", ingredient)
             }
 
             if (types.isNotEmpty())
             {
-                recipeQuery = recipeQuery.oneOf("Type", types)
+                recipeQuery = recipeQuery.oneOf("type", types)
             }
 
             if (cuisines.isNotEmpty())
             {
-                recipeQuery = recipeQuery.oneOf("Cuisine", cuisines)
+                recipeQuery = recipeQuery.oneOf("cuisine", cuisines)
             }
 
-            return recipeQuery.lessThan("CookTime", time).findAll()
+            return recipeQuery.lessThan("cookTime", time).findAll()
 
         }
 
         // + асинхронность
         public fun findRecipeById(recipeId: String) : Recipe? {
             val database = Realm.getDefaultInstance()
-            return database.where<Recipe>().equalTo("Id", recipeId).findFirst()
+            return database.where<Recipe>().equalTo("id", recipeId).findFirst()
         }
 
         public fun findIngredientByName(ingredientName: String) : Ingredient? {
             val database = Realm.getDefaultInstance()
-            return database.where<Ingredient>().equalTo("Name", ingredientName).findFirst()
+            return database.where<Ingredient>().equalTo("name", ingredientName).findFirst()
         }
 
         public fun findRecipeIngredientsById(recipeId: String) : RealmResults<RecipeIngredient> {
             val database = Realm.getDefaultInstance()
-            return database.where<RecipeIngredient>().equalTo("Recipe.Id", recipeId).findAll()
+            return database.where<RecipeIngredient>().equalTo("recipe.id", recipeId).findAll()
         }
     }
 }

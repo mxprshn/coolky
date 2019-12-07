@@ -53,9 +53,9 @@ class RecipeFragment : Fragment()
         ingredientsStepsTabLayout.setupWithViewPager(ingredientsStepsViewPager)
 
         Picasso.get().isLoggingEnabled = true
-        dishNameTextView.text = model.Name
-        portionsAmountTextView.text = model.PortionAmount.toString()
-        timeAmountTextView.text = model.CookTime.toString()
-        Picasso.get().load(model.PictureUrl).into(dishImageView)
+        dishNameTextView.text = model.name
+        portionsAmountTextView.text = model.portionAmount.toString()
+        timeAmountTextView.text = model.cookTime.toString()
+        Picasso.get().load(model.pictureUrl).into(dishImageView)
     }
 }

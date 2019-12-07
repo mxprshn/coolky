@@ -10,14 +10,14 @@ import io.realm.OrderedRealmCollection
 class RecipeInfoViewModel(private val id: String) : ViewModel()  {
     private val recipe: Recipe? = DBProvider.findRecipeById(id)
 
-    public var Name: String? = recipe!!.DishName
-    public var CookTime: Int = recipe!!.CookTime
-    public var Cuisine: String? = recipe!!.Cuisine
-    public var PortionAmount: Int = recipe!!.PortionAmount
-    public var PictureUrl: String? = recipe!!.PictureUrl
-    public var WebSite: String? = recipe!!.WebSite
-    public var Steps: List<String>? = recipe!!.Steps
-    public var Ingredients: OrderedRealmCollection<RecipeIngredient>? = DBProvider.findRecipeIngredientsById(id)
+    public var name: String? = recipe!!.dishName
+    public var cookTime: Int = recipe!!.cookTime
+    public var cuisine: String? = recipe!!.cuisine
+    public var portionAmount: Int = recipe!!.portionAmount
+    public var pictureUrl: String? = recipe!!.pictureUrl
+    public var webSite: String? = recipe!!.webSite
+    public var steps: List<String>? = recipe!!.steps
+    public var ingredients: OrderedRealmCollection<RecipeIngredient>? = DBProvider.findRecipeIngredientsById(id)
 
     class Factory(private val id: String) : ViewModelProvider.NewInstanceFactory()
     {

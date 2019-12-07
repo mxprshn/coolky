@@ -13,7 +13,6 @@ import com.example.coolky.database.models.Recipe
 import com.squareup.picasso.Picasso
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
-import kotlinx.android.synthetic.main.fragment_recipe.*
 
 class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val clickListener: OnItemClickListener) : RealmRecyclerViewAdapter<Recipe, SearchResultsListAdapter.SearchResultViewHolder>
         (collection, true)
@@ -33,11 +32,11 @@ class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val 
     class SearchResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
         public fun bind(recipe: Recipe, clickListener: OnItemClickListener) {
-            itemView.setOnClickListener { clickListener.onItemClick(recipe.Id!!) }
-            dishNameTextView.text = recipe.DishName
-            ingredientsLeftAmountTextView.text = DBProvider.findRecipeIngredientsById(recipe.Id!!).count().toString()
-            dishTypeTextView.text = recipe.Type
-            Picasso.get().load(recipe.PictureUrl).into(dishImageView)
+            itemView.setOnClickListener { clickListener.onItemClick(recipe.id!!) }
+            dishNameTextView.text = recipe.dishName
+            ingredientsLeftAmountTextView.text = DBProvider.findRecipeIngredientsById(recipe.id!!).count().toString()
+            dishTypeTextView.text = recipe.type
+            Picasso.get().load(recipe.pictureUrl).into(dishImageView)
         }
 
         private val dishNameTextView: TextView = itemView.findViewById(R.id.dishNameTextView)

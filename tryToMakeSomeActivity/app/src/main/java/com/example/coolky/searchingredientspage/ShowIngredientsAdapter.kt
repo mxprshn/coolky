@@ -14,7 +14,7 @@ class ShowIngredientsAdapter(collection: OrderedRealmCollection<Ingredient>?) : 
         (collection, true) {
     override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
         val ingredient = getItem(position)
-        holder.ingredientName.text = ingredient!!.Name.toString()
+        holder.ingredientName.text = ingredient!!.name.toString()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
