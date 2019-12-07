@@ -42,6 +42,7 @@ class DBProvider
             }
 
             return recipeQuery.lessThan("CookTime", time).findAll()
+
         }
 
         // + асинхронность

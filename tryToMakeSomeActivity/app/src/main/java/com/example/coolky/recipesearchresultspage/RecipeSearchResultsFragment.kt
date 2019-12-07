@@ -16,10 +16,19 @@ import com.example.coolky.searchpage.RecipeSearchViewModel
 import io.realm.OrderedRealmCollection
 import kotlinx.android.synthetic.main.fragment_recipe_ingredient_list.*
 import kotlinx.android.synthetic.main.fragment_recipe_search_results.*
+import kotlinx.android.synthetic.main.fragment_recipes_search.*
+import java.util.*
 import kotlin.math.log
 
 class RecipeSearchResultsFragment : Fragment()
 {
+
+
+    private lateinit var chosenIngredients : Array<String>
+    private lateinit var chosenTypes : Array<String>
+    private lateinit var chosenCuisines : Array<String>
+    private var chosenTime : Int = 0
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View?
     {
@@ -29,20 +38,16 @@ class RecipeSearchResultsFragment : Fragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
-        super.onViewCreated(view, savedInstanceState)
+        searchResultsRecyclerView.layoutManager = LinearLayoutManager(this.context)
 
         val model = ViewModelProvider(activity!!)[RecipeSearchViewModel::class.java]
 
-        model.ChosenTime.observe(viewLifecycleOwner, Observer {
-                t -> Log.wtf("RES", t.toString())
-        })
+        chosenCuisines = Array(model.ChosenCuisines.size) {i -> model.ChosenCuisines[i].toLowerCase(Locale.getDefault())}
 
-        model.ChosenCuisines.observe(viewLifecycleOwner, Observer {
-            cuisines ->
-            run { for (e in cuisines) Log.wtf("RES", e) }
-        })
+        chosenTypes = Array(model.ChosenTypesOfDishes.size) {i -> model.ChosenTypesOfDishes[i].toLowerCase(Locale.getDefault())}
 
-        searchResultsRecyclerView.layoutManager = LinearLayoutManager(this.context)
-        searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes(arrayOf(), arrayOf(), arrayOf(), 800))
+        chosenTime = model.ChosenTime
+
+        searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes(arrayOf(), chosenTypes, chosenCuisines, chosenTime))
     }
 }
