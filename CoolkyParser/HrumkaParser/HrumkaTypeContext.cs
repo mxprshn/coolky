@@ -30,42 +30,28 @@ namespace CoolkyRecipeParser.HrumkaParser
             return int.Parse(match.Value);
         }
 
-        public override async Task<IEnumerable<IDocument>> GetPages()
+        public override async Task<IEnumerable<string>> GetPages()
         {
             var basePage = await HtmlLoader.LoadAsync($"{baseUrl}/catalog/{urlTypeName}");
             var pageCount = PageCountParser(basePage.QuerySelector(".search-pages [href]:last-child").Text());
-            var queue = new ConcurrentBag<IDocument>();
+            var stringBag = new ConcurrentBag<string>();
             var counter = 1;
 
             await Enumerable.Range(1, pageCount).ForEachAsync<int>(async (i) =>
             {
                 var currentPage = await HtmlLoader.LoadAsync($"{baseUrl}/catalog/{urlTypeName}/{i}");
                 var recipeElements = currentPage.QuerySelectorAll(".h5");
-                Console.WriteLine($"{recipeElements.Length} recipes found at page {i}.");
+                Console.WriteLine($"{recipeElements.Length} recipes found at page {i}.");                
 
-                
-
-                await recipeElements.ForEachAsync(async (recipeElement) =>
+                Parallel.ForEach(recipeElements, (recipeElement) =>
                 {
-                    Console.WriteLine($"Downloading recipe {counter} of type {type} in {Thread.CurrentThread.ManagedThreadId} thread.");
+                    Console.WriteLine($"Found {counter} of type {type} in {Thread.CurrentThread.ManagedThreadId} thread.");
                     Interlocked.Increment(ref counter);
-                    var recipeLink = recipeElement.GetAttribute("href");
-                    IDocument page = null;
-
-                    try
-                    {
-                        page = await HtmlLoader.LoadAsync(baseUrl + recipeLink);
-                    }
-                    catch (Exception exc)
-                    {
-                        Console.WriteLine($"Error occured during downloading {recipeLink}.");
-                    }
-
-                    queue.Add(page);
+                    stringBag.Add($"{baseUrl}{recipeElement.GetAttribute("href")}");
                 });
             });
 
-            return queue.ToList();
+            return stringBag.ToList();
         }
 
         public override string GetType(IParsingLogic logic, IDocument page) => type;

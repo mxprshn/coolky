@@ -18,13 +18,26 @@ namespace CoolkyRecipeParser
 
         public async Task ParseAsync()
         {
-            var logic = factory.GetLogic();            
+            var logic = factory.GetLogic();
 
             foreach (var context in factory.GetContexts())
             {
-                var pages = await context.GetPages();
-                await pages.ForEachAsync(async (page) =>
+                var urls = await context.GetPages();               
+
+                await urls.ForEachAsync(async (url) =>
                 {
+                    IDocument page = null;
+
+                    try
+                    {
+                        page = await HtmlLoader.LoadAsync(url);
+                    }
+                    catch
+                    {
+                        Console.WriteLine($"Error downloading page {url}");
+                        return;
+                    }
+
                     try
                     {
                         var ingredients = context.GetIngredients(logic, page);
