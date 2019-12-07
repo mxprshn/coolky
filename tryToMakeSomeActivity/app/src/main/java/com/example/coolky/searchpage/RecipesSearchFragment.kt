@@ -11,6 +11,7 @@ import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.coolky.FragmentTools
 import com.example.coolky.R
 import com.example.coolky.recipesearchresultspage.RecipeSearchResultsFragment
