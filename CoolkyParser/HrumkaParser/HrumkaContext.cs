@@ -24,8 +24,15 @@ namespace CoolkyRecipeParser.HrumkaParser
 
         public override async Task<IEnumerable<string>> GetPages()
         {
+            var pageCount = 1;
             var basePage = await HtmlLoader.LoadAsync($"{baseUrl}/catalog/{SectionName}");
-            var pageCount = PageCountParser(basePage.QuerySelector(".search-pages [href]:last-child").Text());
+            var pager = basePage.QuerySelector(".search-pages [href]:last-child");
+
+            if (pager != null)
+            {
+                pageCount = PageCountParser(pager.Text());
+            }
+            
             var stringBag = new ConcurrentBag<string>();
             var counter = 1;
 
