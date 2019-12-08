@@ -4,7 +4,10 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModelProvider
 import com.coolteam.coolky.recipepage.RecipeFragment
+import com.coolteam.coolky.searchpage.RecipeSearchViewModel
 import com.coolteam.coolky.searchpage.RecipesSearchFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
@@ -17,7 +20,7 @@ public class MainActivity : AppCompatActivity() {
         bottomNavigation.selectedItemId = R.id.recipesSearch
         recipesSearchFragment = RecipesSearchFragment()
         FragmentTools.changeFragment(recipesSearchFragment, supportFragmentManager)
-        
+
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             bottomNavigationOnItemSelectedHandler(item)
             true
@@ -41,8 +44,7 @@ public class MainActivity : AppCompatActivity() {
             }
 
             R.id.recipesSearch -> {
-                recipesSearchFragment =
-                    RecipesSearchFragment()
+                recipesSearchFragment = RecipesSearchFragment()
                 FragmentTools.changeFragment(recipesSearchFragment, supportFragmentManager)
             }
 
