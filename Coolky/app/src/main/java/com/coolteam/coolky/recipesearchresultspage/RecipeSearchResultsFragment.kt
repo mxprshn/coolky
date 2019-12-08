@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.coolteam.coolky.FragmentTools
 import com.coolteam.coolky.OnItemClickListener
@@ -18,6 +19,7 @@ import java.util.*
 
 class RecipeSearchResultsFragment : Fragment()
 {
+    private var model: RecipeSearchViewModel?=null
     private lateinit var chosenIngredients : Array<String>
     private lateinit var chosenTypes : Array<String>
     private lateinit var chosenCuisines : Array<String>
@@ -31,10 +33,17 @@ class RecipeSearchResultsFragment : Fragment()
         }
     }
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        model = ViewModelProvider(activity!!)[RecipeSearchViewModel::class.java]
+    }
+
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,
                               savedInstanceState: Bundle?): View?
     {
         super.onCreateView(inflater, container, savedInstanceState)
+
         return inflater.inflate(R.layout.fragment_recipe_search_results, container, false)
     }
 
@@ -42,13 +51,23 @@ class RecipeSearchResultsFragment : Fragment()
     {
         searchResultsRecyclerView.layoutManager = LinearLayoutManager(this.context)
 
-        val model = ViewModelProvider(activity!!)[RecipeSearchViewModel::class.java]
+        model!!.chosenTypesOfDishes.observe(activity!!, Observer {
+            types ->
+            run {
+                chosenTypes = Array(types.size) {i -> types[i].toLowerCase(Locale.getDefault())}
+            }
+        })
 
-        chosenCuisines = Array(model.chosenCuisines.size) {i -> model.chosenCuisines[i].toLowerCase(Locale.getDefault())}
+        model!!.chosenCuisines.observe(activity!!, Observer {
+            cuisines ->
+            run {
+                chosenCuisines = Array(cuisines.size) { i -> cuisines[i].toLowerCase(Locale.getDefault()) }
+            }
+        })
 
-        chosenTypes = Array(model.chosenTypesOfDishes.size) {i -> model.chosenTypesOfDishes[i].toLowerCase(Locale.getDefault())}
-
-        chosenTime = model.chosenTime
+        model!!.chosenTime.observe(activity!!, Observer {
+                t -> chosenTime = t
+        })
 
         searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes(arrayOf(), chosenTypes, chosenCuisines, chosenTime), SearchResultClickListener())
     }

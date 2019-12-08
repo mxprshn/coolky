@@ -10,7 +10,7 @@ class FragmentTools {
             manager
                 .beginTransaction()
                 .replace(R.id.frameLayout , fragmentToOpen)
-                .setTransition(FragmentTransaction.TRANSIT_FRAGMENT_OPEN)
+                .addToBackStack(null)
                 .commit()
         }
     }
