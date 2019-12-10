@@ -1,5 +1,6 @@
 package com.coolteam.coolky.recipesearchresultspage
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -47,6 +48,7 @@ class RecipeSearchResultsFragment : Fragment()
         return inflater.inflate(R.layout.fragment_recipe_search_results, container, false)
     }
 
+    @SuppressLint("DefaultLocale")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
         searchResultsRecyclerView.layoutManager = LinearLayoutManager(this.context)
@@ -54,14 +56,14 @@ class RecipeSearchResultsFragment : Fragment()
         model!!.chosenTypesOfDishes.observe(activity!!, Observer {
             types ->
             run {
-                chosenTypes = Array(types.size) {i -> types[i].toLowerCase(Locale.getDefault())}
+                chosenTypes = Array(types.size) {i -> types[i].toLowerCase()}
             }
         })
 
         model!!.chosenCuisines.observe(activity!!, Observer {
             cuisines ->
             run {
-                chosenCuisines = Array(cuisines.size) { i -> cuisines[i].toLowerCase(Locale.getDefault()) }
+                chosenCuisines = Array(cuisines.size) { i -> cuisines[i].toLowerCase() }
             }
         })
 

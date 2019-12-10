@@ -1,5 +1,6 @@
 package com.coolteam.coolky.database
 
+import android.annotation.SuppressLint
 import com.coolteam.coolky.database.models.Ingredient
 import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.database.models.RecipeIngredient
@@ -7,6 +8,7 @@ import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.kotlin.oneOf
 import io.realm.kotlin.where
+import java.util.*
 
 class DBProvider
 {
@@ -59,6 +61,19 @@ class DBProvider
         public fun findRecipeIngredientsById(recipeId: String) : RealmResults<RecipeIngredient> {
             val database = Realm.getDefaultInstance()
             return database.where<RecipeIngredient>().equalTo("recipe.id", recipeId).findAll()
+        }
+
+        @SuppressLint("DefaultLocale")
+        public fun findRecipesByName(recipeName : String): RealmResults<Recipe> {
+            val database = Realm.getDefaultInstance()
+            val recipeNameQuery = database.where<Recipe>()
+            val name = recipeName.toLowerCase().capitalize()
+
+            recipeNameQuery.contains("dishName", name)
+            recipeNameQuery.or()
+            recipeNameQuery.contains("dishName", name.toLowerCase(Locale.getDefault()))
+
+            return recipeNameQuery.findAll()
         }
     }
 }

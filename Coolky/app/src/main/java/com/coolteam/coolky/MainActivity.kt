@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.MenuItem
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import com.coolteam.coolky.feedpage.FeedFragment
 import com.coolteam.coolky.recipepage.RecipeFragment
 import com.coolteam.coolky.searchpage.RecipeSearchViewModel
 import com.coolteam.coolky.searchpage.RecipesSearchFragment
@@ -33,9 +34,11 @@ public class MainActivity : AppCompatActivity() {
     @SuppressLint("RestrictedApi")
     private fun bottomNavigationOnItemSelectedHandler(item: MenuItem) {
         when(item.itemId) {
-            R.id.recommended -> {
-                recommendedFragment = RecommendedFragment()
-                FragmentTools.changeFragment(recommendedFragment, supportFragmentManager)
+            R.id.feed -> {
+                feedFragment = FeedFragment()
+                FragmentTools.changeFragment(feedFragment, supportFragmentManager)
+                //recommendedFragment = RecommendedFragment()
+                //FragmentTools.changeFragment(recommendedFragment, supportFragmentManager)
             }
 
             R.id.myRecipes -> {
@@ -60,11 +63,9 @@ public class MainActivity : AppCompatActivity() {
         }
     }
 
-    private lateinit var recommendedFragment: RecommendedFragment
+    private lateinit var feedFragment: FeedFragment
     private lateinit var myRecipesFragment: MyRecipesFragment
     private lateinit var settingsFragment: SettingsFragment
     private lateinit var recipesSearchFragment: RecipesSearchFragment
     private lateinit var favoritesFragment: FavoritesFragment
-
-    private lateinit var recipeFragment: RecipeFragment
 }
