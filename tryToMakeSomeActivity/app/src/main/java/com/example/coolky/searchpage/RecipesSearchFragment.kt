@@ -15,6 +15,7 @@ import com.example.coolky.searchingredientspage.SearchIngredientsFragment
 import com.google.android.material.chip.Chip
 import kotlinx.android.synthetic.main.fragment_recipes_search.*
 
+
 /**
  * A simple [Fragment] subclass.
  *

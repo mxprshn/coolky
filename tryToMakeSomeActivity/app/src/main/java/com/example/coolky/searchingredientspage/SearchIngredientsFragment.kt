@@ -1,18 +1,21 @@
 package com.example.coolky.searchingredientspage
 
-import android.app.Activity
 import android.content.Context
-import android.inputmethodservice.Keyboard
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
-import android.view.*
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
-import androidx.core.content.ContextCompat.getSystemService
+import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.coolky.R
 import com.example.coolky.database.DBProvider
 import com.example.coolky.database.models.Ingredient
@@ -36,21 +39,35 @@ class SearchIngredientsFragment : Fragment() {
     public override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        showIngredients.adapter = ShowIngredientsAdapter(ingredients)
+        showIngredients.adapter = ShowIngredientsAdapter(ingredientsToShow)
         showIngredients.layoutManager = LinearLayoutManager(context)
 
-        showIngredients.addOnItemTouchListener(RecyclerItemClickListener(context, showIngredients,
-            object : RecyclerItemClickListener.OnItemClickListener {
-                override fun onItemClick(view: View?, position: Int) {
-                    Log.wtf("wtf", "okay")
-                    searchIngredients.hideKeyboard()
-                    /*if (true) {
-                        Toast.makeText(context, "${view.text.toString()}", Toast.LENGTH_LONG)
-                    }*/
-                }
+        showIngredients.addOnItemTouchListener(
+            RecyclerItemClickListener(context, showIngredients,
+                object : RecyclerItemClickListener.OnItemClickListener {
+                    override fun onItemClick(view: View?, position: Int) {
+                        searchIngredients.hideKeyboard()
+                        // val recyclerViewElementColor = showIngredients[position].background as ColorDrawable
+                        //val recyclerViewElementColor = showIngredients[position].background
 
-                override fun onLongItemClick(view: View?, position: Int) {}
-            }))
+                        //if (recyclerViewElementColor== null) {
+                        //    Log.i("omg", "color is null")
+                        //}
+
+                        // FIX IT!!!
+                       // if (Color.parseColor(recyclerViewElementColor.toString()) == Color.parseColor("#ADD8E6")) {
+                       //     showIngredients[position].setBackgroundColor(Color.parseColor("#FFFFFF"))
+                       // }
+                       // else {
+                       //     showIngredients[position].setBackgroundColor(Color.parseColor("#ADD8E6"))
+                       // }
+                    }
+
+                    override fun onLongItemClick(view: View?, position: Int) {}
+                })
+        )
+
+
 
         searchIngredients.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -63,37 +80,36 @@ class SearchIngredientsFragment : Fragment() {
         })
     }
 
-    fun Context.hideKeyboard(view: View) {
-        val inputMethodManager = getSystemService(Activity.INPUT_METHOD_SERVICE) as InputMethodManager
-        inputMethodManager.hideSoftInputFromWindow(view.windowToken, 0)
+    private fun recyclerViewOnTouchHandler(recyclerView: View) {
+        if (recyclerView is RecyclerView) {
+            searchIngredients.hideKeyboard()
+        }
     }
 
     // Хорошо ли просто делать ресайклер вью невидимым?
     private fun searchHintsHandler() {
         if (searchIngredients.text.isNotEmpty()) {
-            ingredients = DBProvider.getIngredients(searchIngredients.text.toString())
+            ingredientsToShow = DBProvider.getIngredients(searchIngredients.text.toString())
 
-            if (!ingredients.isNullOrEmpty()) {
+            if (!ingredientsToShow.isNullOrEmpty()) {
                 nothingIsFound.visibility = View.GONE
-                showIngredients.adapter = ShowIngredientsAdapter(ingredients)
+                showIngredients.adapter = ShowIngredientsAdapter(ingredientsToShow)
                 showIngredients.visibility = View.VISIBLE
-            }
-            else if (ingredients != null && ingredients.isNullOrEmpty()) {
+            } else if (ingredientsToShow != null && ingredientsToShow.isNullOrEmpty()) {
                 showIngredients.visibility = View.GONE
                 nothingIsFound.visibility = View.VISIBLE
             }
-        }
-        else
-        {
+        } else {
             nothingIsFound.visibility = View.GONE
             showIngredients.visibility = View.GONE
         }
     }
 
-    fun EditText.hideKeyboard() {
+    private fun EditText.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
-    private var ingredients: RealmResults<Ingredient>? = null
+    private var ingredientsToShow: RealmResults<Ingredient>? = null
+    private var ingredientsToSend: MutableList<Ingredient> = mutableListOf()
 }
