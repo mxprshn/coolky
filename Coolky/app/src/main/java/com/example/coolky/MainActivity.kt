@@ -4,8 +4,6 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentTransaction
 import com.example.coolky.searchpage.RecipesSearchFragment
 import kotlinx.android.synthetic.main.activity_main.*
 

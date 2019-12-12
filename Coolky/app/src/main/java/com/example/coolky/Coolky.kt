@@ -4,10 +4,6 @@ import android.app.Application
 import io.realm.Realm
 import com.example.coolky.database.BundledRealmModule
 import io.realm.RealmConfiguration
-import androidx.core.content.ContextCompat.getSystemService
-import android.icu.lang.UCharacter.GraphemeClusterBreak.T
-import android.util.Log
-import com.example.coolky.database.DBProvider
 
 
 class Coolky : Application()

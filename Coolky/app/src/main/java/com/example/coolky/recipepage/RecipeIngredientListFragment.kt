@@ -7,9 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.coolky.R
-import com.example.coolky.database.DBProvider
 import kotlinx.android.synthetic.main.fragment_recipe_ingredient_list.*
 
 class RecipeIngredientListFragment : Fragment()

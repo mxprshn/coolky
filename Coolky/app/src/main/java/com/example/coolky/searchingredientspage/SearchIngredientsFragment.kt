@@ -1,12 +1,9 @@
 package com.example.coolky.searchingredientspage
 
 import android.content.Context
-import android.graphics.Color
-import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -23,7 +20,6 @@ import com.example.coolky.database.DBProvider
 import com.example.coolky.database.models.Ingredient
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_search_ingredients.*
-import kotlinx.android.synthetic.main.view_holder_ingredient.*
 
 
 /**
