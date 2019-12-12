@@ -8,8 +8,8 @@
         android:id="@+id/ingredientView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FFFFFF"
-        android:checkMark="@drawable/ic_ingredient_is_chosen_blue_24dp"
+        android:checkMark="?android:attr/listChoiceIndicatorMultiple"
+        android:checked="false"
         android:padding="5dp"
         android:textColor="@android:color/primary_text_light"
         android:textSize="22sp" />

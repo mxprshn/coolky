@@ -11,7 +11,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.CheckedTextView
 import android.widget.EditText
+import android.widget.LinearLayout
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,7 @@ import com.example.coolky.database.DBProvider
 import com.example.coolky.database.models.Ingredient
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_search_ingredients.*
+import kotlinx.android.synthetic.main.view_holder_ingredient.*
 
 
 /**
@@ -47,20 +50,15 @@ class SearchIngredientsFragment : Fragment() {
                 object : RecyclerItemClickListener.OnItemClickListener {
                     override fun onItemClick(view: View?, position: Int) {
                         searchIngredients.hideKeyboard()
-                        // val recyclerViewElementColor = showIngredients[position].background as ColorDrawable
-                        //val recyclerViewElementColor = showIngredients[position].background
-
-                        //if (recyclerViewElementColor== null) {
-                        //    Log.i("omg", "color is null")
-                        //}
-
-                        // FIX IT!!!
-                       // if (Color.parseColor(recyclerViewElementColor.toString()) == Color.parseColor("#ADD8E6")) {
-                       //     showIngredients[position].setBackgroundColor(Color.parseColor("#FFFFFF"))
-                       // }
-                       // else {
-                       //     showIngredients[position].setBackgroundColor(Color.parseColor("#ADD8E6"))
-                       // }
+                        val checkedTextView = ((showIngredients[position] as LinearLayout)[0] as CheckedTextView)
+                        if (checkedTextView.isChecked) {
+                            checkedTextView.isChecked = false
+                            ingredientsToSend.remove(checkedTextView.text.toString())
+                        }
+                        else {
+                            checkedTextView.isChecked = true
+                            ingredientsToSend.add(checkedTextView.text.toString())
+                        }
                     }
 
                     override fun onLongItemClick(view: View?, position: Int) {}
@@ -111,5 +109,5 @@ class SearchIngredientsFragment : Fragment() {
     }
 
     private var ingredientsToShow: RealmResults<Ingredient>? = null
-    private var ingredientsToSend: MutableList<Ingredient> = mutableListOf()
+    private var ingredientsToSend: MutableList<String> = mutableListOf()
 }
