@@ -30,7 +30,6 @@
             android:id="@+id/feedRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
             android:background="?backgroundColor"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2" >

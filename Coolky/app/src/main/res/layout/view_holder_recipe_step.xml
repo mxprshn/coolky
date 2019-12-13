@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/background_light"
+    android:background="?backgroundColor"
     android:orientation="vertical">
 
     <TextView
@@ -14,7 +14,6 @@
         android:padding="12dp"
         android:text="Сперва займитесь соусом. Традиционно для пиццы используют томатный соус, приготовленный из свежих или из консервированных томатов, но так как сезон свежих томатов слишком короткий, а консервированные можно найти не везде, предлагаю приготовить простой, но вкусный вариант соуса для пиццы. Возьмите 1 ст. л. с горкой хорошей (качественной и вкусной!) томатной пасты, добавьте к ней 2-3 ст. л. воды (кипяченой), щепотку сахара, соли и немного сушенных трав."
         android:textAlignment="center"
-        android:textColor="@android:color/primary_text_light"
         android:textSize="16sp" />
 
     <ImageView
