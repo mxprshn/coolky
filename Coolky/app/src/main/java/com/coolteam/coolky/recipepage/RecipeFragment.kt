@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.coolteam.coolky.R
@@ -48,6 +49,12 @@ class RecipeFragment : Fragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
+        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+            roundedRectangleImageView.setImageResource(R.drawable.shadow_rounded_rectangle_night)
+        } else {
+            roundedRectangleImageView.setImageResource(R.drawable.shadow_rounded_rectangle)
+        }
+
         super.onViewCreated(view, savedInstanceState)
         ingredientsStepsViewPager.adapter = IngredientsStepsPagerAdapter(childFragmentManager)
         ingredientsStepsTabLayout.setupWithViewPager(ingredientsStepsViewPager)

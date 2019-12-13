@@ -7,8 +7,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.fragment.app.FragmentManager
-import com.coolteam.coolky.FragmentTools
+import androidx.lifecycle.ViewModelProvider
+import com.coolteam.coolky.MainActivityViewModel
 import com.coolteam.coolky.R
 import kotlinx.android.synthetic.main.fragment_settings.*
 
@@ -16,6 +16,13 @@ import kotlinx.android.synthetic.main.fragment_settings.*
  * A simple [Fragment] subclass.
  */
 class SettingsFragment : Fragment() {
+
+    var darkModeModel : MainActivityViewModel?=null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        darkModeModel = ViewModelProvider(activity!!)[MainActivityViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,9 +45,7 @@ class SettingsFragment : Fragment() {
                     AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
                 }
 
-                if (activity!!.supportFragmentManager.backStackEntryCount == 0) {
-                    activity!!.supportFragmentManager.beginTransaction().addToBackStack(this.tag)
-                }
+                darkModeModel!!.isDarkThemeJustToggled = true
             }
         }
     }

@@ -1,5 +1,6 @@
 <resources>
     <!-- Base application theme. -->
+    <attr name="recipeRectangle" format="reference"/>
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.Bridge">
         <!-- Customize your theme here. -->
         <item name="android:textViewStyle">@style/AppTheme</item>
@@ -11,7 +12,7 @@
         <item name="colorSecondary">@color/colorPrimary</item>
         <item name="android:windowAnimationStyle">@style/WindowAnimationTransition</item>
     </style>
-
+    
     <style name="WindowAnimationTransition">
         <item name="android:windowEnterAnimation">@android:anim/fade_in</item>
         <item name="android:windowExitAnimation">@android:anim/fade_out</item>
