@@ -3,5 +3,10 @@
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
     <color name="colorAccent">#D81B60</color>
+    <color name="colorPrimaryNight">#121212</color>
+    <color name="colorPrimaryNightDark">#000000</color>
     <color name="whiteColor">#FFFFFF</color>
+    <color name="backGroundNight">#303030</color>
+    <color name="gray">#808080</color>
+    <color name="lightGray">#708090</color>
 </resources>

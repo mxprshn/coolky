@@ -8,13 +8,14 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/cardView"
+        android:background="?backgroundColor"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp">
+        android:padding="1dp">
 
         <ImageView
             android:id="@+id/dishImageView"
+            android:background="?backgroundColor"
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
@@ -26,7 +27,7 @@
             android:id="@+id/dishNameTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Пицца"
+            android:background="?backgroundColor"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

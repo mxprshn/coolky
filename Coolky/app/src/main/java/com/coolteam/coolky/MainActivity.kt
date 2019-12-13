@@ -4,12 +4,9 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModelProvider
 import com.coolteam.coolky.feedpage.FeedFragment
-import com.coolteam.coolky.recipepage.RecipeFragment
-import com.coolteam.coolky.searchpage.RecipeSearchViewModel
 import com.coolteam.coolky.searchpage.RecipesSearchFragment
+import com.coolteam.coolky.settingspage.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 public class MainActivity : AppCompatActivity() {
@@ -19,8 +16,16 @@ public class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
 
         bottomNavigation.selectedItemId = R.id.recipesSearch
-        recipesSearchFragment = RecipesSearchFragment()
-        FragmentTools.changeFragment(recipesSearchFragment, supportFragmentManager)
+
+        val index = supportFragmentManager.backStackEntryCount - 1
+
+        if (index < 0) {
+            recipesSearchFragment = RecipesSearchFragment()
+            FragmentTools.changeFragment(recipesSearchFragment, supportFragmentManager)
+        } else {
+            settingsFragment = SettingsFragment()
+            FragmentTools.changeFragment(settingsFragment, supportFragmentManager)
+        }
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             bottomNavigationOnItemSelectedHandler(item)
@@ -57,7 +62,8 @@ public class MainActivity : AppCompatActivity() {
             }
 
             R.id.settings -> {
-                settingsFragment = SettingsFragment()
+                settingsFragment =
+                    SettingsFragment()
                 FragmentTools.changeFragment(settingsFragment, supportFragmentManager)
             }
         }

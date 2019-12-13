@@ -9,6 +9,7 @@
     <string name="myRecipes">Мои рецепты</string>
     <string name="favorites">Избранное</string>
     <string name="settings">Настройки</string>
+    <string name="darkMode">Тёмная тема</string>
     <string name="myRecipesInDeveloping">Мои рецепты. В разработке</string>
     <string name="recommendedInDeveloping">Рекомендуемое. В разработке</string>
     <string name="recipesSearchInDeveloping">Поиск рецептов. В разработке</string>
