@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.DBProvider
 import com.coolteam.coolky.database.models.Ingredient
+import io.realm.OrderedRealmCollection
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_search_ingredients.*
 
@@ -35,14 +36,13 @@ class SearchIngredientsFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_search_ingredients, container, false)
     }
 
-    public override fun onActivityCreated(savedInstanceState: Bundle?) {
+    public override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
         showIngredients.adapter = ShowIngredientsAdapter(ingredientsToShow)
         showIngredients.layoutManager = LinearLayoutManager(context)
 
-        showIngredients.addOnItemTouchListener(
-            RecyclerItemClickListener(context, showIngredients,
+        showIngredients.addOnItemTouchListener(RecyclerItemClickListener(context, showIngredients,
                 object : RecyclerItemClickListener.OnItemClickListener {
                     override fun onItemClick(view: View?, position: Int) {
                         searchIngredients.hideKeyboard()
@@ -74,12 +74,6 @@ class SearchIngredientsFragment : Fragment() {
         })
     }
 
-    private fun recyclerViewOnTouchHandler(recyclerView: View) {
-        if (recyclerView is RecyclerView) {
-            searchIngredients.hideKeyboard()
-        }
-    }
-
     // Хорошо ли просто делать ресайклер вью невидимым?
     private fun searchHintsHandler() {
         if (searchIngredients.text.isNotEmpty()) {
@@ -87,7 +81,7 @@ class SearchIngredientsFragment : Fragment() {
 
             if (!ingredientsToShow.isNullOrEmpty()) {
                 nothingIsFound.visibility = View.GONE
-                showIngredients.adapter = ShowIngredientsAdapter(ingredientsToShow)
+                (showIngredients.adapter as ShowIngredientsAdapter).updateData(ingredientsToShow)
                 showIngredients.visibility = View.VISIBLE
             } else if (ingredientsToShow != null && ingredientsToShow.isNullOrEmpty()) {
                 showIngredients.visibility = View.GONE
