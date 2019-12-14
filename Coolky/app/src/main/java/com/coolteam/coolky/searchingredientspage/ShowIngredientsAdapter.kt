@@ -12,7 +12,7 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 
 class ShowIngredientsAdapter(collection: OrderedRealmCollection<Ingredient>?) : RealmRecyclerViewAdapter<Ingredient, ShowIngredientsAdapter.IngredientViewHolder>
-        (collection, true) {
+    (collection, true) {
     public override fun updateData(ingredients: OrderedRealmCollection<Ingredient>?) {
         super.updateData(ingredients)
     }

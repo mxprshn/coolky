@@ -3,8 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@android:color/background_light"
-    android:orientation="vertical">
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="?backgroundColor"
+    android:orientation="vertical"
+    tools:context=".feedpage.FeedFragment">
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/recipeSearchField"
@@ -23,13 +25,14 @@
 
     <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="?backgroundColor">
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/feedRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
+            android:background="?backgroundColor"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:spanCount="2" >
 

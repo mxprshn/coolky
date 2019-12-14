@@ -10,6 +10,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.coolteam.coolky.FragmentTools
+import com.coolteam.coolky.MainActivityViewModel
 import com.coolteam.coolky.OnItemClickListener
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.DBProvider
@@ -21,6 +22,7 @@ import java.util.*
 class RecipeSearchResultsFragment : Fragment()
 {
     private var model: RecipeSearchViewModel?=null
+    private var mainActivityModel: MainActivityViewModel?=null
     private lateinit var chosenIngredients : Array<String>
     private lateinit var chosenTypes : Array<String>
     private lateinit var chosenCuisines : Array<String>
@@ -30,6 +32,7 @@ class RecipeSearchResultsFragment : Fragment()
     {
         override fun onItemClick(recipeId: String) {
             // здесь нужно вызвать метод, переключающий фрагменты
+            mainActivityModel!!.currentSearchFragment = RecipeFragment.newInstance(recipeId)
             FragmentTools.changeFragment(RecipeFragment.newInstance(recipeId), activity!!.supportFragmentManager)
         }
     }
@@ -38,6 +41,7 @@ class RecipeSearchResultsFragment : Fragment()
         super.onCreate(savedInstanceState)
 
         model = ViewModelProvider(activity!!)[RecipeSearchViewModel::class.java]
+        mainActivityModel = ViewModelProvider(activity!!)[MainActivityViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

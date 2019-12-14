@@ -43,22 +43,22 @@ class SearchIngredientsFragment : Fragment() {
         showIngredients.layoutManager = LinearLayoutManager(context)
 
         showIngredients.addOnItemTouchListener(RecyclerItemClickListener(context, showIngredients,
-                object : RecyclerItemClickListener.OnItemClickListener {
-                    override fun onItemClick(view: View?, position: Int) {
-                        searchIngredients.hideKeyboard()
-                        val checkedTextView = ((showIngredients[position] as LinearLayout)[0] as CheckedTextView)
-                        if (checkedTextView.isChecked) {
-                            checkedTextView.isChecked = false
-                            ingredientsToSend.remove(checkedTextView.text.toString())
-                        }
-                        else {
-                            checkedTextView.isChecked = true
-                            ingredientsToSend.add(checkedTextView.text.toString())
-                        }
+            object : RecyclerItemClickListener.OnItemClickListener {
+                override fun onItemClick(view: View?, position: Int) {
+                    searchIngredients.hideKeyboard()
+                    val checkedTextView = ((showIngredients[position] as LinearLayout)[0] as CheckedTextView)
+                    if (checkedTextView.isChecked) {
+                        checkedTextView.isChecked = false
+                        ingredientsToSend.remove(checkedTextView.text.toString())
                     }
+                    else {
+                        checkedTextView.isChecked = true
+                        ingredientsToSend.add(checkedTextView.text.toString())
+                    }
+                }
 
-                    override fun onLongItemClick(view: View?, position: Int) {}
-                })
+                override fun onLongItemClick(view: View?, position: Int) {}
+            })
         )
 
 

@@ -9,6 +9,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.coolteam.coolky.FragmentTools
+import com.coolteam.coolky.MainActivityViewModel
 import com.coolteam.coolky.OnItemClickListener
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.DBProvider
@@ -17,10 +18,12 @@ import kotlinx.android.synthetic.main.fragment_feed.*
 
 class FeedFragment : Fragment() {
     private var model : FeedViewModel?=null
+    private var mainActivityModel : MainActivityViewModel?=null
 
     public inner class FeedItemClickListener : OnItemClickListener
     {
         override fun onItemClick(recipeId: String) {
+            mainActivityModel!!.currentFeedFragment = RecipeFragment.newInstance(recipeId)
             FragmentTools.changeFragment(RecipeFragment.newInstance(recipeId), activity!!.supportFragmentManager)
         }
     }
@@ -28,6 +31,7 @@ class FeedFragment : Fragment() {
     public override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = ViewModelProvider(activity!!)[FeedViewModel::class.java]
+        mainActivityModel = ViewModelProvider(activity!!)[MainActivityViewModel::class.java]
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,

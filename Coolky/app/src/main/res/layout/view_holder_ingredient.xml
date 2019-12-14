@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:checkMark="?android:attr/listChoiceIndicatorMultiple"
         android:padding="5dp"
-        android:textColor="@android:color/primary_text_light"
+        android:background="?backgroundColor"
         android:textSize="20sp" />
 
 </LinearLayout>

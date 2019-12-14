@@ -13,6 +13,7 @@ import com.coolteam.coolky.database.models.Recipe
 import com.squareup.picasso.Picasso
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
+import kotlin.text.StringBuilder
 
 class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val clickListener: OnItemClickListener) : RealmRecyclerViewAdapter<Recipe, SearchResultsListAdapter.SearchResultViewHolder>
         (collection, true)
@@ -34,7 +35,10 @@ class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val 
         public fun bind(recipe: Recipe, clickListener: OnItemClickListener) {
             itemView.setOnClickListener { clickListener.onItemClick(recipe.id!!) }
             dishNameTextView.text = recipe.dishName
-            ingredientsLeftAmountTextView.text = DBProvider.findRecipeIngredientsById(recipe.id!!).count().toString()
+            var stringBuilder = StringBuilder()
+            stringBuilder.append("Нужно ещё ингредиентов: ")
+            stringBuilder.append(DBProvider.findRecipeIngredientsById(recipe.id!!).count().toString())
+            ingredientsLeftAmountTextView.text = stringBuilder
             dishTypeTextView.text = recipe.type
             Picasso.get().load(recipe.pictureUrl).into(dishImageView)
         }

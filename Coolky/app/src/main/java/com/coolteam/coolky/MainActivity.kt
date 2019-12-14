@@ -4,23 +4,31 @@ import android.annotation.SuppressLint
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModelProvider
+import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.feedpage.FeedFragment
-import com.coolteam.coolky.recipepage.RecipeFragment
-import com.coolteam.coolky.searchpage.RecipeSearchViewModel
 import com.coolteam.coolky.searchpage.RecipesSearchFragment
+import com.coolteam.coolky.settingspage.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 public class MainActivity : AppCompatActivity() {
 
+    var model : MainActivityViewModel?=null
+
     public override fun onCreate(savedInstanceState: Bundle?) {
+        model = ViewModelProvider(this)[MainActivityViewModel::class.java]
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         bottomNavigation.selectedItemId = R.id.recipesSearch
-        recipesSearchFragment = RecipesSearchFragment()
-        FragmentTools.changeFragment(recipesSearchFragment, supportFragmentManager)
+
+        if (model!!.isDarkThemeJustToggled) {
+            settingsFragment = SettingsFragment()
+            FragmentTools.changeFragment(settingsFragment, supportFragmentManager)
+            model!!.isDarkThemeJustToggled = false
+        } else {
+            FragmentTools.changeFragment(model!!.currentSearchFragment, supportFragmentManager)
+        }
 
         bottomNavigation.setOnNavigationItemSelectedListener { item ->
             bottomNavigationOnItemSelectedHandler(item)
@@ -35,8 +43,14 @@ public class MainActivity : AppCompatActivity() {
     private fun bottomNavigationOnItemSelectedHandler(item: MenuItem) {
         when(item.itemId) {
             R.id.feed -> {
-                feedFragment = FeedFragment()
-                FragmentTools.changeFragment(feedFragment, supportFragmentManager)
+                if (item.isChecked) {
+                    feedFragment = FeedFragment()
+                    FragmentTools.changeFragment(feedFragment, supportFragmentManager)
+                } else {
+                    FragmentTools.changeFragment(model!!.currentFeedFragment, supportFragmentManager)
+                    model!!.currentFeedFragment = FeedFragment()
+                }
+
                 //recommendedFragment = RecommendedFragment()
                 //FragmentTools.changeFragment(recommendedFragment, supportFragmentManager)
             }
@@ -47,8 +61,13 @@ public class MainActivity : AppCompatActivity() {
             }
 
             R.id.recipesSearch -> {
-                recipesSearchFragment = RecipesSearchFragment()
-                FragmentTools.changeFragment(recipesSearchFragment, supportFragmentManager)
+                if (item.isChecked) {
+                    recipesSearchFragment = RecipesSearchFragment()
+                    FragmentTools.changeFragment(recipesSearchFragment, supportFragmentManager)
+                } else {
+                    FragmentTools.changeFragment(model!!.currentSearchFragment, supportFragmentManager)
+                    model!!.currentSearchFragment = RecipesSearchFragment()
+                }
             }
 
             R.id.favorites -> {
@@ -57,7 +76,8 @@ public class MainActivity : AppCompatActivity() {
             }
 
             R.id.settings -> {
-                settingsFragment = SettingsFragment()
+                settingsFragment =
+                    SettingsFragment()
                 FragmentTools.changeFragment(settingsFragment, supportFragmentManager)
             }
         }
