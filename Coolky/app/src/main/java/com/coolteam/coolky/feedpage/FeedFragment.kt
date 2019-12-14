@@ -59,6 +59,15 @@ class FeedFragment : Fragment() {
         })
 
         val data = DBProvider.findRecipesByName(model!!.request)
-        feedRecyclerView.adapter = FeedAdapter(data, FeedItemClickListener())
+
+        val indexes = ArrayList<Int>()
+
+        for (i in 0 until data.size) {
+            indexes.add(i)
+        }
+
+        indexes.shuffle()
+
+        feedRecyclerView.adapter = FeedAdapter(data, FeedItemClickListener(), indexes)
     }
 }

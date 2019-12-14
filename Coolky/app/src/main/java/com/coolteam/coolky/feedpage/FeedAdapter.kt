@@ -14,19 +14,13 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import kotlin.collections.ArrayList
 
-class FeedAdapter(collection : OrderedRealmCollection<Recipe>, val clickListener: OnItemClickListener) : RealmRecyclerViewAdapter<Recipe, FeedAdapter.FeedItemViewHolder>
+class FeedAdapter(collection : OrderedRealmCollection<Recipe>, val clickListener: OnItemClickListener, val indexes : ArrayList<Int>) : RealmRecyclerViewAdapter<Recipe, FeedAdapter.FeedItemViewHolder>
     (collection, true)
 {
-    var indeces = ArrayList<Int>()
+    var indeces = indexes
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.view_holder_feed_recipe, parent, false)
-        indeces.clear()
-        for (i in 0 until data!!.size) {
-            indeces.add(i)
-        }
-
-        indeces.shuffle()
         return FeedItemViewHolder(view)
     }
 
