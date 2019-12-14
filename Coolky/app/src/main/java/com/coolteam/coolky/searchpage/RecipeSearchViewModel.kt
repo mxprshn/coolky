@@ -31,9 +31,13 @@ class RecipeSearchViewModel : ViewModel() {
         if (ingredients.isEmpty()) {
             return
         }
-
         val tmp = chosenIngredients.value!!
-        tmp.addAll(ingredients)
+
+        for (e in ingredients) {
+            if (!tmp.contains(e)) {
+                tmp.add(e)
+            }
+        }
         tmp.sort()
         chosenIngredients.postValue(tmp)
     }

@@ -71,10 +71,17 @@ class RecipeSearchResultsFragment : Fragment()
             }
         })
 
+        model!!.chosenIngredients.observe(activity!!, Observer {
+            ingredients ->
+            run {
+                chosenIngredients = Array(ingredients.size) {i -> ingredients[i].toLowerCase()}
+            }
+        })
+
         model!!.chosenTime.observe(activity!!, Observer {
                 t -> chosenTime = t
         })
 
-        searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes(arrayOf(), chosenTypes, chosenCuisines, chosenTime), SearchResultClickListener())
+        searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes(chosenIngredients, chosenTypes, chosenCuisines, chosenTime), SearchResultClickListener())
     }
 }

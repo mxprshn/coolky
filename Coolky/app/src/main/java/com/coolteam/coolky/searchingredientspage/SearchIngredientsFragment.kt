@@ -8,16 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
+import android.widget.Button
 import android.widget.CheckedTextView
 import android.widget.EditText
 import android.widget.LinearLayout
 import androidx.core.view.get
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.coolteam.coolky.FragmentTools
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.DBProvider
 import com.coolteam.coolky.database.models.Ingredient
+import com.coolteam.coolky.searchpage.RecipeSearchViewModel
+import com.coolteam.coolky.searchpage.RecipesSearchFragment
 import io.realm.OrderedRealmCollection
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_search_ingredients.*
@@ -27,6 +32,14 @@ import kotlinx.android.synthetic.main.fragment_search_ingredients.*
  * A simple [Fragment] subclass.
  */
 class SearchIngredientsFragment : Fragment() {
+
+    private var model: RecipeSearchViewModel?=null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+        model = ViewModelProvider(activity!!)[RecipeSearchViewModel::class.java]
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,6 +51,8 @@ class SearchIngredientsFragment : Fragment() {
 
     public override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
+
+        ingredientsAreChosen.setOnClickListener(this::ingredientsAreChosenClickListener)
 
         showIngredients.adapter = ShowIngredientsAdapter(ingredientsToShow)
         showIngredients.layoutManager = LinearLayoutManager(context)
@@ -98,6 +113,14 @@ class SearchIngredientsFragment : Fragment() {
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
+    private fun ingredientsAreChosenClickListener(ingredientsChosen: View) {
+        if (ingredientsChosen is Button) {
+            model!!.addIngredients(ingredientsToSend)
+            val recipesSearchFragment = RecipesSearchFragment()
+            FragmentTools.changeFragment(recipesSearchFragment, activity!!.supportFragmentManager)
+        }
+    }
+
     private var ingredientsToShow: RealmResults<Ingredient>? = null
-    private var ingredientsToSend: MutableList<String> = mutableListOf()
+    private var ingredientsToSend: ArrayList<String> = ArrayList()
 }

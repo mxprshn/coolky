@@ -32,8 +32,6 @@ public class RecipesSearchFragment : Fragment() {
     private var model: RecipeSearchViewModel?=null
     private lateinit var typesOfDishes: Array<String>
     private lateinit var cuisines: Array<String>
-    private lateinit var chosenTypesOfDishes : ArrayList<String>
-    private  lateinit var chosenCuisines : ArrayList<String>
     private var root: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -77,6 +75,13 @@ public class RecipesSearchFragment : Fragment() {
             run {
                 updateTagGroup(root!!.tagGroupCuisines, modelCuisines)
                 cuisines = updateChoices(resources.getStringArray(R.array.cuisines), modelCuisines)
+            }
+        })
+
+        model!!.chosenIngredients.observe(activity!!, Observer {
+            modelIngredients ->
+            run {
+                updateTagGroup(root!!.tagGroupIngredients, modelIngredients)
             }
         })
     }
@@ -194,8 +199,6 @@ public class RecipesSearchFragment : Fragment() {
 
     private fun searchClickHandler(search: View) {
         if (search is Button) {
-            val ingredients = ArrayList<String>()
-
             val timeText = cookingTimeMinutes.text.toString()
 
             val time = if (TextUtils.isEmpty(timeText)) {
@@ -204,7 +207,6 @@ public class RecipesSearchFragment : Fragment() {
                 timeText.toInt()
             }
 
-            model!!.chosenIngredients.value = ingredients
             model!!.chosenTime.postValue(time)
 
             val searchResultsFragment = RecipeSearchResultsFragment()
