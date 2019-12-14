@@ -19,8 +19,14 @@ namespace CoolkyRecipeParser
                 Func<TSource, Task> taskSelector, SemaphoreSlim oneAtATime)
         {
             await oneAtATime.WaitAsync();
-            await taskSelector(item);
-            oneAtATime.Release();
+            try
+            {
+                await taskSelector(item);
+            }
+            finally
+            {
+                oneAtATime.Release();
+            }         
         }
     }
 }

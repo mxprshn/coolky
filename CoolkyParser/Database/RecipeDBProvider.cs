@@ -15,68 +15,81 @@ namespace CoolkyRecipeParser
 
         public static Ingredient FindIngredientByName(string name)
         {
-            var realm = Realm.GetInstance(config);
-            return realm.Find<Ingredient>(name);
+            using (var realm = Realm.GetInstance(config))
+            {
+                return realm.Find<Ingredient>(name);
+            }            
         }
 
         public static Recipe FindRecipeById(string id)
         {
-            var realm = Realm.GetInstance(config);
-            return realm.Find<Recipe>(id);
-        }
-
-        public static bool IngredientExists(string name)
-        {
-            var realm = Realm.GetInstance(config);
-            return realm.Find<Ingredient>(name) != null;
-        }
-
-        public static async Task AddRecipeIngredient(string recipeId, string ingredientName, string amount)
-        {
-            var realm = Realm.GetInstance(config);
-
-            await realm.WriteAsync(tempRealm =>
+            using (var realm = Realm.GetInstance(config))
             {
-                tempRealm.Add(new RecipeIngredient(FindRecipeById(recipeId), FindIngredientByName(ingredientName), amount));
-            });
+                return realm.Find<Recipe>(id);
+            }            
         }
 
-        public static async Task AddRecipe(string id, string dishName, int cookTime, string cuisine, string type, int portionAmount,
+        public static bool IngredientExists(string name) => FindIngredientByName(name) != null;
+
+        public static bool RecipeExists(string id) => FindRecipeById(id) != null;
+
+        public static void AddRecipeIngredient(string recipeId, string ingredientName, string amount)
+        {
+            using (var realm = Realm.GetInstance(config))
+            {
+                realm.Write(() =>
+                {
+                    realm.Add(new RecipeIngredient(realm.Find<Recipe>(recipeId), realm.Find<Ingredient>(ingredientName), amount));
+                });
+            }
+        }
+
+        public static void AddRecipe(string id, string dishName, int cookTime, string cuisine, string type, int portionAmount,
+                string pictureUrl, IList<string> steps, string webSite, int ingredientAmount)
+        {
+            using (var realm = Realm.GetInstance(config))
+            {
+                realm.Write(() =>
+                {
+                    realm.Add(new Recipe(id, dishName, cookTime, cuisine, type, portionAmount, pictureUrl, webSite, ingredientAmount, steps));
+                });
+            }
+        }
+
+        public static void UpdateRecipe(string id, string dishName, int cookTime, string cuisine, string type, int portionAmount,
                 string pictureUrl, IList<string> steps, string webSite)
         {
-            var realm = Realm.GetInstance(config);
-
-            await realm.WriteAsync(tempRealm =>
+            using (var realm = Realm.GetInstance(config))
             {
                 var existingRecipe = realm.Find<Recipe>(id);
 
-                if (existingRecipe != null)
+                realm.Write(() =>
                 {
-                    if (cuisine != null)
+                    if (existingRecipe != null)
                     {
-                        existingRecipe.Cuisine = cuisine;
-                    }
+                        if (cuisine != null)
+                        {
+                            existingRecipe.Cuisine = cuisine;
+                        }
 
-                    if (type != null)
-                    {
-                        existingRecipe.Type = type;
+                        if (type != null)
+                        {
+                            existingRecipe.Type = type;
+                        }
                     }
-                }
-                else
-                {
-                    tempRealm.Add(new Recipe(id, dishName, cookTime, cuisine, type, portionAmount, pictureUrl, webSite, steps));
-                }
-            });
+                });
+            }
         }
 
-        public static async Task AddIngredient(string name)
+        public static void AddIngredient(string name)
         {
-            var realm = Realm.GetInstance(config);
-
-            await realm.WriteAsync(tempRealm =>
+            using (var realm = Realm.GetInstance(config))
             {
-                tempRealm.Add(new Ingredient { Name = name });
-            });
+                realm.Write(() =>
+                {
+                    realm.Add(new Ingredient { Name = name });
+                });
+            }
         }
     }
 }
