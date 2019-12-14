@@ -23,17 +23,27 @@ import com.coolteam.coolky.database.DBProvider
 import com.coolteam.coolky.database.models.Ingredient
 import com.coolteam.coolky.searchpage.RecipeSearchViewModel
 import com.coolteam.coolky.searchpage.RecipesSearchFragment
-import io.realm.OrderedRealmCollection
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_search_ingredients.*
-
 
 /**
  * A simple [Fragment] subclass.
  */
 class SearchIngredientsFragment : Fragment() {
 
-    private var model: RecipeSearchViewModel?=null
+    public inner class IngredientClickListener : OnIngredientClickListener {
+        override fun onItemClick(ingredient: CheckedTextView) {
+            searchIngredients.hideKeyboard()
+            if (ingredient.isChecked) {
+                ingredient.isChecked = false
+                ingredientsToSend.remove(ingredient.text.toString())
+            }
+            else {
+                ingredient.isChecked = true
+                ingredientsToSend.add(ingredient.text.toString())
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,30 +63,8 @@ class SearchIngredientsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         ingredientsAreChosen.setOnClickListener(this::ingredientsAreChosenClickListener)
-
-        showIngredients.adapter = ShowIngredientsAdapter(ingredientsToShow)
+        showIngredients.adapter = ShowIngredientsAdapter(ingredientsToShow, IngredientClickListener())
         showIngredients.layoutManager = LinearLayoutManager(context)
-
-        showIngredients.addOnItemTouchListener(RecyclerItemClickListener(context, showIngredients,
-            object : RecyclerItemClickListener.OnItemClickListener {
-                override fun onItemClick(view: View?, position: Int) {
-                    searchIngredients.hideKeyboard()
-                    val checkedTextView = ((showIngredients[position] as LinearLayout)[0] as CheckedTextView)
-                    if (checkedTextView.isChecked) {
-                        checkedTextView.isChecked = false
-                        ingredientsToSend.remove(checkedTextView.text.toString())
-                    }
-                    else {
-                        checkedTextView.isChecked = true
-                        ingredientsToSend.add(checkedTextView.text.toString())
-                    }
-                }
-
-                override fun onLongItemClick(view: View?, position: Int) {}
-            })
-        )
-
-
 
         searchIngredients.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -122,5 +110,6 @@ class SearchIngredientsFragment : Fragment() {
     }
 
     private var ingredientsToShow: RealmResults<Ingredient>? = null
-    private var ingredientsToSend: ArrayList<String> = ArrayList()
+    private var ingredientsToSend: ArrayList<String> = arrayListOf()
+    private var model: RecipeSearchViewModel?=null
 }
