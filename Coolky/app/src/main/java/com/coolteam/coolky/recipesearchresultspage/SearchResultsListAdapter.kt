@@ -5,11 +5,13 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.coolteam.coolky.OnItemClickListener
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.DBProvider
 import com.coolteam.coolky.database.models.Recipe
+import com.coolteam.coolky.searchpage.RecipeSearchViewModel
 import com.squareup.picasso.Picasso
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
@@ -35,9 +37,10 @@ class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val 
         public fun bind(recipe: Recipe, clickListener: OnItemClickListener) {
             itemView.setOnClickListener { clickListener.onItemClick(recipe.id!!) }
             dishNameTextView.text = recipe.dishName
-            var stringBuilder = StringBuilder()
+            val stringBuilder = StringBuilder()
             stringBuilder.append("Нужно ещё ингредиентов: ")
-            stringBuilder.append(DBProvider.findRecipeIngredientsById(recipe.id!!).count().toString())
+            val neededIngredients = DBProvider.findRecipeIngredientsById(recipe.id!!).count()
+            stringBuilder.append(neededIngredients)
             ingredientsLeftAmountTextView.text = stringBuilder
             dishTypeTextView.text = recipe.type
             Picasso.get().load(recipe.pictureUrl).into(dishImageView)

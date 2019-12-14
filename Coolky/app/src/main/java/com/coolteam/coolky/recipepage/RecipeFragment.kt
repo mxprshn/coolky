@@ -63,6 +63,14 @@ class RecipeFragment : Fragment()
         dishNameTextView.text = model.name
         portionsAmountTextView.text = model.portionAmount.toString()
         timeAmountTextView.text = model.cookTime.toString()
+
+        if (model.portionAmount < 10 || model.portionAmount > 20) {
+            when (model.portionAmount % 10) {
+                1 -> portionsTextView.text = "Порция"
+                2, 3, 4 -> portionsTextView.text = "Порции"
+            }
+        }
+
         Picasso.get().load(model.pictureUrl).into(dishImageView)
     }
 }

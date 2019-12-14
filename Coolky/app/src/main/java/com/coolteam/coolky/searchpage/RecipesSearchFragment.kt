@@ -1,5 +1,6 @@
 package com.coolteam.coolky.searchpage
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.Context
 import android.content.DialogInterface
@@ -53,7 +54,6 @@ public class RecipesSearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //activity!!.supportFragmentManager.beginTransaction().detach(this).attach(this).commit()
         root = inflater.inflate(R.layout.fragment_recipes_search, container, false)
         return root
     }
@@ -121,13 +121,14 @@ public class RecipesSearchFragment : Fragment() {
         addTags(tagGroup, toAdd)
     }
 
+    @SuppressLint("DefaultLocale", "InflateParams")
     private fun addTags(tagGroup: ChipGroup, list : ArrayList<String>) {
         val layoutInflater = LayoutInflater.from(root!!.context)
 
         for (text in list) {
             val tag = layoutInflater.inflate(R.layout.tag_item, null, false)
 
-            (tag as Chip).text = text
+            (tag as Chip).text = text.capitalize()
 
             tag.setOnCloseIconClickListener {
                 tagGroup.removeView(tag)
@@ -149,18 +150,18 @@ public class RecipesSearchFragment : Fragment() {
 
             builder.setTitle(R.string.chooseTypeOfDishText)
                 .setMultiChoiceItems(
-                    typesOfDishesCopy, null,
-                    DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
-                        if (isChecked) {
-                            tmpChosenTypes.add(typesOfDishesCopy[which])
+                    typesOfDishesCopy, null
+                ) { _, which, isChecked ->
+                    if (isChecked) {
+                        tmpChosenTypes.add(typesOfDishesCopy[which])
 
-                        } else {
-                            tmpChosenTypes.remove(typesOfDishesCopy[which])
-                        }
-                    })
+                    } else {
+                        tmpChosenTypes.remove(typesOfDishesCopy[which])
+                    }
+                }
                 .setPositiveButton(
                     R.string.ok
-                ) { dialog, id ->
+                ) { _, _ ->
                     model!!.addTypes(tmpChosenTypes)
                 }
                 .create()
@@ -183,17 +184,17 @@ public class RecipesSearchFragment : Fragment() {
 
             builder.setTitle(R.string.chooseCuisineText)
                 .setMultiChoiceItems(
-                    cuisinesCopy, null,
-                    DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
-                        if (isChecked) {
-                            tmpChosenCuisines.add(cuisinesCopy[which])
-                        } else {
-                            tmpChosenCuisines.remove(cuisinesCopy[which])
-                        }
-                    })
+                    cuisinesCopy, null
+                ) { _, which, isChecked ->
+                    if (isChecked) {
+                        tmpChosenCuisines.add(cuisinesCopy[which])
+                    } else {
+                        tmpChosenCuisines.remove(cuisinesCopy[which])
+                    }
+                }
                 .setPositiveButton(
                     R.string.ok
-                ) { dialog, id ->
+                ) { _, _ ->
                     model!!.addCuisines(tmpChosenCuisines)
                 }
                 .create()

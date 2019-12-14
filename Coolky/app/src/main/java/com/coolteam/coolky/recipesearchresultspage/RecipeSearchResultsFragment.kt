@@ -14,6 +14,7 @@ import com.coolteam.coolky.MainActivityViewModel
 import com.coolteam.coolky.OnItemClickListener
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.DBProvider
+import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.recipepage.RecipeFragment
 import com.coolteam.coolky.searchpage.RecipeSearchViewModel
 import kotlinx.android.synthetic.main.fragment_recipe_search_results.*
@@ -82,6 +83,8 @@ class RecipeSearchResultsFragment : Fragment()
                 t -> chosenTime = t
         })
 
-        searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes(chosenIngredients, chosenTypes, chosenCuisines, chosenTime), SearchResultClickListener())
+        val data = DBProvider.getRecipes(chosenIngredients, chosenTypes, chosenCuisines, chosenTime)
+
+        searchResultsRecyclerView.adapter = SearchResultsListAdapter(data, SearchResultClickListener())
     }
 }

@@ -12,21 +12,37 @@ import com.coolteam.coolky.database.models.Recipe
 import com.squareup.picasso.Picasso
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
+import kotlin.collections.ArrayList
 
 class FeedAdapter(collection : OrderedRealmCollection<Recipe>, val clickListener: OnItemClickListener) : RealmRecyclerViewAdapter<Recipe, FeedAdapter.FeedItemViewHolder>
     (collection, true)
 {
+    var indeces = ArrayList<Int>()
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FeedItemViewHolder {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.view_holder_feed_recipe, parent, false)
+        indeces.clear()
+        for (i in 0 until data!!.size) {
+            indeces.add(i)
+        }
+
+        indeces.shuffle()
         return FeedItemViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: FeedItemViewHolder, position: Int) {
-        val recipe = getItem(position)
+        val recipe = getItem(indeces[position])
         holder.bind(recipe!!, clickListener)
     }
 
     public override fun updateData(data: OrderedRealmCollection<Recipe>?) {
+        indeces.clear()
+        for (i in 0 until data!!.size) {
+            indeces.add(i)
+        }
+
+        indeces.shuffle()
+
         super.updateData(data)
     }
 

@@ -13,14 +13,16 @@ import com.coolteam.coolky.MainActivityViewModel
 import com.coolteam.coolky.OnItemClickListener
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.DBProvider
+import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.recipepage.RecipeFragment
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_feed.*
 
 class FeedFragment : Fragment() {
     private var model : FeedViewModel?=null
     private var mainActivityModel : MainActivityViewModel?=null
 
-    public inner class FeedItemClickListener : OnItemClickListener
+    inner class FeedItemClickListener : OnItemClickListener
     {
         override fun onItemClick(recipeId: String) {
             mainActivityModel!!.currentFeedFragment = RecipeFragment.newInstance(recipeId)
@@ -28,7 +30,7 @@ class FeedFragment : Fragment() {
         }
     }
 
-    public override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         model = ViewModelProvider(activity!!)[FeedViewModel::class.java]
         mainActivityModel = ViewModelProvider(activity!!)[MainActivityViewModel::class.java]
@@ -56,6 +58,7 @@ class FeedFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        feedRecyclerView.adapter = FeedAdapter(DBProvider.findRecipesByName(model!!.request), FeedItemClickListener())
+        val data = DBProvider.findRecipesByName(model!!.request)
+        feedRecyclerView.adapter = FeedAdapter(data, FeedItemClickListener())
     }
 }
