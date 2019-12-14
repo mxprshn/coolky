@@ -1,9 +1,11 @@
 package com.coolteam.coolky
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.feedpage.FeedFragment
@@ -16,6 +18,12 @@ public class MainActivity : AppCompatActivity() {
     var model : MainActivityViewModel?=null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        val mode = resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
+
+        if (mode == Configuration.UI_MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+
         model = ViewModelProvider(this)[MainActivityViewModel::class.java]
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
