@@ -6,17 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".searchingredientspage.SearchIngredientsFragment">
 
-    <EditText
-        android:id="@+id/searchIngredients"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/ingredientSearchField"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:hint="@string/inputIngredient"
-        android:importantForAutofill="no"
-        android:inputType="text"
         app:layout_constraintEnd_toStartOf="@+id/ingredientsAreChosen"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
-    </EditText>
+        app:layout_constraintTop_toTopOf="parent"
+        app:endIconMode="clear_text">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:inputType="text"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/nothingIsFound"
@@ -27,7 +32,7 @@
         android:text="@string/nothingIsFoundForYourRequest"
         android:textSize="16sp"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@id/searchIngredients"
+        app:layout_constraintBottom_toTopOf="@+id/ingredientSearchField"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
     </TextView>
@@ -45,7 +50,7 @@
         android:id="@+id/showIngredients"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@id/searchIngredients"
+        app:layout_constraintTop_toBottomOf="@+id/ingredientSearchField"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent">
     </androidx.recyclerview.widget.RecyclerView>

@@ -33,7 +33,7 @@ class SearchIngredientsFragment : Fragment() {
 
     public inner class IngredientClickListener : OnIngredientClickListener {
         override fun onItemClick(ingredient: CheckedTextView) {
-            searchIngredients.hideKeyboard()
+            ingredientSearchField.editText!!.hideKeyboard()
             if (ingredient.isChecked) {
                 ingredient.isChecked = false
                 ingredientsToSend.remove(ingredient.text.toString())
@@ -66,7 +66,7 @@ class SearchIngredientsFragment : Fragment() {
         showIngredients.adapter = ShowIngredientsAdapter(ingredientsToShow, IngredientClickListener())
         showIngredients.layoutManager = LinearLayoutManager(context)
 
-        searchIngredients.addTextChangedListener(object : TextWatcher {
+        ingredientSearchField.editText!!.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -79,8 +79,8 @@ class SearchIngredientsFragment : Fragment() {
 
     // Хорошо ли просто делать ресайклер вью невидимым?
     private fun searchHintsHandler() {
-        if (searchIngredients.text.isNotEmpty()) {
-            ingredientsToShow = DBProvider.getIngredients(searchIngredients.text.toString())
+        if (ingredientSearchField.editText!!.text!!.isNotEmpty()) {
+            ingredientsToShow = DBProvider.getIngredients(ingredientSearchField.editText!!.text.toString())
 
             if (!ingredientsToShow.isNullOrEmpty()) {
                 nothingIsFound.visibility = View.GONE
