@@ -1,6 +1,7 @@
 package com.coolteam.coolky.searchpage
 
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
 import android.text.TextUtils
@@ -8,7 +9,9 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -56,6 +59,7 @@ public class RecipesSearchFragment : Fragment() {
     }
 
     public override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        cookingTimeMinutes.hideKeyboard()
 
         chooseTypeOfDish.setOnClickListener(this::chooseTypeOfDishClickHandler)
         chooseCuisine.setOnClickListener(this::chooseCuisineClickHandler)
@@ -213,5 +217,10 @@ public class RecipesSearchFragment : Fragment() {
 
             FragmentTools.changeFragment(searchResultsFragment, activity!!.supportFragmentManager)
         }
+    }
+
+    private fun EditText.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }

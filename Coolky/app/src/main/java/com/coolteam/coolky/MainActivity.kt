@@ -46,13 +46,10 @@ public class MainActivity : AppCompatActivity() {
                 if (item.isChecked) {
                     feedFragment = FeedFragment()
                     FragmentTools.changeFragment(feedFragment, supportFragmentManager)
+                    model!!.currentFeedFragment = FeedFragment()
                 } else {
                     FragmentTools.changeFragment(model!!.currentFeedFragment, supportFragmentManager)
-                    model!!.currentFeedFragment = FeedFragment()
                 }
-
-                //recommendedFragment = RecommendedFragment()
-                //FragmentTools.changeFragment(recommendedFragment, supportFragmentManager)
             }
 
             R.id.myRecipes -> {
@@ -64,9 +61,9 @@ public class MainActivity : AppCompatActivity() {
                 if (item.isChecked) {
                     recipesSearchFragment = RecipesSearchFragment()
                     FragmentTools.changeFragment(recipesSearchFragment, supportFragmentManager)
+                    model!!.currentSearchFragment = RecipesSearchFragment()
                 } else {
                     FragmentTools.changeFragment(model!!.currentSearchFragment, supportFragmentManager)
-                    model!!.currentSearchFragment = RecipesSearchFragment()
                 }
             }
 
