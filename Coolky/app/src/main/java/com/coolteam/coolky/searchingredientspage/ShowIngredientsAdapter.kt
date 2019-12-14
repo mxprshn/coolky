@@ -7,11 +7,16 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.models.Ingredient
+import com.coolteam.coolky.database.models.Recipe
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 
 class ShowIngredientsAdapter(collection: OrderedRealmCollection<Ingredient>?) : RealmRecyclerViewAdapter<Ingredient, ShowIngredientsAdapter.IngredientViewHolder>
-        (collection, true) {
+    (collection, true) {
+    public override fun updateData(ingredients: OrderedRealmCollection<Ingredient>?) {
+        super.updateData(ingredients)
+    }
+
     override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
         val ingredient = getItem(position)
         holder.ingredientName.text = ingredient!!.name.toString()
