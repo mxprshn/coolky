@@ -38,9 +38,11 @@ class SettingsFragment : Fragment() {
 
         val mode = context?.resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
 
-        AppCompatDelegate.setDefaultNightMode(mode!!)
+        if (mode == Configuration.UI_MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
 
-        themeSwitch.isChecked = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES || mode == Configuration.UI_MODE_NIGHT_YES
+        themeSwitch.isChecked = AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES
 
         themeSwitch.setOnCheckedChangeListener { _, isChecked ->
             run {
