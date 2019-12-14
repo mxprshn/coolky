@@ -37,7 +37,7 @@ namespace CoolkyRecipeParser.HrumkaParser
             var stringBag = new ConcurrentBag<string>();
             var counter = 1;
 
-            await Enumerable.Range(1, Math.Min(pageCount, MaxPageAmount)).ForEachAsync(async (i) =>
+            await Enumerable.Range(1, Math.Min(pageCount, MaxPageAmount)).ParallelForEachAsync(async (i) =>
             {
                 var currentPage = await HtmlLoader.LoadAsync($"{baseUrl}/catalog/{SectionName}/{i}");
                 var recipeElements = currentPage.QuerySelectorAll(".h5");
@@ -50,7 +50,7 @@ namespace CoolkyRecipeParser.HrumkaParser
                     stringBag.Add(url);
                     Console.WriteLine($"Recipe {Volatile.Read(ref counter)}: {url} added to parsing queue.");
                 }
-            });
+            }, Environment.ProcessorCount);
 
             return stringBag.ToList();
         }

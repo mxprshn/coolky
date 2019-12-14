@@ -25,7 +25,7 @@ namespace CoolkyRecipeParser
                 var urls = await context.GetPages();
                 var counter = 0;
 
-                urls.ForEachAsync(async (url) =>
+                await urls.ParallelForEachAsync(async (url) =>
                 {
                     IDocument page = null;
 
@@ -75,9 +75,9 @@ namespace CoolkyRecipeParser
                     }
                     catch (Exception exc)
                     {
-                        //Console.WriteLine($"Error occured during page parsing: {exc.Message}");
+                        Console.WriteLine($"Error occured during page parsing: {exc.Message}");
                     }
-                }).Wait();
+                }, Environment.ProcessorCount);
             }
         }
     }
