@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
 import androidx.lifecycle.ViewModelProvider
+import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.feedpage.FeedFragment
 import com.coolteam.coolky.searchpage.RecipesSearchFragment
 import com.coolteam.coolky.settingspage.SettingsFragment
@@ -47,6 +48,7 @@ public class MainActivity : AppCompatActivity() {
                     FragmentTools.changeFragment(feedFragment, supportFragmentManager)
                 } else {
                     FragmentTools.changeFragment(model!!.currentFeedFragment, supportFragmentManager)
+                    model!!.currentFeedFragment = FeedFragment()
                 }
 
                 //recommendedFragment = RecommendedFragment()
@@ -64,6 +66,7 @@ public class MainActivity : AppCompatActivity() {
                     FragmentTools.changeFragment(recipesSearchFragment, supportFragmentManager)
                 } else {
                     FragmentTools.changeFragment(model!!.currentSearchFragment, supportFragmentManager)
+                    model!!.currentSearchFragment = RecipesSearchFragment()
                 }
             }
 
