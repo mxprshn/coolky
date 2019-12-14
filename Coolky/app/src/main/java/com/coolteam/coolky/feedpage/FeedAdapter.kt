@@ -35,8 +35,6 @@ class FeedAdapter(collection : OrderedRealmCollection<Recipe>, val clickListener
             indeces.add(i)
         }
 
-        indeces.shuffle()
-
         super.updateData(data)
     }
 

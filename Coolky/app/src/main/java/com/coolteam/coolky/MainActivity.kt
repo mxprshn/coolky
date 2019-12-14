@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.coolteam.coolky.database.models.Recipe
@@ -42,6 +43,8 @@ public class MainActivity : AppCompatActivity() {
             bottomNavigationOnItemSelectedHandler(item)
             true
         }
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     // Эта аннотация - костыль, который исправляет библиотечную багу

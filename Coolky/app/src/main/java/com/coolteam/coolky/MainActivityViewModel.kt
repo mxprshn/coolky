@@ -6,7 +6,7 @@ import com.coolteam.coolky.feedpage.FeedFragment
 import com.coolteam.coolky.searchpage.RecipesSearchFragment
 
 class MainActivityViewModel : ViewModel() {
-    public var isDarkThemeJustToggled : Boolean=false
-    public var currentFeedFragment : Fragment=FeedFragment()
-    public var currentSearchFragment : Fragment=RecipesSearchFragment()
+    public var isDarkThemeJustToggled: Boolean=false
+    public var currentFeedFragment: Fragment=FeedFragment()
+    public var currentSearchFragment: Fragment=RecipesSearchFragment()
 }
