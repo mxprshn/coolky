@@ -121,14 +121,14 @@ public class RecipesSearchFragment : Fragment() {
         addTags(tagGroup, toAdd)
     }
 
-    @SuppressLint("DefaultLocale", "InflateParams")
+
     private fun addTags(tagGroup: ChipGroup, list : ArrayList<String>) {
         val layoutInflater = LayoutInflater.from(root!!.context)
 
         for (text in list) {
             val tag = layoutInflater.inflate(R.layout.tag_item, null, false)
 
-            (tag as Chip).text = text.capitalize()
+            (tag as Chip).text = text
 
             tag.setOnCloseIconClickListener {
                 tagGroup.removeView(tag)

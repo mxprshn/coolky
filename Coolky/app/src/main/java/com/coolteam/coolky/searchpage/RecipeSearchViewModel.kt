@@ -1,7 +1,10 @@
 package com.coolteam.coolky.searchpage
 
+import android.annotation.SuppressLint
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import java.util.*
+import kotlin.collections.ArrayList
 
 class RecipeSearchViewModel : ViewModel() {
     public var chosenIngredients = MutableLiveData<ArrayList<String>>()
@@ -27,6 +30,7 @@ class RecipeSearchViewModel : ViewModel() {
         }
     }
 
+    @SuppressLint("DefaultLocale")
     public fun addIngredients(ingredients: ArrayList<String>) {
         if (ingredients.isEmpty()) {
             return
@@ -35,7 +39,7 @@ class RecipeSearchViewModel : ViewModel() {
 
         for (e in ingredients) {
             if (!tmp.contains(e)) {
-                tmp.add(e)
+                tmp.add(e.capitalize())
             }
         }
         tmp.sort()
