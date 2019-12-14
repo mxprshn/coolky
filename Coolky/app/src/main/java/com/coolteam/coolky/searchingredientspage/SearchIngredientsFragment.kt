@@ -10,23 +10,32 @@ import android.view.ViewGroup
 import android.view.inputmethod.InputMethodManager
 import android.widget.CheckedTextView
 import android.widget.EditText
-import android.widget.LinearLayout
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.DBProvider
 import com.coolteam.coolky.database.models.Ingredient
-import io.realm.OrderedRealmCollection
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_search_ingredients.*
-
 
 /**
  * A simple [Fragment] subclass.
  */
 class SearchIngredientsFragment : Fragment() {
+
+    public inner class IngredientClickListener : OnIngredientClickListener {
+        override fun onItemClick(ingredient: CheckedTextView) {
+            searchIngredients.hideKeyboard()
+            if (ingredient.isChecked) {
+                ingredient.isChecked = false
+                ingredientsToSend.remove(ingredient.text.toString())
+            }
+            else {
+                ingredient.isChecked = true
+                ingredientsToSend.add(ingredient.text.toString())
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -39,29 +48,8 @@ class SearchIngredientsFragment : Fragment() {
     public override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
 
-        showIngredients.adapter = ShowIngredientsAdapter(ingredientsToShow)
+        showIngredients.adapter = ShowIngredientsAdapter(ingredientsToShow, IngredientClickListener())
         showIngredients.layoutManager = LinearLayoutManager(context)
-
-        showIngredients.addOnItemTouchListener(RecyclerItemClickListener(context, showIngredients,
-            object : RecyclerItemClickListener.OnItemClickListener {
-                override fun onItemClick(view: View?, position: Int) {
-                    searchIngredients.hideKeyboard()
-                    val checkedTextView = ((showIngredients[position] as LinearLayout)[0] as CheckedTextView)
-                    if (checkedTextView.isChecked) {
-                        checkedTextView.isChecked = false
-                        ingredientsToSend.remove(checkedTextView.text.toString())
-                    }
-                    else {
-                        checkedTextView.isChecked = true
-                        ingredientsToSend.add(checkedTextView.text.toString())
-                    }
-                }
-
-                override fun onLongItemClick(view: View?, position: Int) {}
-            })
-        )
-
-
 
         searchIngredients.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {}
@@ -93,11 +81,14 @@ class SearchIngredientsFragment : Fragment() {
         }
     }
 
+
+
+
     private fun EditText.hideKeyboard() {
         val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(windowToken, 0)
     }
 
     private var ingredientsToShow: RealmResults<Ingredient>? = null
-    private var ingredientsToSend: MutableList<String> = mutableListOf()
+    private var ingredientsToSend: ArrayList<String> = arrayListOf()
 }
