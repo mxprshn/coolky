@@ -34,12 +34,16 @@ class SearchIngredientsFragment : Fragment() {
     public inner class IngredientClickListener : OnIngredientClickListener {
         override fun onItemClick(ingredient: CheckedTextView) {
             ingredientSearchField.editText!!.hideKeyboard()
+            val textOfIngredient = ingredient.text.toString()
+
             if (ingredient.isChecked) {
                 ingredient.isChecked = false
-                ingredientsToSend.remove(ingredient.text.toString())
+                ReuseCheckedTextViewModel.chosenIngredients.remove(textOfIngredient)
+                ingredientsToSend.remove(textOfIngredient)
             }
             else {
                 ingredient.isChecked = true
+                ReuseCheckedTextViewModel.chosenIngredients.add(textOfIngredient)
                 ingredientsToSend.add(ingredient.text.toString())
             }
         }
@@ -110,6 +114,6 @@ class SearchIngredientsFragment : Fragment() {
     }
 
     private var ingredientsToShow: RealmResults<Ingredient>? = null
-    private var ingredientsToSend: ArrayList<String> = arrayListOf()
     private var model: RecipeSearchViewModel?=null
+    private var ingredientsToSend: ArrayList<String> = arrayListOf()
 }

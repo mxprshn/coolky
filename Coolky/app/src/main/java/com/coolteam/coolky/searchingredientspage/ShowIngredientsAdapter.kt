@@ -19,6 +19,16 @@ class ShowIngredientsAdapter(collection: OrderedRealmCollection<Ingredient>?, pr
     override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
         val ingredient = getItem(position)
         holder.ingredientCheckedTextView.text = ingredient!!.name.toString()
+
+        val textOfHolderCheckedByUser = ReuseCheckedTextViewModel.chosenIngredients.contains(holder.ingredientCheckedTextView.text.toString())
+
+        if (holder.ingredientCheckedTextView.isChecked && !textOfHolderCheckedByUser) {
+            holder.ingredientCheckedTextView.isChecked = false
+        }
+        else if (textOfHolderCheckedByUser) {
+            holder.ingredientCheckedTextView.isChecked = true
+        }
+
         holder.bind(ingredient, clickListener)
     }
 
