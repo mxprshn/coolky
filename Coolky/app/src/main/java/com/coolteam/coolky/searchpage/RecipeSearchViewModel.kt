@@ -46,6 +46,15 @@ class RecipeSearchViewModel : ViewModel() {
         chosenIngredients.postValue(tmp)
     }
 
+    public fun addIngredient(ingredient: String) {
+        val tmp = chosenIngredients.value!!
+        if (!tmp.contains(ingredient)) {
+            tmp.add(ingredient)
+        }
+        tmp.sort()
+        chosenIngredients.postValue(tmp)
+    }
+
     public fun removeIngredient(ingredient: String) {
         val tmp = chosenIngredients.value!!
         tmp.remove(ingredient)

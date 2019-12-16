@@ -7,10 +7,11 @@ import android.widget.CheckedTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.models.Ingredient
+import com.coolteam.coolky.searchpage.RecipeSearchViewModel
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 
-class ShowIngredientsAdapter(collection: OrderedRealmCollection<Ingredient>?, private val clickListener: OnIngredientClickListener) : RealmRecyclerViewAdapter<Ingredient, ShowIngredientsAdapter.IngredientViewHolder>
+class ShowIngredientsAdapter(collection: OrderedRealmCollection<Ingredient>?, private val clickListener: OnIngredientClickListener, val model: RecipeSearchViewModel) : RealmRecyclerViewAdapter<Ingredient, ShowIngredientsAdapter.IngredientViewHolder>
     (collection, true) {
     public override fun updateData(ingredients: OrderedRealmCollection<Ingredient>?) {
         super.updateData(ingredients)
@@ -20,7 +21,7 @@ class ShowIngredientsAdapter(collection: OrderedRealmCollection<Ingredient>?, pr
         val ingredient = getItem(position)
         holder.ingredientCheckedTextView.text = ingredient!!.name.toString()
 
-        val textOfHolderCheckedByUser = ReuseCheckedTextViewModel.chosenIngredients.contains(holder.ingredientCheckedTextView.text.toString())
+        val textOfHolderCheckedByUser = model.chosenIngredients.value!!.contains(holder.ingredientCheckedTextView.text.toString())
 
         if (holder.ingredientCheckedTextView.isChecked && !textOfHolderCheckedByUser) {
             holder.ingredientCheckedTextView.isChecked = false

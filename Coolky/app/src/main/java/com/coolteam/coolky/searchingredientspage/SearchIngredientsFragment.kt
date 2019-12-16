@@ -38,12 +38,12 @@ class SearchIngredientsFragment : Fragment() {
 
             if (ingredient.isChecked) {
                 ingredient.isChecked = false
-                ReuseCheckedTextViewModel.chosenIngredients.remove(textOfIngredient)
+                model!!.removeIngredient(textOfIngredient)
                 ingredientsToSend.remove(textOfIngredient)
             }
             else {
                 ingredient.isChecked = true
-                ReuseCheckedTextViewModel.chosenIngredients.add(textOfIngredient)
+                model!!.addIngredient(textOfIngredient)
                 ingredientsToSend.add(ingredient.text.toString())
             }
         }
@@ -67,7 +67,7 @@ class SearchIngredientsFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
 
         ingredientsAreChosen.setOnClickListener(this::ingredientsAreChosenClickListener)
-        showIngredients.adapter = ShowIngredientsAdapter(ingredientsToShow, IngredientClickListener())
+        showIngredients.adapter = ShowIngredientsAdapter(ingredientsToShow, IngredientClickListener(), model!!)
         showIngredients.layoutManager = LinearLayoutManager(context)
 
         ingredientSearchField.editText!!.addTextChangedListener(object : TextWatcher {
@@ -107,7 +107,6 @@ class SearchIngredientsFragment : Fragment() {
 
     private fun ingredientsAreChosenClickListener(ingredientsChosen: View) {
         if (ingredientsChosen is Button) {
-            model!!.addIngredients(ingredientsToSend)
             val recipesSearchFragment = RecipesSearchFragment()
             FragmentTools.changeFragment(recipesSearchFragment, activity!!.supportFragmentManager)
         }
