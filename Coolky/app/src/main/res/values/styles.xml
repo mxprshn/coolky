@@ -6,7 +6,7 @@
         <item name="android:textViewStyle">@style/AppTheme</item>
         <item name="colorPrimary">@color/colorPrimaryLight</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorPrimaryDark</item>
         <item name="backgroundColor">@color/whiteColor</item>
         <item name="colorOnPrimarySurface">@color/whiteColor</item>
         <item name="colorSecondary">@color/colorPrimary</item>
