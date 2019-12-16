@@ -17,7 +17,7 @@
     <string name="favoritesInDeveloping">Избранное. В разработке</string>
     <string name="recipesSearchTextOnButton">Поиск</string>
     <string name="choose">Выбрать</string>
-    <string name="min">Мин</string>
+    <string name="min">мин.</string>
 
     <string-array name="typesOfDishes">
         <item>Первое</item>
