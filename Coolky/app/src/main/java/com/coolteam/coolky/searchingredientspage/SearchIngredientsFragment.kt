@@ -11,13 +11,11 @@ import android.view.inputmethod.InputMethodManager
 import android.widget.Button
 import android.widget.CheckedTextView
 import android.widget.EditText
-import android.widget.LinearLayout
-import androidx.core.view.get
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.coolteam.coolky.FragmentTools
+import com.coolteam.coolky.MainActivity
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.DBProvider
 import com.coolteam.coolky.database.models.Ingredient
@@ -25,6 +23,7 @@ import com.coolteam.coolky.searchpage.RecipeSearchViewModel
 import com.coolteam.coolky.searchpage.RecipesSearchFragment
 import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_search_ingredients.*
+
 
 /**
  * A simple [Fragment] subclass.
@@ -79,6 +78,11 @@ class SearchIngredientsFragment : Fragment() {
                 searchHintsHandler()
             }
         })
+
+        if (activity != null) {
+            val act = activity as MainActivity?
+            act!!.hideBottomNavigation()
+        }
     }
 
     // Хорошо ли просто делать ресайклер вью невидимым?

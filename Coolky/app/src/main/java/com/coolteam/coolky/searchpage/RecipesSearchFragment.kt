@@ -20,6 +20,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.coolteam.coolky.FragmentTools
+import com.coolteam.coolky.MainActivity
 import com.coolteam.coolky.R
 import com.coolteam.coolky.recipesearchresultspage.RecipeSearchResultsFragment
 import com.coolteam.coolky.searchingredientspage.SearchIngredientsFragment
@@ -90,6 +91,11 @@ public class RecipesSearchFragment : Fragment() {
                 updateTagGroup(root!!.tagGroupIngredients, modelIngredients)
             }
         })
+
+        if (activity != null) {
+            val act = activity as MainActivity?
+            act!!.showBottomNavigation()
+        }
     }
 
     private fun updateChoices(base: Array<String>, chosen: ArrayList<String>?): Array<String> {

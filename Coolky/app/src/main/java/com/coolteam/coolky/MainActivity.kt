@@ -2,9 +2,11 @@ package com.coolteam.coolky
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
@@ -89,6 +91,14 @@ public class MainActivity : AppCompatActivity() {
                 FragmentTools.changeFragment(settingsFragment, supportFragmentManager)
             }
         }
+    }
+
+    public fun hideBottomNavigation() {
+        bottomNavigation.visibility = View.GONE
+    }
+
+    public fun showBottomNavigation() {
+        bottomNavigation.visibility = View.VISIBLE
     }
 
     private lateinit var feedFragment: FeedFragment
