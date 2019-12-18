@@ -4,7 +4,6 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace CoolkyRecipeParser.HrumkaParser
@@ -35,26 +34,28 @@ namespace CoolkyRecipeParser.HrumkaParser
             }
             
             var stringBag = new ConcurrentBag<string>();
-            var counter = 1;
+            //var counter = 1;
 
-            await Enumerable.Range(1, Math.Min(pageCount, MaxPageAmount)).ParallelForEachAsync(async (i) =>
-            {
-                var currentPage = await HtmlLoader.LoadAsync($"{baseUrl}/catalog/{SectionName}/{i}");
-                var recipeElements = currentPage.QuerySelectorAll(".h5");
-                Console.WriteLine($"{recipeElements.Length} recipes found at page {i}.");
-
-                foreach(var recipeElement in recipeElements)
-                {
-                    Interlocked.Increment(ref counter);
-                    var url = $"{baseUrl}{recipeElement.GetAttribute("href")}";
-                    stringBag.Add(url);
-                    Console.WriteLine($"Recipe {Volatile.Read(ref counter)}: {url} added to parsing queue.");
-                }
-            }, Environment.ProcessorCount);
+            await Enumerable.Range(1, Math.Min(pageCount, MaxPageAmount)).ParallelForEachAsync((i) => ProcessPage(i, stringBag));
 
             return stringBag.ToList();
         }
 
         public override string GetWebSite() => "1000.menu";
+
+        private async Task ProcessPage(int pageNumber, ConcurrentBag<string> stringBag)
+        {
+            var currentPage = await HtmlLoader.LoadAsync($"{baseUrl}/catalog/{SectionName}/{pageNumber}");
+            var recipeElements = currentPage.QuerySelectorAll(".h5");
+            Console.WriteLine($"{recipeElements.Length} recipes found at page {pageNumber}.");
+
+            foreach (var recipeElement in recipeElements)
+            {
+                //Interlocked.Increment(ref counter);
+                var url = $"{baseUrl}{recipeElement.GetAttribute("href")}";
+                stringBag.Add(url);
+                //Console.WriteLine($"Recipe {Volatile.Read(ref counter)}: {url} added to parsing queue.");
+            }
+        }
     }
 }

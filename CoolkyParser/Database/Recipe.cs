@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections.Generic;
 using Realms;
 
 namespace CoolkyRecipeParser
@@ -37,6 +35,9 @@ namespace CoolkyRecipeParser
 
         [MapTo("steps")]
         public IList<string> Steps { get; }
+
+        [MapTo("isFavourite")]
+        public bool IsFavourite { get; set; } = false;
 
         public Recipe() { }
 

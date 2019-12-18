@@ -2,7 +2,6 @@
 using System.Net.Http;
 using AngleSharp.Dom;
 using AngleSharp;
-using System;
 
 namespace CoolkyRecipeParser
 {
