@@ -43,7 +43,16 @@ class FeedAdapter(collection : OrderedRealmCollection<Recipe>, val clickListener
         public fun bind(recipe: Recipe, clickListener: OnItemClickListener) {
             itemView.setOnClickListener { clickListener.onItemClick(recipe.id!!)}
             dishNameTextView.text = recipe.dishName
-            Picasso.get().load(recipe.pictureUrl).into(dishImageView)
+
+            if (recipe.pictureUrl != "")
+            {
+                Picasso.get().load(recipe.pictureUrl).into(dishImageView).placeholder(R.drawable.not_found)
+            }
+            else
+            {
+                dishImageView.setImageResource(R.drawable.not_found)
+            }
+
         }
 
         private val dishNameTextView: TextView = itemView.findViewById(R.id.dishNameTextView)

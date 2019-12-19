@@ -71,6 +71,13 @@ class RecipeFragment : Fragment()
             }
         }
 
-        Picasso.get().load(model.pictureUrl).into(dishImageView)
+        if (model.pictureUrl != "")
+        {
+            Picasso.get().load(model.pictureUrl).placeholder(R.drawable.not_found).into(dishImageView)
+        }
+        else
+        {
+            dishImageView.setImageResource(R.drawable.not_found)
+        }
     }
 }

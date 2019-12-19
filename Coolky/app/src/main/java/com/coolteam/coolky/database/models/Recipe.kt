@@ -19,6 +19,7 @@ open class Recipe : RealmObject()
     public var pictureUrl: String? = null
     public var webSite: String? = null
     public var steps: RealmList<String> = RealmList()
+    public var ingredientAmount: Int = 0
 
     @LinkingObjects("recipe")
     public final val recipeIngredients: RealmResults<RecipeIngredient>? = null
