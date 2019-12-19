@@ -80,7 +80,7 @@ namespace CoolkyRecipeParser
                     Interlocked.Increment(ref counter);
                     Console.WriteLine($"Parsing recipe {counter} of {urls.Count()} in {Thread.CurrentThread.ManagedThreadId} thread.");
                     return ProcessRecipe(url, context, logic);
-                });
+                }, Environment.ProcessorCount);
             }
         }
     }

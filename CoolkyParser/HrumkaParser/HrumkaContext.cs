@@ -36,7 +36,8 @@ namespace CoolkyRecipeParser.HrumkaParser
             var stringBag = new ConcurrentBag<string>();
             //var counter = 1;
 
-            await Enumerable.Range(1, Math.Min(pageCount, MaxPageAmount)).ParallelForEachAsync((i) => ProcessPage(i, stringBag));
+            await Enumerable.Range(1, Math.Min(pageCount, MaxPageAmount)).ParallelForEachAsync((i) => ProcessPage(i, stringBag),
+                Environment.ProcessorCount);
 
             return stringBag.ToList();
         }
