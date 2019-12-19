@@ -94,7 +94,8 @@ namespace CoolkyRecipeParser.HrumkaParser
         public string GetPictureUrl(IDocument page)
         {
             var cookTimeElement = page.QuerySelector(".main-photo img ");
-            return $"https:{cookTimeElement.GetAttribute("src")}";
+            var pictureUrl = $"https:{cookTimeElement.GetAttribute("src")}";
+            return pictureUrl == "https://static.1000.menu/style/images/cooking-completion.jpg" ? pictureUrl : "";
         }
     }
 }

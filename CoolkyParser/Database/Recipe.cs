@@ -36,9 +36,6 @@ namespace CoolkyRecipeParser
         [MapTo("steps")]
         public IList<string> Steps { get; }
 
-        [MapTo("isFavourite")]
-        public bool IsFavourite { get; set; } = false;
-
         public Recipe() { }
 
         public Recipe(string id, string dishName, int cookTime, string cuisine, string type, int portionAmount,

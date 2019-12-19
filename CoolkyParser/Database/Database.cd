@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="NameAndType">
+  <Class Name="CoolkyRecipeParser.Recipe">
+    <Position X="2.75" Y="2.75" Width="2" />
+    <Members>
+      <Method Name="Recipe" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>ACADAAAAAACQAAAAAIAAAoAAAAAAAAAAASAAAAAAAAA=</HashCode>
+      <FileName>Database\Recipe.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Realms.RealmObject" Collapsed="true">
+    <Position X="5.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier />
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CoolkyRecipeParser.RecipeIngredient">
+    <Position X="5.5" Y="2.75" Width="1.5" />
+    <Members>
+      <Method Name="RecipeIngredient" Hidden="true" />
+    </Members>
+    <AssociationLine Name="Ingredient" Type="CoolkyRecipeParser.Ingredient">
+      <MemberNameLabel ManuallyPlaced="true">
+        <Position X="0.047" Y="0.06" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <AssociationLine Name="Recipe" Type="CoolkyRecipeParser.Recipe">
+      <MemberNameLabel ManuallyPlaced="true" ManuallySized="true">
+        <Position X="0.058" Y="0.07" Height="0.182" Width="0.662" />
+      </MemberNameLabel>
+    </AssociationLine>
+    <TypeIdentifier>
+      <HashCode>AAAABABAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Database\RecipeIngredient.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Ingredient" />
+      <Property Name="Recipe" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CoolkyRecipeParser.Ingredient">
+    <Position X="8" Y="2.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Database\Ingredient.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

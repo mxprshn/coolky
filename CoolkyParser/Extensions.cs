@@ -29,7 +29,7 @@ namespace CoolkyRecipeParser
         //    }         
         //}
 
-        public static Task ParallelForEachAsync<T>(this IEnumerable<T> source, Func<T, Task> funcBody, int maxParallelLevel = 21)
+        public static Task ParallelForEachAsync<T>(this IEnumerable<T> source, Func<T, Task> funcBody, int maxParallelLevel = 11)
         {
             async Task AwaitPartition(IEnumerator<T> partition)
             {
