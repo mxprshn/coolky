@@ -1,3 +1,5 @@
+![alt text](https://github.com/mxprshn/coolky/blob/CoolkyPreAlpha/Coolky/app/src/main/res/mipmap-xxxhdpi/ic_launcher.png)
+
 # Coolky
 
 *Cool cooking mobile app*

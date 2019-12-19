@@ -1,19 +1,52 @@
 package com.coolteam.coolky.database
 
 import android.annotation.SuppressLint
+import com.coolteam.coolky.database.models.Favourite
 import com.coolteam.coolky.database.models.Ingredient
 import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.database.models.RecipeIngredient
-import io.realm.Realm
-import io.realm.RealmResults
+import io.realm.*
 import io.realm.kotlin.oneOf
 import io.realm.kotlin.where
 import java.util.*
+
 
 class DBProvider
 {
     companion object
     {
+        private var favouriteRecipesConfig: RealmConfiguration = RealmConfiguration.Builder()
+            .name("favourites.realm")
+            .build()
+
+        public fun isFavourite(recipeId: String): Boolean {
+            return Realm.getInstance(favouriteRecipesConfig).where<Favourite>().equalTo("recipeId", recipeId).findAll().isNotEmpty()
+        }
+
+        public fun setFavourite(recipeId: String, isFavourite: Boolean) {
+            val database = Realm.getInstance(favouriteRecipesConfig)
+            val isAlreadyFavourite = database.where<Favourite>().equalTo("recipeId", recipeId).findAll().isNotEmpty()
+
+            if (isFavourite && !isAlreadyFavourite) {
+                database.beginTransaction()
+                val favourite: Favourite = database.createObject(Favourite::class.java)
+                favourite.recipeId = recipeId
+                database.commitTransaction()
+            }
+
+            if (!isFavourite && isAlreadyFavourite) {
+                database.beginTransaction()
+                val favourite = database.where<Favourite>().equalTo("recipeId", recipeId).findFirst()
+                favourite!!.deleteFromRealm()
+                database.commitTransaction()
+            }
+        }
+
+        public fun getFavourites(): RealmResults<Favourite> {
+            val database = Realm.getInstance(favouriteRecipesConfig)
+            return database.where<Favourite>().findAll()
+        }
+
         // это нужно как-то сделать аля статическим
         public fun getIngredients(input: String): RealmResults<Ingredient> {
             val database = Realm.getDefaultInstance()
@@ -43,12 +76,17 @@ class DBProvider
                 recipeQuery = recipeQuery.oneOf("cuisine", cuisines)
             }
 
-            return recipeQuery.lessThan("cookTime", time).findAll()
+            return recipeQuery.lessThan("cookTime", time).sort("ingredientAmount", Sort.ASCENDING).findAll()
 
         }
 
+        public fun getCount(): Long {
+            val database = Realm.getDefaultInstance()
+            return database.where<Recipe>().count()
+        }
+
         // + асинхронность
-        public fun findRecipeById(recipeId: String) : Recipe? {
+        public fun findRecipeById(recipeId: String): Recipe? {
             val database = Realm.getDefaultInstance()
             return database.where<Recipe>().equalTo("id", recipeId).findFirst()
         }
@@ -64,7 +102,7 @@ class DBProvider
         }
 
         @SuppressLint("DefaultLocale")
-        public fun findRecipesByName(recipeName : String): RealmResults<Recipe> {
+        public fun findRecipesByName(recipeName : String): OrderedRealmCollection<Recipe> {
             val database = Realm.getDefaultInstance()
             val recipeNameQuery = database.where<Recipe>()
             val name = recipeName.toLowerCase().capitalize()

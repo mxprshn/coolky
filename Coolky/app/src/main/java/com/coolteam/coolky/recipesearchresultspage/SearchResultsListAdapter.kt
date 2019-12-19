@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import com.like.LikeButton
+
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.coolteam.coolky.OnItemClickListener
@@ -44,13 +45,21 @@ class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val 
 
             dishNameTextView.text = recipe.dishName
             val stringBuilder = StringBuilder()
-            stringBuilder.append("Нужно ещё ингредиентов: ")
+            stringBuilder.append("Нужно ингредиентов: ")
             val neededIngredients = DBProvider.findRecipeIngredientsById(recipe.id!!).count()
             stringBuilder.append(neededIngredients)
 
             ingredientsLeftAmountTextView.text = stringBuilder
             dishTypeTextView.text = recipe.type
-            Picasso.get().load(recipe.pictureUrl).into(dishImageView)
+
+            if (recipe.pictureUrl != "")
+            {
+                Picasso.get().load(recipe.pictureUrl).into(dishImageView)
+            }
+            else
+            {
+                dishImageView.setImageResource(R.drawable.not_found)
+            }
         }
 
         private val dishNameTextView: TextView = itemView.findViewById(R.id.dishNameTextView)

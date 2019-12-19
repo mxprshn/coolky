@@ -1,5 +1,6 @@
 package com.coolteam.coolky.database
 
+import com.coolteam.coolky.database.models.Favourite
 import com.coolteam.coolky.database.models.Ingredient
 import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.database.models.RecipeIngredient

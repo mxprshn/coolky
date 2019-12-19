@@ -74,8 +74,14 @@ class RecipeFragment : Fragment()
                 2, 3, 4 -> portionsTextView.text = "Порции"
             }
         }
-
-        Picasso.get().load(model.pictureUrl).into(dishImageView)
+        if (model.pictureUrl != "")
+        {
+            Picasso.get().load(model.pictureUrl).into(dishImageView)
+        }
+        else
+        {
+            dishImageView.setImageResource(R.drawable.not_found)
+        }
     }
 
     private fun onStarButtonClickHandler(view: View) {
