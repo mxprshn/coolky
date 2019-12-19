@@ -49,8 +49,13 @@ class FeedFragment : Fragment() {
 
         recipeSearchField.editText!!.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(s: Editable?) {
-                (feedRecyclerView.adapter!! as FeedAdapter).updateData(DBProvider.findRecipesByName(s.toString()))
                 model!!.request = s.toString()
+
+                if (model!!.request == "") {
+                    (feedRecyclerView.adapter!! as FeedAdapter).setDefaultData()
+                } else {
+                    (feedRecyclerView.adapter!! as FeedAdapter).updateData(DBProvider.findRecipesByName(s.toString()))
+                }
             }
 
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
@@ -58,16 +63,13 @@ class FeedFragment : Fragment() {
             override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
         })
 
-        val data = DBProvider.findRecipesByName(model!!.request)
-
-        val indexes = ArrayList<Int>()
-
-        for (i in 0 until data.size) {
-            indexes.add(i)
+        swipeRefreshLayout.setOnRefreshListener {
+            (feedRecyclerView.adapter!! as FeedAdapter).shuffleData()
+            swipeRefreshLayout.isRefreshing = false
         }
 
-        indexes.shuffle()
+        val data = DBProvider.findRecipesByName(model!!.request)
 
-        feedRecyclerView.adapter = FeedAdapter(data, FeedItemClickListener(), indexes)
+        feedRecyclerView.adapter = FeedAdapter(data, FeedItemClickListener(), model!!.currentIndexesPermutation)
     }
 }

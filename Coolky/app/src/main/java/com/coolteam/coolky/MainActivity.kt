@@ -10,15 +10,18 @@ import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
+import com.coolteam.coolky.database.DBProvider
 import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.feedpage.FeedFragment
+import com.coolteam.coolky.feedpage.FeedViewModel
 import com.coolteam.coolky.searchpage.RecipesSearchFragment
 import com.coolteam.coolky.settingspage.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
 
 public class MainActivity : AppCompatActivity() {
 
-    var model : MainActivityViewModel?=null
+    var model: MainActivityViewModel?=null
+    var feedModel: FeedViewModel?=null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
         val mode = resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
@@ -28,6 +31,10 @@ public class MainActivity : AppCompatActivity() {
         }
 
         model = ViewModelProvider(this)[MainActivityViewModel::class.java]
+        feedModel = ViewModelProvider(this)[FeedViewModel::class.java]
+
+        feedModel!!.initializeIndexes(DBProvider.getCount())
+
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 

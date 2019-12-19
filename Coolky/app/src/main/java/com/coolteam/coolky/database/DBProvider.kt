@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import com.coolteam.coolky.database.models.Ingredient
 import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.database.models.RecipeIngredient
+import io.realm.OrderedRealmCollection
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.kotlin.oneOf
@@ -47,8 +48,13 @@ class DBProvider
 
         }
 
+        public fun getCount(): Long {
+            val database = Realm.getDefaultInstance()
+            return database.where<Recipe>().count()
+        }
+
         // + асинхронность
-        public fun findRecipeById(recipeId: String) : Recipe? {
+        public fun findRecipeById(recipeId: String): Recipe? {
             val database = Realm.getDefaultInstance()
             return database.where<Recipe>().equalTo("id", recipeId).findFirst()
         }
@@ -64,7 +70,7 @@ class DBProvider
         }
 
         @SuppressLint("DefaultLocale")
-        public fun findRecipesByName(recipeName : String): RealmResults<Recipe> {
+        public fun findRecipesByName(recipeName : String): OrderedRealmCollection<Recipe> {
             val database = Realm.getDefaultInstance()
             val recipeNameQuery = database.where<Recipe>()
             val name = recipeName.toLowerCase().capitalize()
