@@ -1,21 +1,48 @@
 package com.coolteam.coolky.database
 
 import android.annotation.SuppressLint
+import com.coolteam.coolky.database.models.Favourite
 import com.coolteam.coolky.database.models.Ingredient
 import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.database.models.RecipeIngredient
-import io.realm.OrderedRealmCollection
-import io.realm.Realm
-import io.realm.RealmResults
-import io.realm.Sort
+import io.realm.*
 import io.realm.kotlin.oneOf
 import io.realm.kotlin.where
 import java.util.*
+
 
 class DBProvider
 {
     companion object
     {
+        private var favouriteRecipesConfig: RealmConfiguration = RealmConfiguration.Builder()
+            .name("favourites.realm")
+            .build()
+
+        public fun isFavourite(recipeId: String): Boolean {
+            return Realm.getInstance(favouriteRecipesConfig).where<Favourite>().equalTo("recipe.id", recipeId).findAll().isNotEmpty()
+        }
+
+        public fun setFavourite(recipeId: String, isFavourite: Boolean) {
+            val database = Realm.getInstance(favouriteRecipesConfig)
+            val isAlreadyFavourite = database.where<Favourite>().equalTo("recipe.id", recipeId).findAll().isNotEmpty()
+
+            if (isFavourite && !isAlreadyFavourite) {
+                database.beginTransaction()
+                val favourite:Favourite = database.createObject(User::class.java) // Create a new object
+
+                user.setName("John")
+                user.setEmail("john@corporation.com")
+                realm.commitTransaction()
+            }
+
+            if (database.where<Favourite>().equalTo("recipe.id", recipeId).findAll().isNotEmpty()
+        }
+
+        public fun getFavourites(): RealmResults<Favourite> {
+
+        }
+
         // это нужно как-то сделать аля статическим
         public fun getIngredients(input: String): RealmResults<Ingredient> {
             val database = Realm.getDefaultInstance()
