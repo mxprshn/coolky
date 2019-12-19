@@ -7,6 +7,7 @@ import com.coolteam.coolky.database.models.RecipeIngredient
 import io.realm.OrderedRealmCollection
 import io.realm.Realm
 import io.realm.RealmResults
+import io.realm.Sort
 import io.realm.kotlin.oneOf
 import io.realm.kotlin.where
 import java.util.*
@@ -44,7 +45,7 @@ class DBProvider
                 recipeQuery = recipeQuery.oneOf("cuisine", cuisines)
             }
 
-            return recipeQuery.lessThan("cookTime", time).findAll()
+            return recipeQuery.lessThan("cookTime", time).sort("ingredientAmount", Sort.ASCENDING).findAll()
 
         }
 
