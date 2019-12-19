@@ -46,7 +46,7 @@ class FeedAdapter(collection : OrderedRealmCollection<Recipe>, val clickListener
 
             if (recipe.pictureUrl != "")
             {
-                Picasso.get().load(recipe.pictureUrl).into(dishImageView).placeholder(R.drawable.not_found)
+                Picasso.get().load(recipe.pictureUrl).into(dishImageView)
             }
             else
             {

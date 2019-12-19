@@ -38,7 +38,7 @@ class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val 
             itemView.setOnClickListener { clickListener.onItemClick(recipe.id!!) }
             dishNameTextView.text = recipe.dishName
             val stringBuilder = StringBuilder()
-            stringBuilder.append("Нужно ещё ингредиентов: ")
+            stringBuilder.append("Нужно ингредиентов: ")
             val neededIngredients = DBProvider.findRecipeIngredientsById(recipe.id!!).count()
             stringBuilder.append(neededIngredients)
             ingredientsLeftAmountTextView.text = stringBuilder
@@ -46,7 +46,7 @@ class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val 
 
             if (recipe.pictureUrl != "")
             {
-                Picasso.get().load(recipe.pictureUrl).placeholder(R.drawable.not_found).into(dishImageView)
+                Picasso.get().load(recipe.pictureUrl).into(dishImageView)
             }
             else
             {

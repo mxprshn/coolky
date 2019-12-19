@@ -73,7 +73,7 @@ class RecipeFragment : Fragment()
 
         if (model.pictureUrl != "")
         {
-            Picasso.get().load(model.pictureUrl).placeholder(R.drawable.not_found).into(dishImageView)
+            Picasso.get().load(model.pictureUrl).into(dishImageView)
         }
         else
         {
