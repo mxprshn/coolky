@@ -5,6 +5,7 @@ import android.content.res.Configuration
 import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager

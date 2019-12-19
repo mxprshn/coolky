@@ -6,5 +6,5 @@ import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.database.models.RecipeIngredient
 import io.realm.annotations.RealmModule
 
-@RealmModule(classes = [Ingredient::class, Recipe::class, RecipeIngredient::class, Favourite::class])
+@RealmModule(classes = [Ingredient::class, Recipe::class, RecipeIngredient::class])
 class BundledRealmModule

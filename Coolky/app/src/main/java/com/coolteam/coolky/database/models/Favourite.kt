@@ -5,6 +5,5 @@ import io.realm.annotations.PrimaryKey
 
 open class Favourite : RealmObject()
 {
-    @PrimaryKey
-    public var recipe: Recipe? = null
+    public var recipeId: String? = null
 }

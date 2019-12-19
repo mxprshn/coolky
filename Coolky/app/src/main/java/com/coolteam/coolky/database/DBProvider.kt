@@ -20,27 +20,31 @@ class DBProvider
             .build()
 
         public fun isFavourite(recipeId: String): Boolean {
-            return Realm.getInstance(favouriteRecipesConfig).where<Favourite>().equalTo("recipe.id", recipeId).findAll().isNotEmpty()
+            return Realm.getInstance(favouriteRecipesConfig).where<Favourite>().equalTo("recipeId", recipeId).findAll().isNotEmpty()
         }
 
         public fun setFavourite(recipeId: String, isFavourite: Boolean) {
             val database = Realm.getInstance(favouriteRecipesConfig)
-            val isAlreadyFavourite = database.where<Favourite>().equalTo("recipe.id", recipeId).findAll().isNotEmpty()
+            val isAlreadyFavourite = database.where<Favourite>().equalTo("recipeId", recipeId).findAll().isNotEmpty()
 
             if (isFavourite && !isAlreadyFavourite) {
                 database.beginTransaction()
-                val favourite:Favourite = database.createObject(User::class.java) // Create a new object
-
-                user.setName("John")
-                user.setEmail("john@corporation.com")
-                realm.commitTransaction()
+                val favourite: Favourite = database.createObject(Favourite::class.java)
+                favourite.recipeId = recipeId
+                database.commitTransaction()
             }
 
-            if (database.where<Favourite>().equalTo("recipe.id", recipeId).findAll().isNotEmpty()
+            if (!isFavourite && isAlreadyFavourite) {
+                database.beginTransaction()
+                val favourite = database.where<Favourite>().equalTo("recipeId", recipeId).findFirst()
+                favourite!!.deleteFromRealm()
+                database.commitTransaction()
+            }
         }
 
         public fun getFavourites(): RealmResults<Favourite> {
-
+            val database = Realm.getInstance(favouriteRecipesConfig)
+            return database.where<Favourite>().findAll()
         }
 
         // это нужно как-то сделать аля статическим
