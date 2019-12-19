@@ -33,7 +33,9 @@ public class MainActivity : AppCompatActivity() {
         model = ViewModelProvider(this)[MainActivityViewModel::class.java]
         feedModel = ViewModelProvider(this)[FeedViewModel::class.java]
 
-        feedModel!!.initializeIndexes(DBProvider.getCount())
+        if (feedModel!!.currentIndexesPermutation.isEmpty()) {
+            feedModel!!.initializeIndexes(DBProvider.getCount())
+        }
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)

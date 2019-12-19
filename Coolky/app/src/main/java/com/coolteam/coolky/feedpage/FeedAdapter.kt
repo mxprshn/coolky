@@ -15,15 +15,14 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import kotlin.collections.ArrayList
 
-class FeedAdapter(collection : OrderedRealmCollection<Recipe>, val clickListener: OnItemClickListener, initIndexes : ArrayList<Int>) : RealmRecyclerViewAdapter<Recipe, FeedAdapter.FeedItemViewHolder>
+class FeedAdapter(collection : OrderedRealmCollection<Recipe>, private val clickListener: OnItemClickListener, initIndexes : ArrayList<Int>) : RealmRecyclerViewAdapter<Recipe, FeedAdapter.FeedItemViewHolder>
     (collection, true)
 {
     private var defaultIndexes: ArrayList<Int> = ArrayList()
-    private var indexes: ArrayList<Int>
+    private var indexes: ArrayList<Int> = ArrayList()
     private val defaultData: OrderedRealmCollection<Recipe>?
 
     init {
-        indexes = ArrayList()
         defaultIndexes.addAll(initIndexes)
         indexes.addAll(initIndexes)
         defaultData = DBProvider.findRecipesByName("")
@@ -57,6 +56,10 @@ class FeedAdapter(collection : OrderedRealmCollection<Recipe>, val clickListener
     public fun shuffleData() {
         indexes.shuffle()
         super.updateData(data)
+    }
+
+    public fun getNewIndexes(): ArrayList<Int> {
+        return indexes
     }
 
     class FeedItemViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)

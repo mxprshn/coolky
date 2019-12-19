@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 
 class FeedViewModel : ViewModel() {
     public var request : String=""
-    public lateinit var currentIndexesPermutation : ArrayList<Int>
+    public var currentIndexesPermutation = ArrayList<Int>()
 
     public fun initializeIndexes(recipesCount: Long) {
         val indexes = ArrayList<Int>()

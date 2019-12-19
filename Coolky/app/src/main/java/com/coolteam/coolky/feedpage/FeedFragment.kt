@@ -65,6 +65,11 @@ class FeedFragment : Fragment() {
 
         swipeRefreshLayout.setOnRefreshListener {
             (feedRecyclerView.adapter!! as FeedAdapter).shuffleData()
+
+            if (model!!.request == "") {
+                model!!.currentIndexesPermutation = (feedRecyclerView.adapter as FeedAdapter).getNewIndexes()
+            }
+
             swipeRefreshLayout.isRefreshing = false
         }
 
