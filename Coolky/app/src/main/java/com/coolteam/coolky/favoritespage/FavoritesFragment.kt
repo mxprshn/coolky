@@ -11,12 +11,16 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.coolteam.coolky.*
 import com.coolteam.coolky.database.DBProvider
+import com.coolteam.coolky.database.models.Favourite
+import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.recipepage.RecipeFragment
 import com.coolteam.coolky.searchpage.RecipeSearchViewModel
 import com.like.LikeButton
+import io.realm.OrderedRealmCollection
+import io.realm.RealmResults
 import kotlinx.android.synthetic.main.fragment_recipe_search_results.*
 
-class RecipeSearchResultsFragment : Fragment()
+class FavoritesFragment : Fragment()
 {
     private var model: RecipeSearchViewModel?=null
     private var mainActivityModel: MainActivityViewModel?=null
@@ -67,21 +71,21 @@ class RecipeSearchResultsFragment : Fragment()
         searchResultsRecyclerView.layoutManager = LinearLayoutManager(this.context)
 
         model!!.chosenTypesOfDishes.observe(activity!!, Observer {
-            types ->
+                types ->
             run {
                 chosenTypes = Array(types.size) {i -> types[i].toLowerCase()}
             }
         })
 
         model!!.chosenCuisines.observe(activity!!, Observer {
-            cuisines ->
+                cuisines ->
             run {
                 chosenCuisines = Array(cuisines.size) { i -> cuisines[i].toLowerCase() }
             }
         })
 
         model!!.chosenIngredients.observe(activity!!, Observer {
-            ingredients ->
+                ingredients ->
             run {
                 chosenIngredients = Array(ingredients.size) {i -> ingredients[i].toLowerCase()}
             }
@@ -91,8 +95,8 @@ class RecipeSearchResultsFragment : Fragment()
                 t -> chosenTime = t
         })
 
-        val data = DBProvider.getRecipes(chosenIngredients, chosenTypes, chosenCuisines, chosenTime)
+        val favorites: RealmResults<Favourite> = DBProvider.getFavourites()
 
-        searchResultsRecyclerView.adapter = SearchResultsListAdapter(data, SearchResultClickListener())
+        searchResultsRecyclerView.adapter = FavoritesAdapter(favorites, SearchResultClickListener())
     }
 }

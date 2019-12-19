@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.coolteam.coolky.R
+import com.coolteam.coolky.database.DBProvider
 import com.like.LikeButton
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_recipe.*
@@ -85,15 +86,13 @@ class RecipeFragment : Fragment()
     }
 
     private fun onStarButtonClickHandler(view: View) {
-        if (view is LikeButton) {
-            if (view.isLiked) {
-                view.isLiked = false
-                // в базу кидаем
-            }
-            else {
-                // из базы убираем
-                view.isLiked = true
-            }
+        if (starButton.isLiked) {
+            starButton.isLiked = false
+            DBProvider.setFavourite(model.idRecipe, false)
+        }
+        else {
+            starButton.isLiked = true
+            DBProvider.setFavourite(model.idRecipe, true)
         }
     }
 }

@@ -2,19 +2,17 @@ package com.coolteam.coolky
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import android.view.WindowManager
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.coolteam.coolky.database.DBProvider
-import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.feedpage.FeedFragment
 import com.coolteam.coolky.feedpage.FeedViewModel
+import com.coolteam.coolky.recipesearchresultspage.FavoritesFragment
 import com.coolteam.coolky.searchpage.RecipesSearchFragment
 import com.coolteam.coolky.settingspage.SettingsFragment
 import kotlinx.android.synthetic.main.activity_main.*
@@ -94,8 +92,7 @@ public class MainActivity : AppCompatActivity() {
             }
 
             R.id.settings -> {
-                settingsFragment =
-                    SettingsFragment()
+                settingsFragment = SettingsFragment()
                 FragmentTools.changeFragment(settingsFragment, supportFragmentManager)
             }
         }

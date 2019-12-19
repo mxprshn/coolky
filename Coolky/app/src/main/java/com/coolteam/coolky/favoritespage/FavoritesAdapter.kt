@@ -11,36 +11,38 @@ import androidx.recyclerview.widget.RecyclerView
 import com.coolteam.coolky.OnViewHolderIngredientClickListener
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.DBProvider
+import com.coolteam.coolky.database.models.Favourite
 import com.coolteam.coolky.database.models.Recipe
 import com.squareup.picasso.Picasso
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import kotlin.text.StringBuilder
 
-class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val clickListener: OnViewHolderIngredientClickListener) : RealmRecyclerViewAdapter<Recipe, SearchResultsListAdapter.SearchResultViewHolder>
-        (collection, true)
+class FavoritesAdapter(collection: OrderedRealmCollection<Favourite>?, val clickListener: OnViewHolderIngredientClickListener) : RealmRecyclerViewAdapter<Favourite, FavoritesAdapter.FavoriteViewHolder>
+    (collection, true)
 {
-    override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int)
+    override fun onBindViewHolder(holder: FavoriteViewHolder, position: Int)
     {
         val recipe = getItem(position)
         holder.bind(recipe!!, clickListener)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchResultViewHolder
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): FavoriteViewHolder
     {
         val view = LayoutInflater.from(parent.context).inflate(R.layout.view_holder_recipe_search_result, parent, false)
-        return SearchResultViewHolder(view)
+        return FavoriteViewHolder(view)
     }
 
-    class SearchResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
+    class FavoriteViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
-        public fun bind(recipe: Recipe, clickListener: OnViewHolderIngredientClickListener) {
-            itemView.setOnClickListener { clickListener.onItemClick(recipe.id!!) }
+        public fun bind(favorite: Favourite, clickListener: OnViewHolderIngredientClickListener) {
+            val recipe = DBProvider.findRecipeById(favorite.recipeId!!)
+            itemView.setOnClickListener { clickListener.onItemClick(recipe!!.id!!) }
             // Вопрос с переиспользованием вьюшек нужно решить снова
             // Если уже в избранном, то тогда нужно звездочку сделать желтенькой
-            starButton.setOnClickListener { clickListener.onStarButtonClickListener(recipe.id!!, starButton) }
+            starButton.setOnClickListener { clickListener.onStarButtonClickListener(recipe!!.id!!, starButton) }
 
-            dishNameTextView.text = recipe.dishName
+            dishNameTextView.text = recipe!!.dishName
             val stringBuilder = StringBuilder()
             stringBuilder.append("Нужно ингредиентов: ")
             val neededIngredients = DBProvider.findRecipeIngredientsById(recipe.id!!).count()

@@ -1,4 +1,4 @@
-package com.coolteam.coolky.recipesearchresultspage
+package com.coolteam.coolky
 
 import com.like.LikeButton
 
