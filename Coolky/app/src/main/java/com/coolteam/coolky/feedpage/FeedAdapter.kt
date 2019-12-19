@@ -15,11 +15,6 @@ import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 import kotlin.collections.ArrayList
 
-class FeedAdapter(collection : OrderedRealmCollection<Recipe>, val clickListener: OnItemClickListener, val indexes : ArrayList<Int>) : RealmRecyclerViewAdapter<Recipe, FeedAdapter.FeedItemViewHolder>
-    (collection, true)
-{
-    var indeces = indexes
-
 class FeedAdapter(collection : OrderedRealmCollection<Recipe>, val clickListener: OnItemClickListener, initIndexes : ArrayList<Int>) : RealmRecyclerViewAdapter<Recipe, FeedAdapter.FeedItemViewHolder>
     (collection, true)
 {

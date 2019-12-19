@@ -19,7 +19,6 @@
     <string name="choose">Выбрать</string>
     <string name="min">мин</string>
     <string name="searchingRecipeInFavorites">Поиска рецепта в избранном</string>
-    <string name="min">мин.</string>
 
     <string-array name="typesOfDishes">
         <item>Первое</item>
