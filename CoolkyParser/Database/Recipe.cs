@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using Realms;
 
 namespace CoolkyRecipeParser
@@ -30,16 +32,13 @@ namespace CoolkyRecipeParser
         [MapTo("webSite")]
         public string WebSite { get; set; }
 
-        [MapTo("ingredientAmount")]
-        public int IngredientAmount { get; set; }
-
         [MapTo("steps")]
         public IList<string> Steps { get; }
 
         public Recipe() { }
 
         public Recipe(string id, string dishName, int cookTime, string cuisine, string type, int portionAmount,
-                string pictureUrl, string webSite, int ingredientAmount, IList<string> steps)
+                string pictureUrl, string webSite, IList<string> steps)
         {
             Id = id;
             DishName = dishName;
@@ -50,7 +49,6 @@ namespace CoolkyRecipeParser
             PortionAmount = portionAmount;
             PictureUrl = pictureUrl;
             WebSite = webSite;
-            IngredientAmount = ingredientAmount;
         }
     }
 }

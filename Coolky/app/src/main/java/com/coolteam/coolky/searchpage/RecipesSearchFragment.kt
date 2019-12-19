@@ -1,19 +1,26 @@
 package com.coolteam.coolky.searchpage
 
+import android.annotation.SuppressLint
 import android.app.AlertDialog
+import android.content.Context
 import android.content.DialogInterface
 import android.os.Bundle
+import android.renderscript.ScriptGroup
+import android.text.InputType
 import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.inputmethod.InputMethodManager
 import android.widget.Button
+import android.widget.EditText
 import androidx.core.view.children
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.coolteam.coolky.FragmentTools
+import com.coolteam.coolky.MainActivity
 import com.coolteam.coolky.R
 import com.coolteam.coolky.recipesearchresultspage.RecipeSearchResultsFragment
 import com.coolteam.coolky.searchingredientspage.SearchIngredientsFragment
@@ -32,8 +39,6 @@ public class RecipesSearchFragment : Fragment() {
     private var model: RecipeSearchViewModel?=null
     private lateinit var typesOfDishes: Array<String>
     private lateinit var cuisines: Array<String>
-    private lateinit var chosenTypesOfDishes : ArrayList<String>
-    private  lateinit var chosenCuisines : ArrayList<String>
     private var root: View? = null
 
     override fun onCreate(savedInstanceState: Bundle?)
@@ -52,12 +57,12 @@ public class RecipesSearchFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        //activity!!.supportFragmentManager.beginTransaction().detach(this).attach(this).commit()
         root = inflater.inflate(R.layout.fragment_recipes_search, container, false)
         return root
     }
 
     public override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        cookingTimeMinutes.hideKeyboard()
 
         chooseTypeOfDish.setOnClickListener(this::chooseTypeOfDishClickHandler)
         chooseCuisine.setOnClickListener(this::chooseCuisineClickHandler)
@@ -79,6 +84,18 @@ public class RecipesSearchFragment : Fragment() {
                 cuisines = updateChoices(resources.getStringArray(R.array.cuisines), modelCuisines)
             }
         })
+
+        model!!.chosenIngredients.observe(activity!!, Observer {
+            modelIngredients ->
+            run {
+                updateTagGroup(root!!.tagGroupIngredients, modelIngredients)
+            }
+        })
+
+        if (activity != null) {
+            val act = activity as MainActivity?
+            act!!.showBottomNavigation()
+        }
     }
 
     private fun updateChoices(base: Array<String>, chosen: ArrayList<String>?): Array<String> {
@@ -112,6 +129,7 @@ public class RecipesSearchFragment : Fragment() {
         addTags(tagGroup, toAdd)
     }
 
+
     private fun addTags(tagGroup: ChipGroup, list : ArrayList<String>) {
         val layoutInflater = LayoutInflater.from(root!!.context)
 
@@ -140,18 +158,18 @@ public class RecipesSearchFragment : Fragment() {
 
             builder.setTitle(R.string.chooseTypeOfDishText)
                 .setMultiChoiceItems(
-                    typesOfDishesCopy, null,
-                    DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
-                        if (isChecked) {
-                            tmpChosenTypes.add(typesOfDishesCopy[which])
+                    typesOfDishesCopy, null
+                ) { _, which, isChecked ->
+                    if (isChecked) {
+                        tmpChosenTypes.add(typesOfDishesCopy[which])
 
-                        } else {
-                            tmpChosenTypes.remove(typesOfDishesCopy[which])
-                        }
-                    })
+                    } else {
+                        tmpChosenTypes.remove(typesOfDishesCopy[which])
+                    }
+                }
                 .setPositiveButton(
                     R.string.ok
-                ) { dialog, id ->
+                ) { _, _ ->
                     model!!.addTypes(tmpChosenTypes)
                 }
                 .create()
@@ -174,17 +192,17 @@ public class RecipesSearchFragment : Fragment() {
 
             builder.setTitle(R.string.chooseCuisineText)
                 .setMultiChoiceItems(
-                    cuisinesCopy, null,
-                    DialogInterface.OnMultiChoiceClickListener { dialog, which, isChecked ->
-                        if (isChecked) {
-                            tmpChosenCuisines.add(cuisinesCopy[which])
-                        } else {
-                            tmpChosenCuisines.remove(cuisinesCopy[which])
-                        }
-                    })
+                    cuisinesCopy, null
+                ) { _, which, isChecked ->
+                    if (isChecked) {
+                        tmpChosenCuisines.add(cuisinesCopy[which])
+                    } else {
+                        tmpChosenCuisines.remove(cuisinesCopy[which])
+                    }
+                }
                 .setPositiveButton(
                     R.string.ok
-                ) { dialog, id ->
+                ) { _, _ ->
                     model!!.addCuisines(tmpChosenCuisines)
                 }
                 .create()
@@ -194,8 +212,6 @@ public class RecipesSearchFragment : Fragment() {
 
     private fun searchClickHandler(search: View) {
         if (search is Button) {
-            val ingredients = ArrayList<String>()
-
             val timeText = cookingTimeMinutes.text.toString()
 
             val time = if (TextUtils.isEmpty(timeText)) {
@@ -204,12 +220,16 @@ public class RecipesSearchFragment : Fragment() {
                 timeText.toInt()
             }
 
-            model!!.chosenIngredients.value = ingredients
             model!!.chosenTime.postValue(time)
 
             val searchResultsFragment = RecipeSearchResultsFragment()
 
             FragmentTools.changeFragment(searchResultsFragment, activity!!.supportFragmentManager)
         }
+    }
+
+    private fun EditText.hideKeyboard() {
+        val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+        imm.hideSoftInputFromWindow(windowToken, 0)
     }
 }

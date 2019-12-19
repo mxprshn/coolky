@@ -23,10 +23,6 @@ namespace CoolkyRecipeParser.HrumkaParser
             this.type = type;
         }
 
-        public HrumkaTypeContext(string urlTypeName, string type, int maxPageAmount) :
-                this(urlTypeName, type) => MaxPageAmount = maxPageAmount;
-
-
         public override string GetType(IParsingLogic logic, IDocument page) => type;
     }
 }

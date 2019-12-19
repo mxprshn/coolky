@@ -6,6 +6,15 @@
     android:layout_height="wrap_content"
     android:background="?backgroundColor">
 
+    <com.like.LikeButton
+        android:id="@+id/starButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:icon_size="18dp"
+        app:icon_type="star"
+        app:layout_constraintTop_toBottomOf="@id/dishNameTextView"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <TextView
         android:id="@+id/ingredientsLeftAmountTextView"
         android:layout_width="wrap_content"

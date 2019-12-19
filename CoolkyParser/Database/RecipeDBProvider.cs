@@ -1,5 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using Realms;
+using Realms.Exceptions;
 
 namespace CoolkyRecipeParser
 {
@@ -9,81 +15,68 @@ namespace CoolkyRecipeParser
 
         public static Ingredient FindIngredientByName(string name)
         {
-            using (var realm = Realm.GetInstance(config))
-            {
-                return realm.Find<Ingredient>(name);
-            }            
+            var realm = Realm.GetInstance(config);
+            return realm.Find<Ingredient>(name);
         }
 
         public static Recipe FindRecipeById(string id)
         {
-            using (var realm = Realm.GetInstance(config))
-            {
-                return realm.Find<Recipe>(id);
-            }            
+            var realm = Realm.GetInstance(config);
+            return realm.Find<Recipe>(id);
         }
 
-        public static bool IngredientExists(string name) => FindIngredientByName(name) != null;
-
-        public static bool RecipeExists(string id) => FindRecipeById(id) != null;
-
-        public static void AddRecipeIngredient(string recipeId, string ingredientName, string amount)
+        public static bool IngredientExists(string name)
         {
-            using (var realm = Realm.GetInstance(config))
-            {
-                realm.Write(() =>
-                {
-                    realm.Add(new RecipeIngredient(realm.Find<Recipe>(recipeId), realm.Find<Ingredient>(ingredientName), amount));
-                });
-            }
+            var realm = Realm.GetInstance(config);
+            return realm.Find<Ingredient>(name) != null;
         }
 
-        public static void AddRecipe(string id, string dishName, int cookTime, string cuisine, string type, int portionAmount,
-                string pictureUrl, IList<string> steps, string webSite, int ingredientAmount)
+        public static async Task AddRecipeIngredient(string recipeId, string ingredientName, string amount)
         {
-            using (var realm = Realm.GetInstance(config))
+            var realm = Realm.GetInstance(config);
+
+            await realm.WriteAsync(tempRealm =>
             {
-                realm.Write(() =>
-                {
-                    realm.Add(new Recipe(id, dishName, cookTime, cuisine, type, portionAmount, pictureUrl, webSite, ingredientAmount, steps));
-                });
-            }
+                tempRealm.Add(new RecipeIngredient(FindRecipeById(recipeId), FindIngredientByName(ingredientName), amount));
+            });
         }
 
-        public static void UpdateRecipe(string id, string dishName, int cookTime, string cuisine, string type, int portionAmount,
+        public static async Task AddRecipe(string id, string dishName, int cookTime, string cuisine, string type, int portionAmount,
                 string pictureUrl, IList<string> steps, string webSite)
         {
-            using (var realm = Realm.GetInstance(config))
+            var realm = Realm.GetInstance(config);
+
+            await realm.WriteAsync(tempRealm =>
             {
                 var existingRecipe = realm.Find<Recipe>(id);
 
-                realm.Write(() =>
+                if (existingRecipe != null)
                 {
-                    if (existingRecipe != null)
+                    if (cuisine != null)
                     {
-                        if (cuisine != null)
-                        {
-                            existingRecipe.Cuisine = cuisine;
-                        }
-
-                        if (type != null)
-                        {
-                            existingRecipe.Type = type;
-                        }
+                        existingRecipe.Cuisine = cuisine;
                     }
-                });
-            }
+
+                    if (type != null)
+                    {
+                        existingRecipe.Type = type;
+                    }
+                }
+                else
+                {
+                    tempRealm.Add(new Recipe(id, dishName, cookTime, cuisine, type, portionAmount, pictureUrl, webSite, steps));
+                }
+            });
         }
 
-        public static void AddIngredient(string name)
+        public static async Task AddIngredient(string name)
         {
-            using (var realm = Realm.GetInstance(config))
+            var realm = Realm.GetInstance(config);
+
+            await realm.WriteAsync(tempRealm =>
             {
-                realm.Write(() =>
-                {
-                    realm.Add(new Ingredient { Name = name });
-                });
-            }
+                tempRealm.Add(new Ingredient { Name = name });
+            });
         }
     }
 }

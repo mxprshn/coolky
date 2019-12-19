@@ -14,9 +14,12 @@ import com.coolteam.coolky.MainActivityViewModel
 import com.coolteam.coolky.OnItemClickListener
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.DBProvider
+import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.recipepage.RecipeFragment
 import com.coolteam.coolky.searchpage.RecipeSearchViewModel
+import com.like.LikeButton
 import kotlinx.android.synthetic.main.fragment_recipe_search_results.*
+import kotlinx.android.synthetic.main.view_holder_recipe_search_result.*
 import java.util.*
 
 class RecipeSearchResultsFragment : Fragment()
@@ -28,12 +31,23 @@ class RecipeSearchResultsFragment : Fragment()
     private lateinit var chosenCuisines : Array<String>
     private var chosenTime : Int = 0
 
-    public inner class SearchResultClickListener : OnItemClickListener
+    public inner class SearchResultClickListener :OnViewHolderIngredientClickListener
     {
         override fun onItemClick(recipeId: String) {
             // здесь нужно вызвать метод, переключающий фрагменты
             mainActivityModel!!.currentSearchFragment = RecipeFragment.newInstance(recipeId)
             FragmentTools.changeFragment(RecipeFragment.newInstance(recipeId), activity!!.supportFragmentManager)
+        }
+
+        override fun onStarButtonClickListener(recipeId: String, starButton: LikeButton) {
+            if (starButton.isLiked) {
+                starButton.isLiked = false
+                // удалим из избранного
+            }
+            else {
+                starButton.isLiked = true
+                // добавим в избранное
+            }
         }
     }
 
@@ -71,10 +85,19 @@ class RecipeSearchResultsFragment : Fragment()
             }
         })
 
+        model!!.chosenIngredients.observe(activity!!, Observer {
+            ingredients ->
+            run {
+                chosenIngredients = Array(ingredients.size) {i -> ingredients[i].toLowerCase()}
+            }
+        })
+
         model!!.chosenTime.observe(activity!!, Observer {
                 t -> chosenTime = t
         })
 
-        searchResultsRecyclerView.adapter = SearchResultsListAdapter(DBProvider.getRecipes(arrayOf(), chosenTypes, chosenCuisines, chosenTime), SearchResultClickListener())
+        val data = DBProvider.getRecipes(chosenIngredients, chosenTypes, chosenCuisines, chosenTime)
+
+        searchResultsRecyclerView.adapter = SearchResultsListAdapter(data, SearchResultClickListener())
     }
 }

@@ -3,18 +3,34 @@ package com.coolteam.coolky.searchingredientspage
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
+import android.widget.CheckedTextView
 import androidx.recyclerview.widget.RecyclerView
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.models.Ingredient
+import com.coolteam.coolky.searchpage.RecipeSearchViewModel
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
 
-class ShowIngredientsAdapter(collection: OrderedRealmCollection<Ingredient>?) : RealmRecyclerViewAdapter<Ingredient, ShowIngredientsAdapter.IngredientViewHolder>
-        (collection, true) {
+class ShowIngredientsAdapter(collection: OrderedRealmCollection<Ingredient>?, private val clickListener: OnIngredientClickListener, val model: RecipeSearchViewModel) : RealmRecyclerViewAdapter<Ingredient, ShowIngredientsAdapter.IngredientViewHolder>
+    (collection, true) {
+    public override fun updateData(ingredients: OrderedRealmCollection<Ingredient>?) {
+        super.updateData(ingredients)
+    }
+
     override fun onBindViewHolder(holder: IngredientViewHolder, position: Int) {
         val ingredient = getItem(position)
-        holder.ingredientName.text = ingredient!!.name.toString()
+        holder.ingredientCheckedTextView.text = ingredient!!.name.toString()
+
+        val textOfHolderCheckedByUser = model.chosenIngredients.value!!.contains(holder.ingredientCheckedTextView.text.toString())
+
+        if (holder.ingredientCheckedTextView.isChecked && !textOfHolderCheckedByUser) {
+            holder.ingredientCheckedTextView.isChecked = false
+        }
+        else if (textOfHolderCheckedByUser) {
+            holder.ingredientCheckedTextView.isChecked = true
+        }
+
+        holder.bind(ingredient, clickListener)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): IngredientViewHolder {
@@ -23,6 +39,10 @@ class ShowIngredientsAdapter(collection: OrderedRealmCollection<Ingredient>?) : 
     }
 
     class IngredientViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val ingredientName: TextView = itemView.findViewById(R.id.ingredientView)
+        val ingredientCheckedTextView: CheckedTextView = itemView.findViewById(R.id.ingredientView)
+
+        public fun bind(ingredient: Ingredient, clickListener: OnIngredientClickListener) {
+            itemView.setOnClickListener { clickListener.onItemClick(ingredientCheckedTextView) }
+        }
     }
 }

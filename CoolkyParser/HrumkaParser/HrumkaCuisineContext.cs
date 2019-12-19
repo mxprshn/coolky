@@ -23,9 +23,6 @@ namespace CoolkyRecipeParser.HrumkaParser
             this.cuisine = cuisine;
         }
 
-        public HrumkaCuisineContext(string urlCuisineName, string cuisine, int maxPageAmount) :
-                this(urlCuisineName, cuisine) => MaxPageAmount = maxPageAmount;
-
         public override string GetCuisine(IParsingLogic logic, IDocument page) => cuisine;
     }
 }

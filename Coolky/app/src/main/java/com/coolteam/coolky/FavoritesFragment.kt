@@ -20,5 +20,12 @@ class FavoritesFragment : Fragment() {
         return inflater.inflate(R.layout.fragment_favorites, container, false)
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        // отобразить базу с избранным
+        // если рецепт удаляем из избранного, то по идее он должен из этого списка исчезнуть, ну или забить?
+    }
+
 
 }

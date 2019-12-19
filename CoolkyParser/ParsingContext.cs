@@ -6,6 +6,7 @@ namespace CoolkyRecipeParser
 {
     public abstract class ParsingContext
     {
+        // реализовать через yield return?
         public abstract Task<IEnumerable<string>> GetPages();
 
         public virtual string GetId(IParsingLogic logic, IDocument page) => logic.GetId(page);

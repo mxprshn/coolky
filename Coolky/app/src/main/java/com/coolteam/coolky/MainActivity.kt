@@ -1,9 +1,14 @@
 package com.coolteam.coolky
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
+import android.opengl.Visibility
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.view.View
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.ViewModelProvider
 import com.coolteam.coolky.database.models.Recipe
 import com.coolteam.coolky.feedpage.FeedFragment
@@ -16,6 +21,12 @@ public class MainActivity : AppCompatActivity() {
     var model : MainActivityViewModel?=null
 
     public override fun onCreate(savedInstanceState: Bundle?) {
+        val mode = resources?.configuration?.uiMode?.and(Configuration.UI_MODE_NIGHT_MASK)
+
+        if (mode == Configuration.UI_MODE_NIGHT_YES) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
+        }
+
         model = ViewModelProvider(this)[MainActivityViewModel::class.java]
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -34,6 +45,8 @@ public class MainActivity : AppCompatActivity() {
             bottomNavigationOnItemSelectedHandler(item)
             true
         }
+
+        window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_HIDDEN);
     }
 
     // Эта аннотация - костыль, который исправляет библиотечную багу
@@ -46,13 +59,10 @@ public class MainActivity : AppCompatActivity() {
                 if (item.isChecked) {
                     feedFragment = FeedFragment()
                     FragmentTools.changeFragment(feedFragment, supportFragmentManager)
+                    model!!.currentFeedFragment = FeedFragment()
                 } else {
                     FragmentTools.changeFragment(model!!.currentFeedFragment, supportFragmentManager)
-                    model!!.currentFeedFragment = FeedFragment()
                 }
-
-                //recommendedFragment = RecommendedFragment()
-                //FragmentTools.changeFragment(recommendedFragment, supportFragmentManager)
             }
 
             R.id.myRecipes -> {
@@ -64,9 +74,9 @@ public class MainActivity : AppCompatActivity() {
                 if (item.isChecked) {
                     recipesSearchFragment = RecipesSearchFragment()
                     FragmentTools.changeFragment(recipesSearchFragment, supportFragmentManager)
+                    model!!.currentSearchFragment = RecipesSearchFragment()
                 } else {
                     FragmentTools.changeFragment(model!!.currentSearchFragment, supportFragmentManager)
-                    model!!.currentSearchFragment = RecipesSearchFragment()
                 }
             }
 
@@ -81,6 +91,14 @@ public class MainActivity : AppCompatActivity() {
                 FragmentTools.changeFragment(settingsFragment, supportFragmentManager)
             }
         }
+    }
+
+    public fun hideBottomNavigation() {
+        bottomNavigation.visibility = View.GONE
+    }
+
+    public fun showBottomNavigation() {
+        bottomNavigation.visibility = View.VISIBLE
     }
 
     private lateinit var feedFragment: FeedFragment

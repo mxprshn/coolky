@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatDelegate
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import com.coolteam.coolky.R
+import com.like.LikeButton
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.fragment_recipe.*
 
@@ -49,6 +50,9 @@ class RecipeFragment : Fragment()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?)
     {
+        // установить кнопочку: желтенькая, если рецепт в избранном; в противном случае ничего не делаем
+        starButton.setOnClickListener(this::onStarButtonClickHandler)
+
         if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
             roundedRectangleImageView.setImageResource(R.drawable.shadow_rounded_rectangle_night)
         } else {
@@ -63,6 +67,27 @@ class RecipeFragment : Fragment()
         dishNameTextView.text = model.name
         portionsAmountTextView.text = model.portionAmount.toString()
         timeAmountTextView.text = model.cookTime.toString()
+
+        if (model.portionAmount < 10 || model.portionAmount > 20) {
+            when (model.portionAmount % 10) {
+                1 -> portionsTextView.text = "Порция"
+                2, 3, 4 -> portionsTextView.text = "Порции"
+            }
+        }
+
         Picasso.get().load(model.pictureUrl).into(dishImageView)
+    }
+
+    private fun onStarButtonClickHandler(view: View) {
+        if (view is LikeButton) {
+            if (view.isLiked) {
+                view.isLiked = false
+                // в базу кидаем
+            }
+            else {
+                // из базы убираем
+                view.isLiked = true
+            }
+        }
     }
 }

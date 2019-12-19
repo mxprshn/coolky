@@ -5,17 +5,21 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.like.LikeButton
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.RecyclerView
 import com.coolteam.coolky.OnItemClickListener
 import com.coolteam.coolky.R
 import com.coolteam.coolky.database.DBProvider
 import com.coolteam.coolky.database.models.Recipe
+import com.coolteam.coolky.searchpage.RecipeSearchViewModel
 import com.squareup.picasso.Picasso
 import io.realm.OrderedRealmCollection
 import io.realm.RealmRecyclerViewAdapter
+import kotlinx.android.synthetic.main.view_holder_recipe_search_result.view.*
 import kotlin.text.StringBuilder
 
-class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val clickListener: OnItemClickListener) : RealmRecyclerViewAdapter<Recipe, SearchResultsListAdapter.SearchResultViewHolder>
+class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val clickListener: OnViewHolderIngredientClickListener) : RealmRecyclerViewAdapter<Recipe, SearchResultsListAdapter.SearchResultViewHolder>
         (collection, true)
 {
     override fun onBindViewHolder(holder: SearchResultViewHolder, position: Int)
@@ -32,12 +36,18 @@ class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val 
 
     class SearchResultViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView)
     {
-        public fun bind(recipe: Recipe, clickListener: OnItemClickListener) {
+        public fun bind(recipe: Recipe, clickListener: OnViewHolderIngredientClickListener) {
             itemView.setOnClickListener { clickListener.onItemClick(recipe.id!!) }
+            // Вопрос с переиспользованием вьюшек нужно решить снова
+            // Если уже в избранном, то тогда нужно звездочку сделать желтенькой
+            starButton.setOnClickListener { clickListener.onStarButtonClickListener(recipe.id!!, starButton) }
+
             dishNameTextView.text = recipe.dishName
-            var stringBuilder = StringBuilder()
+            val stringBuilder = StringBuilder()
             stringBuilder.append("Нужно ещё ингредиентов: ")
-            stringBuilder.append(DBProvider.findRecipeIngredientsById(recipe.id!!).count().toString())
+            val neededIngredients = DBProvider.findRecipeIngredientsById(recipe.id!!).count()
+            stringBuilder.append(neededIngredients)
+
             ingredientsLeftAmountTextView.text = stringBuilder
             dishTypeTextView.text = recipe.type
             Picasso.get().load(recipe.pictureUrl).into(dishImageView)
@@ -47,5 +57,6 @@ class SearchResultsListAdapter(collection: OrderedRealmCollection<Recipe>?, val 
         private val dishTypeTextView: TextView = itemView.findViewById(R.id.typeTextView)
         private val ingredientsLeftAmountTextView: TextView = itemView.findViewById(R.id.ingredientsLeftAmountTextView)
         private val dishImageView: ImageView = itemView.findViewById(R.id.dishImageView)
+        private val starButton: LikeButton = itemView.findViewById(R.id.starButton)
     }
 }

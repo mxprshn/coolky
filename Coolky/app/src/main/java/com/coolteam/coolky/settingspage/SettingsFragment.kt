@@ -1,6 +1,7 @@
 package com.coolteam.coolky.settingspage
 
 
+import android.content.res.Configuration
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
