@@ -83,6 +83,8 @@ class RecipeFragment : Fragment()
         {
             dishImageView.setImageResource(R.drawable.not_found)
         }
+
+        starButton.isLiked = model.isFavorite
     }
 
     private fun onStarButtonClickHandler(view: View) {

@@ -11,6 +11,7 @@ class RecipeInfoViewModel(private val id: String) : ViewModel()  {
     private val recipe: Recipe? = DBProvider.findRecipeById(id)
 
     public var idRecipe: String = id
+    public var isFavorite: Boolean = DBProvider.isFavourite(id)
     public var name: String? = recipe!!.dishName
     public var cookTime: Int = recipe!!.cookTime
     public var cuisine: String? = recipe!!.cuisine
