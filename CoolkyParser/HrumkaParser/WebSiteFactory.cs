@@ -2,7 +2,7 @@
 
 namespace CoolkyRecipeParser.HrumkaParser
 {
-    class HrumkaParserFactory : IParserFactory
+    class WebSiteFactory : IParserFactory
     {
         private const int maxPageAmount = 3;
 
@@ -11,7 +11,7 @@ namespace CoolkyRecipeParser.HrumkaParser
             new HrumkaTypeContext("vtoroe-bludo", "второе"),
             new HrumkaTypeContext("supj", "первое"),
             new HrumkaTypeContext("salaty", "салат"),
-            new HrumkaTypeContext("zakuski", "закуска"),
+            new HrumkaTypeContext("zakuski", "закуска"),z
             new HrumkaTypeContext("vjpechka", "выпечка"),
             new HrumkaTypeContext("desert", "десерт"),
             new HrumkaTypeContext("napitki", "напиток"),
@@ -24,6 +24,6 @@ namespace CoolkyRecipeParser.HrumkaParser
             new HrumkaCuisineContext("koreiskaya-kuxnya", "корейская")
         };
 
-        public IParsingLogic GetLogic() => new HrumkaParsingLogic();
+        public IParsingLogic GetLogic() => new WebSiteLogic();
     }
 }

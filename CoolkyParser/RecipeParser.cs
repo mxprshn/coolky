@@ -39,24 +39,24 @@ namespace CoolkyRecipeParser
                     return;
                 }
 
-                if (RecipeDBProvider.RecipeExists(id))
+                if (DBProvider.RecipeExists(id))
                 {
-                    RecipeDBProvider.UpdateRecipe(id, context.GetDishName(logic, page), context.GetCookTime(logic, page), context.GetCuisine(logic, page),
+                    DBProvider.UpdateRecipe(id, context.GetDishName(logic, page), context.GetCookTime(logic, page), context.GetCuisine(logic, page),
                             context.GetType(logic, page), context.GetPortionAmount(logic, page), context.GetPictureUrl(logic, page), context.GetSteps(logic, page), context.GetWebSite());
                 }
                 else
                 {
-                    RecipeDBProvider.AddRecipe(id, context.GetDishName(logic, page), context.GetCookTime(logic, page), context.GetCuisine(logic, page),
+                    DBProvider.AddRecipe(id, context.GetDishName(logic, page), context.GetCookTime(logic, page), context.GetCuisine(logic, page),
                             context.GetType(logic, page), context.GetPortionAmount(logic, page), context.GetPictureUrl(logic, page), context.GetSteps(logic, page), context.GetWebSite(), ingredients.Count());
 
                     foreach (var ingredient in ingredients)
                     {
-                        if (!RecipeDBProvider.IngredientExists(ingredient.name))
+                        if (!DBProvider.IngredientExists(ingredient.name))
                         {
-                            RecipeDBProvider.AddIngredient(ingredient.name);
+                            DBProvider.AddIngredient(ingredient.name);
                         }
 
-                        RecipeDBProvider.AddRecipeIngredient(id, ingredient.name, ingredient.amount);
+                        DBProvider.AddRecipeIngredient(id, ingredient.name, ingredient.amount);
                     }
                 }
             }

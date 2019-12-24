@@ -3,7 +3,7 @@ using Realms;
 
 namespace CoolkyRecipeParser
 {
-    public static class RecipeDBProvider
+    public static class DBProvider
     {
         private static RealmConfiguration config = new RealmConfiguration($"Recipes.realm");
 

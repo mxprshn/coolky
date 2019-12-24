@@ -4,7 +4,7 @@ using AngleSharp.Dom;
 
 namespace CoolkyRecipeParser.HrumkaParser
 {
-    class HrumkaParsingLogic : IParsingLogic
+    class WebSiteLogic : IParsingLogic
     {
         private int ConvertTime(string source)
         {

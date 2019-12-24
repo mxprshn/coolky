@@ -1,28 +1,93 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <ClassDiagram MajorVersion="1" MinorVersion="1" MembersFormat="FullSignature">
-  <Class Name="CoolkyRecipeParser.HrumkaParser.HrumkaParsingLogic" Collapsed="true">
-    <Position X="6" Y="3" Width="2.75" />
+  <Class Name="CoolkyRecipeParser.RecipeParser">
+    <Position X="5.75" Y="6.5" Width="3" />
+    <Members>
+      <Method Name="ProcessRecipe" Hidden="true" />
+    </Members>
     <TypeIdentifier>
-      <HashCode>AAAAAAAgAAAAACAAEAAAAAAAAAAIAAkAAAAAABIgACA=</HashCode>
-      <FileName>HrumkaParser\HrumkaParsingLogic.cs</FileName>
+      <HashCode>AAAAAABAAAAgAAAAAAAAAAAAAAAAAAAAAAABAAAAAAA=</HashCode>
+      <FileName>RecipeParser.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Field Name="factory" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="CoolkyRecipeParser.ParsingContext">
+    <Position X="5.25" Y="2.5" Width="4" />
+    <Members>
+      <Method Name="GetCookTime" Hidden="true" />
+      <Method Name="GetId" Hidden="true" />
+      <Method Name="GetPictureUrl" Hidden="true" />
+      <Method Name="GetPortionAmount" Hidden="true" />
+      <Method Name="GetType" Hidden="true" />
+      <Method Name="GetWebSite" Hidden="true" />
+    </Members>
+    <TypeIdentifier>
+      <HashCode>AAACAAAgAAAAACAAEAAAAAAAAAAIAAmAAAAAABIAACA=</HashCode>
+      <FileName>ParsingContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoolkyRecipeParser.WebSite1Logic">
+    <Position X="1.75" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WebSite1Logic.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CoolkyRecipeParser.WebSite2Logic">
+    <Position X="3.5" Y="4.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WebSite1Logic.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CoolkyRecipeParser.WebSite1CuisineContext">
+    <Position X="5.25" Y="5" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WebSite1CuisineContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoolkyRecipeParser.WebSite2TypeContext">
+    <Position X="7.5" Y="5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WebSite1CuisineContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CoolkyRecipeParser.WebSite1Factory">
+    <Position X="1.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WebSite1Factory.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="CoolkyRecipeParser.WebSite2Factory">
+    <Position X="3.5" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>WebSite1Factory.cs</FileName>
     </TypeIdentifier>
     <Lollipop Position="0.2" />
   </Class>
   <Interface Name="CoolkyRecipeParser.IParserFactory">
-    <Position X="1.25" Y="1" Width="2.75" />
+    <Position X="2" Y="5.75" Width="2.75" />
     <TypeIdentifier>
       <HashCode>BAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
       <FileName>IParserFactory.cs</FileName>
     </TypeIdentifier>
   </Interface>
   <Interface Name="CoolkyRecipeParser.IParsingLogic">
-    <Position X="5.25" Y="1" Width="2.5" />
+    <Position X="2" Y="2" Width="2.75" />
     <Members>
       <Method Name="GetCookTime" Hidden="true" />
       <Method Name="GetId" Hidden="true" />
       <Method Name="GetPictureUrl" Hidden="true" />
       <Method Name="GetPortionAmount" Hidden="true" />
-      <Method Name="GetSteps" Hidden="true" />
       <Method Name="GetType" Hidden="true" />
     </Members>
     <TypeIdentifier>

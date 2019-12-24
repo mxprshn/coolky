@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CoolkyRecipeParser.HrumkaParser
 {
-    public abstract class HrumkaContext : ParsingContext
+    public class WebSiteContext : ParsingContext
     {
         public abstract string SectionName { get; }
         public int MaxPageAmount { get; protected set; } = int.MaxValue;

@@ -10,7 +10,7 @@ using System.Linq;
 
 namespace CoolkyRecipeParser.HrumkaParser
 {
-    public class HrumkaTypeContext : HrumkaContext
+    public class HrumkaTypeContext : WebSiteContext
     {
         public override string SectionName => urlTypeName;
 
