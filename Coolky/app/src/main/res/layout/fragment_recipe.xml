@@ -41,20 +41,20 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+       <!-- <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <com.like.LikeButton
                 android:id="@+id/starButton"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="0dp"
+                android:layout_height="22dp
+                "
                 app:icon_size="22dp"
                 app:icon_type="star"
                 android:layout_marginBottom="4dp"
                 app:layout_constraintBottom_toBottomOf="@id/imageView"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintEnd_toEndOf="parent" />
 
             <ImageView
                 android:id="@+id/imageView"
@@ -64,11 +64,21 @@
                 android:foregroundGravity="center"
                 android:scaleType="centerInside"
                 app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_scrollFlags="scroll"
                 app:srcCompat="@drawable/ic_moustache" />
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+        </androidx.constraintlayout.widget.ConstraintLayout> -->
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="0dp"
+            android:layout_height="37dp"
+            android:layout_marginBottom="-5dp"
+            android:foregroundGravity="center"
+            android:scaleType="centerInside"
+            app:layout_scrollFlags="scroll"
+            app:srcCompat="@drawable/ic_moustache" />
 
         <TextView
             android:id="@+id/dishNameTextView"
